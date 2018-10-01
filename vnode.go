@@ -12,12 +12,10 @@ type Attrs struct {
 	Events *Ev
 }
 
-type Children []*Vnode
-
 type Vnode struct {
 	TagName  string
 	Attrs    *Attrs
-	Children interface{}
+	Children Node
 	Element  *js.Value
 }
 
@@ -31,4 +29,27 @@ func (vnode *Vnode) isSame(otherVnode *Vnode) bool {
 	}
 
 	return vnode.TagName == otherVnode.TagName && reflect.DeepEqual(vnode.Attrs.Props, otherVnode.Attrs.Props)
+}
+
+func (vnode *Vnode) createElement() {
+	document := js.Global().Get("document")
+	domNode := document.Call("createElement", vnode.TagName)
+
+	if vnode.Attrs != nil {
+		if vnode.Attrs.Props != nil {
+			for k, v := range *vnode.Attrs.Props {
+				domNode.Call("setAttribute", k, v)
+			}
+		}
+
+		if vnode.Attrs.Events != nil {
+			for k, f := range *vnode.Attrs.Events {
+				callback := js.NewCallback(f)
+				domNode.Call("addEventListener", k, callback)
+			}
+		}
+
+	}
+
+	vnode.Children.createElement()
 }
