@@ -21,7 +21,7 @@ func prepareEvents(vnode *Vnode, domNode js.Value) {
 	}
 }
 
-func CreateElement(node interface{}) js.Value {
+func CreateElement(node interface{}) *js.Value {
 	document := js.Global().Get("document")
 
 	switch node.(type) {
@@ -30,7 +30,7 @@ func CreateElement(node interface{}) js.Value {
 		domNode := document.Call("createTextNode", vnode.Value)
 		vnode.Element = &domNode
 
-		return domNode
+		return vnode.Element
 
 	default:
 		vnode := node.(*Vnode)
@@ -41,16 +41,16 @@ func CreateElement(node interface{}) js.Value {
 
 		switch vnode.Children.(type) {
 		case *TextNode:
-			domNode.Call("appendChild", CreateElement(vnode.Children))
+			domNode.Call("appendChild", *CreateElement(vnode.Children))
 		case Children:
 			for _, el := range vnode.Children.(Children) {
-				childNode := CreateElement(el)
+				childNode := *CreateElement(el)
 				domNode.Call("appendChild", childNode)
 			}
 		}
 
 		vnode.Element = &domNode
 
-		return domNode
+		return vnode.Element
 	}
 }

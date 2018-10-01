@@ -8,7 +8,9 @@ type TextNode struct {
 }
 
 func (textNode *TextNode) createElement() {
-	document := js.Global().Get("document")
-	domNode := document.Call("createTextNode", textNode.Value)
-	textNode.Element = &domNode
+	if textNode.Element == nil {
+		document := js.Global().Get("document")
+		domNode := document.Call("createTextNode", textNode.Value)
+		textNode.Element = &domNode
+	}
 }

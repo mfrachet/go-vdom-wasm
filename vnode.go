@@ -15,7 +15,7 @@ type Attrs struct {
 type Vnode struct {
 	TagName  string
 	Attrs    *Attrs
-	Children Node
+	Children interface{}
 	Element  *js.Value
 }
 
@@ -32,24 +32,40 @@ func (vnode *Vnode) isSame(otherVnode *Vnode) bool {
 }
 
 func (vnode *Vnode) createElement() {
-	document := js.Global().Get("document")
-	domNode := document.Call("createElement", vnode.TagName)
+	if vnode.Element == nil {
+		document := js.Global().Get("document")
+		domNode := document.Call("createElement", vnode.TagName)
 
-	if vnode.Attrs != nil {
-		if vnode.Attrs.Props != nil {
-			for k, v := range *vnode.Attrs.Props {
-				domNode.Call("setAttribute", k, v)
+		if vnode.Attrs != nil {
+			if vnode.Attrs.Props != nil {
+				for attr, attrValue := range *vnode.Attrs.Props {
+					domNode.Call("setAttribute", attr, attrValue)
+				}
+			}
+
+			if vnode.Attrs.Events != nil {
+				for eventName, handler := range *vnode.Attrs.Events {
+					callback := js.NewCallback(handler)
+					domNode.Call("addEventListener", eventName, callback)
+				}
 			}
 		}
 
-		if vnode.Attrs.Events != nil {
-			for k, f := range *vnode.Attrs.Events {
-				callback := js.NewCallback(f)
-				domNode.Call("addEventListener", k, callback)
-			}
-		}
-
+		vnode.Element = &domNode
+		vnode.computeChildren()
 	}
+}
 
-	vnode.Children.createElement()
+func (vnode *Vnode) computeChildren() {
+	switch vnode.Children.(type) {
+	case *TextNode:
+		textNode := vnode.Children.(*TextNode)
+		textNode.createElement()
+		vnode.Element.Call("appendChild", textNode.Element)
+	case Children:
+		for _, el := range vnode.Children.(Children) {
+			el.createElement()
+			vnode.Element.Call("appendChild", el.Element)
+		}
+	}
 }
