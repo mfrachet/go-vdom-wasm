@@ -32,18 +32,3 @@ func (vnode *Vnode) isSame(otherVnode *Vnode) bool {
 
 	return vnode.TagName == otherVnode.TagName && reflect.DeepEqual(vnode.Attrs.Props, otherVnode.Attrs.Props)
 }
-
-type TextNode struct {
-	Value   string
-	Element *js.Value
-}
-
-func H(tagName string, attrs *Attrs, children interface{}) *Vnode {
-
-	switch (children).(type) {
-	case string:
-		return &Vnode{tagName, attrs, &TextNode{(children).(string), nil}, nil}
-	default:
-		return &Vnode{tagName, attrs, children.(Children), nil}
-	}
-}
