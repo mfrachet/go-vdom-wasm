@@ -61,11 +61,11 @@ func (vnode *Vnode) computeChildren() {
 	case *TextNode:
 		textNode := vnode.Children.(*TextNode)
 		textNode.createElement()
-		vnode.Element.Call("appendChild", textNode.Element)
+		vnode.Element.Call("appendChild", *textNode.Element)
 	case Children:
 		for _, el := range vnode.Children.(Children) {
 			el.createElement()
-			vnode.Element.Call("appendChild", el.Element)
+			vnode.Element.Call("appendChild", *el.Element)
 		}
 	}
 }
