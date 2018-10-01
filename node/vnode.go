@@ -32,8 +32,3 @@ func (vnode *Vnode) isSame(otherVnode *Vnode) bool {
 
 	return vnode.TagName == otherVnode.TagName && reflect.DeepEqual(vnode.Attrs.Props, otherVnode.Attrs.Props)
 }
-
-type TextNode struct {
-	Value   string
-	Element *js.Value
-}
