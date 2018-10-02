@@ -19,9 +19,7 @@ func updateElement(parent js.Value, newNode Node, oldNode Node, index int) {
 		newNode.createElement()
 		parent.Call("appendChild", *newNode.getElement())
 	} else if newNode == nil {
-		// Removing an old child from the tree
-		childNode := parent.Get("childNodes").Index(index)
-		parent.Call("removeChild", childNode)
+		oldNode.getElement().Call("remove")
 	} else if !newNode.isSame(oldNode) {
 		// Replacing two different children
 		newNode.createElement()
@@ -54,7 +52,8 @@ func updateElement(parent js.Value, newNode Node, oldNode Node, index int) {
 				if newChildrenCount > i {
 					newChild = newChildren[i]
 				}
-				updateElement(parent.Get("childNodes").Index(index), newChild, oldChild, i)
+
+				updateElement(parent.Get("childNodes").Index(index+1), newChild, oldChild, i)
 			}
 		}
 	}
