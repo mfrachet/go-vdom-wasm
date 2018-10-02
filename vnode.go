@@ -20,15 +20,28 @@ type Vnode struct {
 }
 
 func (vnode *Vnode) isSame(otherVnode *Vnode) bool {
-	if vnode.Attrs == nil && otherVnode.Attrs == nil {
-		return vnode.TagName == otherVnode.TagName
-	}
 
-	if vnode.Attrs.Props == nil && otherVnode.Attrs.Props == nil {
-		return vnode.TagName == otherVnode.TagName
-	}
+	if otherVnode.Attrs == nil {
+		if vnode.Attrs == nil {
+			return vnode.TagName == otherVnode.TagName
+		}
 
-	return vnode.TagName == otherVnode.TagName && reflect.DeepEqual(vnode.Attrs.Props, otherVnode.Attrs.Props)
+		return false
+	} else {
+		if vnode.Attrs == nil {
+			return false
+		}
+
+		if otherVnode.Attrs.Props == nil {
+			if vnode.Attrs.Props == nil {
+				return vnode.TagName == otherVnode.TagName
+			}
+
+			return false
+		} else {
+			return vnode.TagName == otherVnode.TagName && reflect.DeepEqual(vnode.Attrs.Props, otherVnode.Attrs.Props)
+		}
+	}
 }
 
 func (vnode *Vnode) createElement() {
