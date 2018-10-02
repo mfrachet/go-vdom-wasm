@@ -1,7 +1,7 @@
 package vn
 
 import (
-	"reflect"
+	"fmt"
 	"syscall/js"
 )
 
@@ -19,31 +19,29 @@ type Vnode struct {
 	Element  *js.Value
 }
 
-func (vnode *Vnode) isSame(otherVnode *Vnode) bool {
-
-	if otherVnode.Attrs == nil {
-		if vnode.Attrs == nil {
-			return vnode.TagName == otherVnode.TagName
-		}
-
-		return false
+func (vnode *Vnode) hashCode() string {
+	if vnode.Attrs != nil && vnode.Attrs.Props != nil {
+		return fmt.Sprintf("%s/%s", vnode.TagName, *vnode.Attrs.Props)
 	}
 
-	// otherVnode.Attrs is not nil so we break
-	if vnode.Attrs == nil {
-		return false
+	return fmt.Sprintf("%s/%s", vnode.TagName, Attrs{})
+}
+
+func (vnode *Vnode) isSame(other Node) bool {
+	return vnode.hashCode() == other.hashCode()
+}
+
+func (vnode *Vnode) childrenCount() int {
+	switch vnode.Children.(type) {
+	case Children:
+		return len(vnode.Children.(Children))
 	}
 
-	if otherVnode.Attrs.Props == nil {
-		if vnode.Attrs.Props == nil {
-			return vnode.TagName == otherVnode.TagName
-		}
+	return 0
+}
 
-		return false
-	}
-
-	return vnode.TagName == otherVnode.TagName && reflect.DeepEqual(vnode.Attrs.Props, otherVnode.Attrs.Props)
-
+func (vnode *Vnode) getChildren() interface{} {
+	return vnode.Children
 }
 
 func (vnode *Vnode) createElement() {
@@ -83,4 +81,8 @@ func (vnode *Vnode) computeChildren() {
 			vnode.Element.Call("appendChild", *el.Element)
 		}
 	}
+}
+
+func (vnode *Vnode) getElement() *js.Value {
+	return vnode.Element
 }
