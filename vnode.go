@@ -12,8 +12,6 @@ type Attrs struct {
 	Events *Ev
 }
 
-type Children []*Vnode
-
 type Vnode struct {
 	TagName  string
 	Attrs    *Attrs
@@ -22,28 +20,67 @@ type Vnode struct {
 }
 
 func (vnode *Vnode) isSame(otherVnode *Vnode) bool {
-	if vnode.Attrs == nil && otherVnode.Attrs == nil {
-		return vnode.TagName == otherVnode.TagName
+
+	if otherVnode.Attrs == nil {
+		if vnode.Attrs == nil {
+			return vnode.TagName == otherVnode.TagName
+		}
+
+		return false
 	}
 
-	if vnode.Attrs.Props == nil && otherVnode.Attrs.Props == nil {
-		return vnode.TagName == otherVnode.TagName
+	// otherVnode.Attrs is not nil so we break
+	if vnode.Attrs == nil {
+		return false
+	}
+
+	if otherVnode.Attrs.Props == nil {
+		if vnode.Attrs.Props == nil {
+			return vnode.TagName == otherVnode.TagName
+		}
+
+		return false
 	}
 
 	return vnode.TagName == otherVnode.TagName && reflect.DeepEqual(vnode.Attrs.Props, otherVnode.Attrs.Props)
+
 }
 
-type TextNode struct {
-	Value   string
-	Element *js.Value
+func (vnode *Vnode) createElement() {
+	if vnode.Element == nil {
+		document := js.Global().Get("document")
+		domNode := document.Call("createElement", vnode.TagName)
+
+		if vnode.Attrs != nil {
+			if vnode.Attrs.Props != nil {
+				for attr, attrValue := range *vnode.Attrs.Props {
+					domNode.Call("setAttribute", attr, attrValue)
+				}
+			}
+
+			if vnode.Attrs.Events != nil {
+				for eventName, handler := range *vnode.Attrs.Events {
+					callback := js.NewCallback(handler)
+					domNode.Call("addEventListener", eventName, callback)
+				}
+			}
+		}
+
+		vnode.Element = &domNode
+		vnode.computeChildren()
+	}
 }
 
-func H(tagName string, attrs *Attrs, children interface{}) *Vnode {
-
-	switch (children).(type) {
-	case string:
-		return &Vnode{tagName, attrs, &TextNode{(children).(string), nil}, nil}
-	default:
-		return &Vnode{tagName, attrs, children.(Children), nil}
+func (vnode *Vnode) computeChildren() {
+	switch vnode.Children.(type) {
+	case *TextNode:
+		textNode := vnode.Children.(*TextNode)
+		textNode.createElement()
+		vnode.Element.Call("appendChild", *textNode.Element)
+	case Children:
+		for _, el := range vnode.Children.(Children) {
+			el.createElement()
+			vnode.Element.Call("appendChild", *el.Element)
+		}
 	}
 }

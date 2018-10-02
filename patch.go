@@ -6,7 +6,7 @@ import (
 
 func initializeApp(rootNodeID string, initialNode *Vnode) {
 	rootNode := js.Global().Get("document").Call("querySelector", rootNodeID)
-	domNode := CreateElement(initialNode)
+	domNode := *CreateElement(initialNode)
 
 	rootNode.Call("appendChild", domNode)
 }
