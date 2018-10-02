@@ -17,9 +17,9 @@ func updateElement(parent js.Value, newNode *Vnode, oldNode *Vnode, index int) {
 		newNode.createElement()
 		parent.Call("appendChild", newNode.Element)
 	} else if newNode == nil {
-		indexToRemove := parent.Get("childNodes").Index(index).Int()
+		indexToRemove := parent.Get("childNodes").Index(index)
 		parent.Call("removeChild", indexToRemove)
-	} else if !newNode.isSame(oldNode) {
+	} else if !newNode.isSame(oldNode) { // not tested yet
 		newNode.createElement()
 		oldNode.Element.Call("replaceWith", *newNode.Element)
 	} else {
