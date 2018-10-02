@@ -4,67 +4,68 @@ import (
 	"syscall/js"
 )
 
-func initializeApp(rootNodeID string, initialNode *Vnode) {
+func initializeApp(rootNodeID string, initialNode Node) {
 	rootNode := js.Global().Get("document").Call("querySelector", rootNodeID)
-	domNode := CreateElement(initialNode)
+	initialNode.createElement()
+	domNode := *initialNode.getElement()
 
 	rootNode.Call("appendChild", domNode)
 }
 
-func computeVnodeChildren(vnode *Vnode) {
-	if vnode.Element == nil {
-		CreateElement(vnode)
-	}
-}
+func updateElement(parent js.Value, newNode Node, oldNode Node, index int) {
 
-func computeTextnodeChildren(vnode *TextNode) {
-	if vnode.Element == nil {
-		CreateElement(vnode)
-	}
-}
-
-func updateElement(parent js.Value, newNode *Vnode, oldNode *Vnode, index int) {
 	if oldNode == nil {
-		computeVnodeChildren(newNode)
-		parent.Call("appendChild", newNode.Element)
+		// Adding a new child to the tree
+		newNode.createElement()
+		parent.Call("appendChild", *newNode.getElement())
 	} else if newNode == nil {
-		indexToRemove := parent.Get("childNodes").Index(index).Int()
-		parent.Call("removeChild", indexToRemove)
+		oldNode.getElement().Call("remove")
 	} else if !newNode.isSame(oldNode) {
-		computeVnodeChildren(newNode)
-		oldNode.Element.Call("replaceWith", *newNode.Element)
+		// Replacing two different children
+		newNode.createElement()
+		oldNode.getElement().Call("replaceWith", *newNode.getElement())
 	} else {
-		computeVnodeChildren(newNode)
-		switch oldNode.Children.(type) {
-		case Children:
-			oldChildren := oldNode.Children.(Children)
-			newChildren := newNode.Children.(Children)
-			oldChildLength := len(oldChildren)
-			newChildLength := len(newChildren)
+		// handling children
+		newChildrenCount := newNode.childrenCount()
 
-			for i := 0; i < oldChildLength || i < newChildLength; i++ {
-				updateElement(parent.Get("childNodes").Index(i), newChildren[i], oldChildren[i], i)
-			}
-		case *TextNode:
-			oldTextNode := oldNode.Children.(*TextNode)
-			newTextNode := newNode.Children.(*TextNode)
+		if newChildrenCount > 0 {
+			newNode.createElement()
+			oldChildrenCount := oldNode.childrenCount()
 
-			if oldTextNode.Value != newTextNode.Value {
-				computeTextnodeChildren(newTextNode)
-				oldNode.Element.Call("replaceWith", *newNode.Element)
+			var max int = newChildrenCount
+
+			if oldChildrenCount > newChildrenCount {
+				max = oldChildrenCount
 			}
 
+			oldChildren := oldNode.getChildren().(Children)
+			newChildren := newNode.getChildren().(Children)
+
+			for i := 0; i < max; i++ {
+				var newChild Node
+				var oldChild Node
+
+				if oldChildrenCount > i {
+					oldChild = oldChildren[i]
+				}
+
+				if newChildrenCount > i {
+					newChild = newChildren[i]
+				}
+
+				updateElement(parent.Get("childNodes").Index(index+1), newChild, oldChild, i)
+			}
 		}
 	}
 }
 
-func Patch(oldNodeRef interface{}, newVnode *Vnode) {
+func Patch(oldNodeRef interface{}, newVnode Node) {
 	switch oldNodeRef.(type) {
 	case string:
 		initializeApp(oldNodeRef.(string), newVnode)
 	default:
-		oldVnode := oldNodeRef.(*Vnode)
+		oldVnode := oldNodeRef.(Node)
 
-		updateElement(*oldVnode.Element, newVnode, oldVnode, 0)
+		updateElement(*oldVnode.getElement(), newVnode, oldVnode, 0)
 	}
 }

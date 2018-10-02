@@ -1,7 +1,7 @@
 package vn
 
 import (
-	"reflect"
+	"fmt"
 	"syscall/js"
 )
 
@@ -12,8 +12,6 @@ type Attrs struct {
 	Events *Ev
 }
 
-type Children []*Vnode
-
 type Vnode struct {
 	TagName  string
 	Attrs    *Attrs
@@ -21,29 +19,70 @@ type Vnode struct {
 	Element  *js.Value
 }
 
-func (vnode *Vnode) isSame(otherVnode *Vnode) bool {
-	if vnode.Attrs == nil && otherVnode.Attrs == nil {
-		return vnode.TagName == otherVnode.TagName
+func (vnode *Vnode) hashCode() string {
+	if vnode.Attrs != nil && vnode.Attrs.Props != nil {
+		return fmt.Sprintf("%s/%s", vnode.TagName, *vnode.Attrs.Props)
 	}
 
-	if vnode.Attrs.Props == nil && otherVnode.Attrs.Props == nil {
-		return vnode.TagName == otherVnode.TagName
-	}
-
-	return vnode.TagName == otherVnode.TagName && reflect.DeepEqual(vnode.Attrs.Props, otherVnode.Attrs.Props)
+	return fmt.Sprintf("%s/%s", vnode.TagName, Attrs{})
 }
 
-type TextNode struct {
-	Value   string
-	Element *js.Value
+func (vnode *Vnode) isSame(other Node) bool {
+	return vnode.hashCode() == other.hashCode()
 }
 
-func H(tagName string, attrs *Attrs, children interface{}) *Vnode {
-
-	switch (children).(type) {
-	case string:
-		return &Vnode{tagName, attrs, &TextNode{(children).(string), nil}, nil}
-	default:
-		return &Vnode{tagName, attrs, children.(Children), nil}
+func (vnode *Vnode) childrenCount() int {
+	switch vnode.Children.(type) {
+	case Children:
+		return len(vnode.Children.(Children))
 	}
+
+	return 0
+}
+
+func (vnode *Vnode) getChildren() interface{} {
+	return vnode.Children
+}
+
+func (vnode *Vnode) createElement() {
+	if vnode.Element == nil {
+		document := js.Global().Get("document")
+		domNode := document.Call("createElement", vnode.TagName)
+
+		if vnode.Attrs != nil {
+			if vnode.Attrs.Props != nil {
+				for attr, attrValue := range *vnode.Attrs.Props {
+					domNode.Call("setAttribute", attr, attrValue)
+				}
+			}
+
+			if vnode.Attrs.Events != nil {
+				for eventName, handler := range *vnode.Attrs.Events {
+					callback := js.NewCallback(handler)
+					domNode.Call("addEventListener", eventName, callback)
+				}
+			}
+		}
+
+		vnode.Element = &domNode
+		vnode.computeChildren()
+	}
+}
+
+func (vnode *Vnode) computeChildren() {
+	switch vnode.Children.(type) {
+	case *TextNode:
+		textNode := vnode.Children.(*TextNode)
+		textNode.createElement()
+		vnode.Element.Call("appendChild", *textNode.Element)
+	case Children:
+		for _, el := range vnode.Children.(Children) {
+			el.createElement()
+			vnode.Element.Call("appendChild", *el.Element)
+		}
+	}
+}
+
+func (vnode *Vnode) getElement() *js.Value {
+	return vnode.Element
 }
