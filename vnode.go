@@ -27,21 +27,23 @@ func (vnode *Vnode) isSame(otherVnode *Vnode) bool {
 		}
 
 		return false
-	} else {
-		if vnode.Attrs == nil {
-			return false
-		}
-
-		if otherVnode.Attrs.Props == nil {
-			if vnode.Attrs.Props == nil {
-				return vnode.TagName == otherVnode.TagName
-			}
-
-			return false
-		} else {
-			return vnode.TagName == otherVnode.TagName && reflect.DeepEqual(vnode.Attrs.Props, otherVnode.Attrs.Props)
-		}
 	}
+
+	// otherVnode.Attrs is not nil so we break
+	if vnode.Attrs == nil {
+		return false
+	}
+
+	if otherVnode.Attrs.Props == nil {
+		if vnode.Attrs.Props == nil {
+			return vnode.TagName == otherVnode.TagName
+		}
+
+		return false
+	}
+
+	return vnode.TagName == otherVnode.TagName && reflect.DeepEqual(vnode.Attrs.Props, otherVnode.Attrs.Props)
+
 }
 
 func (vnode *Vnode) createElement() {
