@@ -11,30 +11,18 @@ func initializeApp(rootNodeID string, initialNode *Vnode) {
 	rootNode.Call("appendChild", domNode)
 }
 
-func computeVnodeChildren(vnode *Vnode) {
-	if vnode.Element == nil {
-		CreateElement(vnode)
-	}
-}
-
-func computeTextnodeChildren(vnode *TextNode) {
-	if vnode.Element == nil {
-		CreateElement(vnode)
-	}
-}
-
 func updateElement(parent js.Value, newNode *Vnode, oldNode *Vnode, index int) {
 	if oldNode == nil {
-		computeVnodeChildren(newNode)
+		newNode.createElement()
 		parent.Call("appendChild", newNode.Element)
 	} else if newNode == nil {
 		indexToRemove := parent.Get("childNodes").Index(index).Int()
 		parent.Call("removeChild", indexToRemove)
 	} else if !newNode.isSame(oldNode) {
-		computeVnodeChildren(newNode)
+		newNode.createElement()
 		oldNode.Element.Call("replaceWith", *newNode.Element)
 	} else {
-		computeVnodeChildren(newNode)
+		newNode.createElement()
 		switch oldNode.Children.(type) {
 		case Children:
 			oldChildren := oldNode.Children.(Children)
@@ -50,7 +38,7 @@ func updateElement(parent js.Value, newNode *Vnode, oldNode *Vnode, index int) {
 			newTextNode := newNode.Children.(*TextNode)
 
 			if oldTextNode.Value != newTextNode.Value {
-				computeTextnodeChildren(newTextNode)
+				newTextNode.createElement()
 				oldNode.Element.Call("replaceWith", *newNode.Element)
 			}
 
