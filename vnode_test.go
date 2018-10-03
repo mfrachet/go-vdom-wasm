@@ -35,3 +35,20 @@ func TestVnodeChildrenCount(t *testing.T) {
 
 	assert.Equal(t, 2, a.childrenCount())
 }
+
+// func TestVnodeCreateElement(t *testing.T) {
+// 	document := js.Global().Get("document")
+// 	domNode := document.Call("createElement", "div")
+// 	spanNode := document.Call("createElement", "span")
+// 	textNode := document.Call("createTextNode", "Hello")
+// 	spanNode.Call("appendChild", textNode)
+// 	domNode.Call("appendChild", spanNode)
+
+// 	vnode := H("div", nil, Children{
+// 		H("span", nil, "Hello"),
+// 	})
+
+// 	vnode.createElement()
+
+// 	assert.Equal(t, domNode, *vnode.Element)
+// }
