@@ -13,7 +13,6 @@ func initializeApp(rootNodeID string, initialNode Node) {
 }
 
 func updateElement(parent js.Value, newNode Node, oldNode Node, index int) {
-
 	if oldNode == nil {
 		// Adding a new child to the tree
 		newNode.createElement()
