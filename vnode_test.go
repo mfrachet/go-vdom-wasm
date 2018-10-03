@@ -14,6 +14,7 @@ func TestIsSameVNode(t *testing.T) {
 	d := H("span", &Attrs{Props: &Props{"hello": "world"}}, "Hello world")
 	e := H("span", &Attrs{Props: &Props{"hello": "world"}}, "Hello world")
 	f := H("div", &Attrs{Props: &Props{"hello": "world"}}, "Hello worldx")
+	j := H("span", &Attrs{Props: &Props{"hello": "world2"}}, "Hello world")
 
 	g := H("span", &Attrs{}, "Hello world")
 	h := H("span", &Attrs{}, "Hello world")
@@ -23,4 +24,5 @@ func TestIsSameVNode(t *testing.T) {
 	assert.Equal(t, true, g.isSame(h))
 	assert.Equal(t, true, d.isSame(e))
 	assert.Equal(t, false, d.isSame(f))
+	assert.Equal(t, false, d.isSame(j))
 }

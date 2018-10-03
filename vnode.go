@@ -21,10 +21,10 @@ type Vnode struct {
 
 func (vnode *Vnode) hashCode() string {
 	if vnode.Attrs != nil && vnode.Attrs.Props != nil {
-		return fmt.Sprintf("%s/%s", vnode.TagName, *vnode.Attrs.Props)
+		return fmt.Sprintf("%s/%v", vnode.TagName, *vnode.Attrs.Props)
 	}
 
-	return fmt.Sprintf("%s/%s", vnode.TagName, Attrs{})
+	return fmt.Sprintf("%s/%v", vnode.TagName, Attrs{})
 }
 
 func (vnode *Vnode) isSame(other Node) bool {
