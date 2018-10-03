@@ -33,6 +33,10 @@ func (textNode *TextNode) childrenCount() int {
 	return -1
 }
 
-func (textNode *TextNode) getChildren() interface{} {
-	return textNode.Value
+func (textNode *TextNode) getChildren() Children {
+	return nil
+}
+
+func (textNode *TextNode) getText() *TextNode {
+	return textNode
 }
