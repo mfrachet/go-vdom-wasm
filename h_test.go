@@ -13,8 +13,8 @@ func TestHWithStringChildren(t *testing.T) {
 		childrenString string
 		want           *Vnode
 	}{
-		{"div", "Hello world", &Vnode{TagName: "div", Attrs: nil, Children: &TextNode{Value: "Hello world", Element: nil}, Element: nil}},
-		{"span", "Hello", &Vnode{TagName: "span", Attrs: nil, Children: &TextNode{Value: "Hello", Element: nil}, Element: nil}},
+		{"div", "Hello world", &Vnode{TagName: "div", Attrs: nil, Text: &TextNode{Value: "Hello world", Element: nil}, Element: nil}},
+		{"span", "Hello", &Vnode{TagName: "span", Attrs: nil, Text: &TextNode{Value: "Hello", Element: nil}, Element: nil}},
 	}
 	for _, c := range cases {
 		got := H(c.TagName, nil, c.childrenString)
@@ -26,7 +26,7 @@ func TestHWithStringChildren(t *testing.T) {
 func TestHWithChildren(t *testing.T) {
 	childrenString := "Hello Children"
 
-	expectedChild := &Vnode{TagName: "div", Attrs: nil, Children: &TextNode{childrenString, nil}, Element: nil}
+	expectedChild := &Vnode{TagName: "div", Attrs: nil, Text: &TextNode{childrenString, nil}, Element: nil}
 	expectedVnode := &Vnode{TagName: "div", Attrs: nil, Children: Children{expectedChild}, Element: nil}
 
 	currentVnode := H("div", nil, Children{H("div", nil, childrenString)})
@@ -40,10 +40,10 @@ func TestHWithAttributes(t *testing.T) {
 		Attrs *Attrs
 		want  *Vnode
 	}{
-		{&Attrs{}, &Vnode{TagName: "div", Attrs: &Attrs{}, Children: &TextNode{Value: "Hello world", Element: nil}, Element: nil}},
-		{&Attrs{Props: &Props{"class": "hello"}}, &Vnode{TagName: "div", Attrs: &Attrs{Props: &Props{"class": "hello"}}, Children: &TextNode{Value: "Hello world", Element: nil}, Element: nil}},
-		{&Attrs{Events: ev}, &Vnode{TagName: "div", Attrs: &Attrs{Events: ev}, Children: &TextNode{Value: "Hello world", Element: nil}, Element: nil}},
-		{&Attrs{Events: ev, Props: &Props{"class": "hello"}}, &Vnode{TagName: "div", Attrs: &Attrs{Events: ev, Props: &Props{"class": "hello"}}, Children: &TextNode{Value: "Hello world", Element: nil}, Element: nil}},
+		{&Attrs{}, &Vnode{TagName: "div", Attrs: &Attrs{}, Text: &TextNode{Value: "Hello world", Element: nil}, Element: nil}},
+		{&Attrs{Props: &Props{"class": "hello"}}, &Vnode{TagName: "div", Attrs: &Attrs{Props: &Props{"class": "hello"}}, Text: &TextNode{Value: "Hello world", Element: nil}, Element: nil}},
+		{&Attrs{Events: ev}, &Vnode{TagName: "div", Attrs: &Attrs{Events: ev}, Text: &TextNode{Value: "Hello world", Element: nil}, Element: nil}},
+		{&Attrs{Events: ev, Props: &Props{"class": "hello"}}, &Vnode{TagName: "div", Attrs: &Attrs{Events: ev, Props: &Props{"class": "hello"}}, Text: &TextNode{Value: "Hello world", Element: nil}, Element: nil}},
 	}
 	for _, c := range cases {
 		got := H("div", c.Attrs, "Hello world")

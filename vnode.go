@@ -5,43 +5,54 @@ import (
 	"syscall/js"
 )
 
-type Ev = map[string]func([]js.Value)
-type Props = map[string]string
-type Attrs struct {
-	Props  *Props
-	Events *Ev
-}
+type Children []*Vnode
 
 type Vnode struct {
 	TagName  string
 	Attrs    *Attrs
-	Children interface{}
+	Children Children
+	Text     *TextNode
 	Element  *js.Value
+}
+
+func (vnode *Vnode) isSame(other Node) bool {
+	if vnode.Text == nil {
+		if other.getText() == nil {
+			return vnode.hashCode() == other.hashCode()
+		}
+
+		return false
+	}
+
+	if other.getText() != nil {
+		return vnode.Text.Value == other.getText().Value && vnode.hashCode() == other.hashCode()
+	}
+
+	return false
+}
+
+func (vnode *Vnode) childrenCount() int {
+	return len(vnode.Children)
+}
+
+func (vnode *Vnode) getChildren() Children {
+	return vnode.Children
+}
+
+func (vnode *Vnode) getText() *TextNode {
+	return vnode.Text
+}
+
+func (vnode *Vnode) getElement() *js.Value {
+	return vnode.Element
 }
 
 func (vnode *Vnode) hashCode() string {
 	if vnode.Attrs != nil && vnode.Attrs.Props != nil {
-		return fmt.Sprintf("%s/%s", vnode.TagName, *vnode.Attrs.Props)
+		return fmt.Sprintf("%s/%v", vnode.TagName, *vnode.Attrs.Props)
 	}
 
-	return fmt.Sprintf("%s/%s", vnode.TagName, Attrs{})
-}
-
-func (vnode *Vnode) isSame(other Node) bool {
-	return vnode.hashCode() == other.hashCode()
-}
-
-func (vnode *Vnode) childrenCount() int {
-	switch vnode.Children.(type) {
-	case Children:
-		return len(vnode.Children.(Children))
-	}
-
-	return 0
-}
-
-func (vnode *Vnode) getChildren() interface{} {
-	return vnode.Children
+	return fmt.Sprintf("%s/%v", vnode.TagName, Attrs{})
 }
 
 func (vnode *Vnode) createElement() {
@@ -70,19 +81,14 @@ func (vnode *Vnode) createElement() {
 }
 
 func (vnode *Vnode) computeChildren() {
-	switch vnode.Children.(type) {
-	case *TextNode:
-		textNode := vnode.Children.(*TextNode)
+	if vnode.Text != nil {
+		textNode := vnode.Text
 		textNode.createElement()
-		vnode.Element.Call("appendChild", *textNode.Element)
-	case Children:
-		for _, el := range vnode.Children.(Children) {
+		vnode.Element.Call("appendChild", *textNode.getElement())
+	} else {
+		for _, el := range vnode.Children {
 			el.createElement()
 			vnode.Element.Call("appendChild", *el.Element)
 		}
 	}
-}
-
-func (vnode *Vnode) getElement() *js.Value {
-	return vnode.Element
 }

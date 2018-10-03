@@ -7,6 +7,7 @@ type Node interface {
 	getElement() *js.Value
 	hashCode() string
 	childrenCount() int
-	getChildren() interface{}
+	getChildren() Children
+	getText() *TextNode
 	isSame(Node) bool
 }

@@ -30,9 +30,13 @@ func (textNode *TextNode) isSame(other Node) bool {
 }
 
 func (textNode *TextNode) childrenCount() int {
-	return 0
+	return -1
 }
 
-func (textNode *TextNode) getChildren() interface{} {
-	return textNode.Value
+func (textNode *TextNode) getChildren() Children {
+	return nil
+}
+
+func (textNode *TextNode) getText() *TextNode {
+	return textNode
 }

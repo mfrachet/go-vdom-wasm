@@ -38,8 +38,8 @@ func updateElement(parent js.Value, newNode Node, oldNode Node, index int) {
 				max = oldChildrenCount
 			}
 
-			oldChildren := oldNode.getChildren().(Children)
-			newChildren := newNode.getChildren().(Children)
+			oldChildren := oldNode.getChildren()
+			newChildren := newNode.getChildren()
 
 			for i := 0; i < max; i++ {
 				var newChild Node
@@ -53,7 +53,12 @@ func updateElement(parent js.Value, newNode Node, oldNode Node, index int) {
 					newChild = newChildren[i]
 				}
 
-				updateElement(parent.Get("childNodes").Index(index+1), newChild, oldChild, i)
+				if newChild != nil && newChild.childrenCount() > 0 {
+					updateElement(parent.Get("childNodes").Index(index), newChild, oldChild, i)
+				} else {
+					updateElement(parent, newChild, oldChild, i)
+				}
+
 			}
 		}
 	}
