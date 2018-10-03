@@ -53,7 +53,7 @@ func updateElement(parent js.Value, newNode Node, oldNode Node, index int) {
 					newChild = newChildren[i]
 				}
 
-				if newChild.childrenCount() > 0 {
+				if newChild != nil && newChild.childrenCount() > 0 {
 					updateElement(parent.Get("childNodes").Index(index), newChild, oldChild, i)
 				} else {
 					updateElement(parent, newChild, oldChild, i)
