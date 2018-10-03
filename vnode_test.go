@@ -1,6 +1,7 @@
 package vn
 
 import (
+	"fmt"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -22,6 +23,7 @@ func TestIsSameVNode(t *testing.T) {
 	k := H("li", nil, "Hello world")
 	l := H("li", nil, "Hello world2")
 
+	fmt.Println("A is ", a, " and B is ", b)
 	assert.Equal(t, true, a.isSame(b))
 	assert.Equal(t, false, a.isSame(c))
 	assert.Equal(t, true, g.isSame(h))

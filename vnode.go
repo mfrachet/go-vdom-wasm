@@ -16,7 +16,19 @@ type Vnode struct {
 }
 
 func (vnode *Vnode) isSame(other Node) bool {
-	return vnode.Text == other.getText() && vnode.hashCode() == other.hashCode()
+	if vnode.Text == nil {
+		if other.getText() == nil {
+			return vnode.hashCode() == other.hashCode()
+		}
+
+		return false
+	}
+
+	if other.getText() != nil {
+		return vnode.Text.Value == other.getText().Value && vnode.hashCode() == other.hashCode()
+	}
+
+	return false
 }
 
 func (vnode *Vnode) childrenCount() int {
