@@ -1,6 +1,7 @@
 package vn
 
 import (
+	"fmt"
 	"syscall/js"
 )
 
@@ -16,6 +17,7 @@ func updateElement(parent js.Value, newNode Node, oldNode Node, index int) {
 
 	if oldNode == nil {
 		// Adding a new child to the tree
+		fmt.Println("who s the parent", parent)
 		newNode.createElement()
 		parent.Call("appendChild", *newNode.getElement())
 	} else if newNode == nil {
@@ -53,9 +55,8 @@ func updateElement(parent js.Value, newNode Node, oldNode Node, index int) {
 					newChild = newChildren[i]
 				}
 
-				parentChildNodes := parent.Get("childNodes")
-				if parentChildNodes.Length() > 0 {
-					updateElement(parentChildNodes.Index(index), newChild, oldChild, i)
+				if newChild.childrenCount() > 0 {
+					updateElement(parent.Get("childNodes").Index(index), newChild, oldChild, i)
 				} else {
 					updateElement(parent, newChild, oldChild, i)
 				}
