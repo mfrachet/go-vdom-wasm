@@ -26,3 +26,12 @@ func TestIsSameVNode(t *testing.T) {
 	assert.Equal(t, false, d.isSame(f))
 	assert.Equal(t, false, d.isSame(j))
 }
+
+func TestVnodeChildrenCount(t *testing.T) {
+	a := H("div", nil, Children{
+		H("span", nil, "Hello"),
+		H("span", nil, "Hello"),
+	})
+
+	assert.Equal(t, 2, a.childrenCount())
+}
