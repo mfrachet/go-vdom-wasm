@@ -10,7 +10,7 @@ func initializeApp(rootNodeID string, initialNode Node) {
 	rootNode.AppendChild(domNode)
 }
 
-func updateElement(parent vn_dom.DomNode, newNode Node, oldNode Node, index int) {
+func updateElement(parent vn_dom.DomElement, newNode Node, oldNode Node, index int) {
 	if oldNode == nil {
 		// Adding a new child to the tree
 		newNode.createElement()
