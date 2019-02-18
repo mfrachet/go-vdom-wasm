@@ -4,61 +4,78 @@ import (
 	"syscall/js"
 )
 
-type DomNode struct {
+type DomNode interface {
+	QuerySelector(string) DomElement
+	AppendChild(DomNode)
+	Remove()
+	ReplaceWith(DomElement)
+	CreateTextNode(string) DomElement
+	CreateElement(string) DomElement
+	SetAttribute(string, string)
+	AddEventListener(string, func([]js.Value))
+	ChildNodes(int) DomElement
+	GetBinding() js.Value
+}
+
+type DomElement struct {
 	binding js.Value
 }
 
-var instance *DomNode
+var instance *DomElement
 
-func GetDocument() DomNode {
+func GetDocument() DomElement {
 	if instance == nil {
 		docNode := js.Global().Get("document")
-		instance = &DomNode{docNode}
+		instance = &DomElement{docNode}
 	}
 
 	return *instance
 }
 
-func (node DomNode) QuerySelector(element string) DomNode {
-	bindingNode := GetDocument().binding.Call("querySelector", element)
-
-	return DomNode{bindingNode}
+func (node DomElement) GetBinding() js.Value {
+	return node.binding
 }
 
-func (node DomNode) AppendChild(child DomNode) {
-	node.binding.Call("appendChild", child.binding)
+func (node DomElement) QuerySelector(element string) DomElement {
+	bindingNode := GetDocument().GetBinding().Call("querySelector", element)
+
+	return DomElement{bindingNode}
 }
 
-func (node DomNode) Remove() {
-	node.binding.Call("remove")
+func (node DomElement) AppendChild(child DomNode) {
+	node.GetBinding().Call("appendChild", child.GetBinding())
 }
 
-func (node DomNode) ReplaceWith(next DomNode) {
-	node.binding.Call("replaceWith", next.binding)
+func (node DomElement) Remove() {
+	node.GetBinding().Call("remove")
 }
 
-func (node DomNode) CreateTextNode(value string) DomNode {
-	textNode := GetDocument().binding.Call("createTextNode", value)
-
-	return DomNode{textNode}
+func (node DomElement) ReplaceWith(next DomElement) {
+	node.GetBinding().Call("replaceWith", next.GetBinding())
 }
 
-func (node DomNode) CreateElement(tag string) DomNode {
-	element := GetDocument().binding.Call("createElement", tag)
+func (node DomElement) CreateTextNode(value string) DomElement {
+	textNode := GetDocument().GetBinding().Call("createTextNode", value)
 
-	return DomNode{element}
+	return DomElement{textNode}
 }
 
-func (node DomNode) SetAttribute(attr string, value string) {
-	node.binding.Call("setAttribute", attr, value)
+func (node DomElement) CreateElement(tag string) DomElement {
+	element := GetDocument().GetBinding().Call("createElement", tag)
+
+	return DomElement{element}
 }
 
-func (node DomNode) AddEventListener(eventName string, callback func([]js.Value)) {
-	node.binding.Call("addEventListener", eventName, js.NewCallback(callback))
+func (node DomElement) SetAttribute(attr string, value string) {
+	node.GetBinding().Call("setAttribute", attr, value)
 }
 
-func (node DomNode) ChildNodes(index int) DomNode {
-	element := node.binding.Get("childNodes").Index(index)
+func (node DomElement) AddEventListener(eventName string, callback func([]js.Value)) {
+	node.GetBinding().Call("addEventListener", eventName, js.NewCallback(callback))
+}
 
-	return DomNode{element}
+func (node DomElement) ChildNodes(index int) DomElement {
+	element := node.GetBinding().Get("childNodes").Index(index)
+
+	return DomElement{element}
 }

@@ -13,7 +13,7 @@ type Vnode struct {
 	Attrs    *Attrs
 	Children Children
 	Text     *TextNode
-	Element  *vn_dom.DomNode
+	Element  *vn_dom.DomElement
 }
 
 func (vnode *Vnode) isSame(other Node) bool {
@@ -44,7 +44,7 @@ func (vnode *Vnode) getText() *TextNode {
 	return vnode.Text
 }
 
-func (vnode *Vnode) getElement() *vn_dom.DomNode {
+func (vnode *Vnode) getElement() *vn_dom.DomElement {
 	return vnode.Element
 }
 

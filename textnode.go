@@ -4,7 +4,7 @@ import vn_dom "github.com/mfrachet/go-vdom-wasm/dom"
 
 type TextNode struct {
 	Value   string
-	Element *vn_dom.DomNode
+	Element *vn_dom.DomElement
 }
 
 func (textNode *TextNode) createElement() {
@@ -15,7 +15,7 @@ func (textNode *TextNode) createElement() {
 	}
 }
 
-func (textNode *TextNode) getElement() *vn_dom.DomNode {
+func (textNode *TextNode) getElement() *vn_dom.DomElement {
 	return textNode.Element
 }
 
