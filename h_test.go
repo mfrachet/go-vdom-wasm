@@ -1,4 +1,4 @@
-package vn
+package vn_test
 
 import (
 	"syscall/js"
@@ -7,17 +7,19 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+import vn "github.com/mfrachet/go-vdom-wasm"
+
 func TestHWithStringChildren(t *testing.T) {
 	cases := []struct {
 		TagName        string
 		childrenString string
-		want           *Vnode
+		want           *vn.Vnode
 	}{
-		{"div", "Hello world", &Vnode{TagName: "div", Attrs: nil, Text: &TextNode{Value: "Hello world", Element: nil}, Element: nil}},
-		{"span", "Hello", &Vnode{TagName: "span", Attrs: nil, Text: &TextNode{Value: "Hello", Element: nil}, Element: nil}},
+		{"div", "Hello world", &vn.Vnode{TagName: "div", Attrs: nil, Text: &vn.TextNode{Value: "Hello world", Element: nil}, Element: nil}},
+		{"span", "Hello", &vn.Vnode{TagName: "span", Attrs: nil, Text: &vn.TextNode{Value: "Hello", Element: nil}, Element: nil}},
 	}
 	for _, c := range cases {
-		got := H(c.TagName, nil, c.childrenString)
+		got := vn.H(c.TagName, nil, c.childrenString)
 
 		assert.Equal(t, c.want, got)
 	}
@@ -26,27 +28,27 @@ func TestHWithStringChildren(t *testing.T) {
 func TestHWithChildren(t *testing.T) {
 	childrenString := "Hello Children"
 
-	expectedChild := &Vnode{TagName: "div", Attrs: nil, Text: &TextNode{childrenString, nil}, Element: nil}
-	expectedVnode := &Vnode{TagName: "div", Attrs: nil, Children: Children{expectedChild}, Element: nil}
+	expectedChild := &vn.Vnode{TagName: "div", Attrs: nil, Text: &vn.TextNode{childrenString, nil}, Element: nil}
+	expectedVnode := &vn.Vnode{TagName: "div", Attrs: nil, Children: vn.Children{expectedChild}, Element: nil}
 
-	currentVnode := H("div", nil, Children{H("div", nil, childrenString)})
+	currentVnode := vn.H("div", nil, vn.Children{vn.H("div", nil, childrenString)})
 
 	assert.Equal(t, expectedVnode, currentVnode)
 }
 
 func TestHWithAttributes(t *testing.T) {
-	ev := &Ev{"f": func(args []js.Value) {}}
+	ev := &vn.Ev{"f": func(args []js.Value) {}}
 	cases := []struct {
-		Attrs *Attrs
-		want  *Vnode
+		Attrs *vn.Attrs
+		want  *vn.Vnode
 	}{
-		{&Attrs{}, &Vnode{TagName: "div", Attrs: &Attrs{}, Text: &TextNode{Value: "Hello world", Element: nil}, Element: nil}},
-		{&Attrs{Props: &Props{"class": "hello"}}, &Vnode{TagName: "div", Attrs: &Attrs{Props: &Props{"class": "hello"}}, Text: &TextNode{Value: "Hello world", Element: nil}, Element: nil}},
-		{&Attrs{Events: ev}, &Vnode{TagName: "div", Attrs: &Attrs{Events: ev}, Text: &TextNode{Value: "Hello world", Element: nil}, Element: nil}},
-		{&Attrs{Events: ev, Props: &Props{"class": "hello"}}, &Vnode{TagName: "div", Attrs: &Attrs{Events: ev, Props: &Props{"class": "hello"}}, Text: &TextNode{Value: "Hello world", Element: nil}, Element: nil}},
+		{&vn.Attrs{}, &vn.Vnode{TagName: "div", Attrs: &vn.Attrs{}, Text: &vn.TextNode{Value: "Hello world", Element: nil}, Element: nil}},
+		{&vn.Attrs{Props: &vn.Props{"class": "hello"}}, &vn.Vnode{TagName: "div", Attrs: &vn.Attrs{Props: &vn.Props{"class": "hello"}}, Text: &vn.TextNode{Value: "Hello world", Element: nil}, Element: nil}},
+		{&vn.Attrs{Events: ev}, &vn.Vnode{TagName: "div", Attrs: &vn.Attrs{Events: ev}, Text: &vn.TextNode{Value: "Hello world", Element: nil}, Element: nil}},
+		{&vn.Attrs{Events: ev, Props: &vn.Props{"class": "hello"}}, &vn.Vnode{TagName: "div", Attrs: &vn.Attrs{Events: ev, Props: &vn.Props{"class": "hello"}}, Text: &vn.TextNode{Value: "Hello world", Element: nil}, Element: nil}},
 	}
 	for _, c := range cases {
-		got := H("div", c.Attrs, "Hello world")
+		got := vn.H("div", c.Attrs, "Hello world")
 
 		assert.Equal(t, c.want, got)
 	}
