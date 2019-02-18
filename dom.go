@@ -42,3 +42,17 @@ func (node DomNode) createTextNode(value string) DomNode {
 
 	return DomNode{textNode}
 }
+
+func (node DomNode) createElement(tag string) DomNode {
+	element := getDocument().binding.Call("createElement", tag)
+
+	return DomNode{element}
+}
+
+func (node DomNode) setAttribute(attr string, value string) {
+	node.binding.Call("setAttribute", attr, value)
+}
+
+func (node DomNode) addEventListener(eventName string, callback func([]js.Value)) {
+	node.binding.Call("addEventListener", eventName, js.NewCallback(callback))
+}
