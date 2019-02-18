@@ -1,10 +1,8 @@
 package vn
 
-import "syscall/js"
-
 type Node interface {
 	createElement()
-	getElement() *js.Value
+	getElement() *DomNode
 	hashCode() string
 	childrenCount() int
 	getChildren() Children

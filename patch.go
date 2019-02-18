@@ -1,29 +1,25 @@
 package vn
 
-import (
-	"syscall/js"
-)
-
 func initializeApp(rootNodeID string, initialNode Node) {
-	rootNode := js.Global().Get("document").Call("querySelector", rootNodeID)
+	rootNode := getDocument().querySelector(rootNodeID)
 	initialNode.createElement()
 	domNode := *initialNode.getElement()
 
-	rootNode.Call("appendChild", domNode)
+	rootNode.appendChild(domNode)
 }
 
-func updateElement(parent js.Value, newNode Node, oldNode Node, index int) {
+func updateElement(parent DomNode, newNode Node, oldNode Node, index int) {
 
 	if oldNode == nil {
 		// Adding a new child to the tree
 		newNode.createElement()
-		parent.Call("appendChild", *newNode.getElement())
+		parent.appendChild(*newNode.getElement())
 	} else if newNode == nil {
-		oldNode.getElement().Call("remove")
+		oldNode.getElement().remove()
 	} else if !newNode.isSame(oldNode) {
 		// Replacing two different children
 		newNode.createElement()
-		oldNode.getElement().Call("replaceWith", *newNode.getElement())
+		oldNode.getElement().replaceWith(*newNode.getElement())
 	} else {
 		// handling children
 		newChildrenCount := newNode.childrenCount()
@@ -54,7 +50,7 @@ func updateElement(parent js.Value, newNode Node, oldNode Node, index int) {
 				}
 
 				if newChild != nil && newChild.childrenCount() > 0 {
-					updateElement(parent.Get("childNodes").Index(index), newChild, oldChild, i)
+					updateElement(parent.childNodes(index), newChild, oldChild, i)
 				} else {
 					updateElement(parent, newChild, oldChild, i)
 				}

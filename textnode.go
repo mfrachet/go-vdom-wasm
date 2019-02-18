@@ -1,23 +1,19 @@
 package vn
 
-import (
-	"syscall/js"
-)
-
 type TextNode struct {
 	Value   string
-	Element *js.Value
+	Element *DomNode
 }
 
 func (textNode *TextNode) createElement() {
 	if textNode.Element == nil {
-		document := js.Global().Get("document")
-		domNode := document.Call("createTextNode", textNode.Value)
+		document := getDocument()
+		domNode := document.createTextNode(textNode.Value)
 		textNode.Element = &domNode
 	}
 }
 
-func (textNode *TextNode) getElement() *js.Value {
+func (textNode *TextNode) getElement() *DomNode {
 	return textNode.Element
 }
 

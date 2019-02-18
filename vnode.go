@@ -2,7 +2,6 @@ package vn
 
 import (
 	"fmt"
-	"syscall/js"
 )
 
 type Children []*Vnode
@@ -12,7 +11,7 @@ type Vnode struct {
 	Attrs    *Attrs
 	Children Children
 	Text     *TextNode
-	Element  *js.Value
+	Element  *DomNode
 }
 
 func (vnode *Vnode) isSame(other Node) bool {
@@ -43,7 +42,7 @@ func (vnode *Vnode) getText() *TextNode {
 	return vnode.Text
 }
 
-func (vnode *Vnode) getElement() *js.Value {
+func (vnode *Vnode) getElement() *DomNode {
 	return vnode.Element
 }
 
@@ -57,20 +56,19 @@ func (vnode *Vnode) hashCode() string {
 
 func (vnode *Vnode) createElement() {
 	if vnode.Element == nil {
-		document := js.Global().Get("document")
-		domNode := document.Call("createElement", vnode.TagName)
+		document := getDocument()
+		domNode := document.createElement(vnode.TagName)
 
 		if vnode.Attrs != nil {
 			if vnode.Attrs.Props != nil {
 				for attr, attrValue := range *vnode.Attrs.Props {
-					domNode.Call("setAttribute", attr, attrValue)
+					domNode.setAttribute(attr, attrValue)
 				}
 			}
 
 			if vnode.Attrs.Events != nil {
 				for eventName, handler := range *vnode.Attrs.Events {
-					callback := js.NewCallback(handler)
-					domNode.Call("addEventListener", eventName, callback)
+					domNode.addEventListener(eventName, handler)
 				}
 			}
 		}
@@ -84,11 +82,11 @@ func (vnode *Vnode) computeChildren() {
 	if vnode.Text != nil {
 		textNode := vnode.Text
 		textNode.createElement()
-		vnode.Element.Call("appendChild", *textNode.getElement())
+		vnode.Element.appendChild(*textNode.getElement())
 	} else {
 		for _, el := range vnode.Children {
 			el.createElement()
-			vnode.Element.Call("appendChild", *el.Element)
+			vnode.Element.appendChild(*el.Element)
 		}
 	}
 }
