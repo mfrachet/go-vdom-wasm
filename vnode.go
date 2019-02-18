@@ -2,6 +2,8 @@ package vn
 
 import (
 	"fmt"
+
+	vn_dom "github.com/mfrachet/go-vdom-wasm/dom"
 )
 
 type Children []*Vnode
@@ -11,7 +13,7 @@ type Vnode struct {
 	Attrs    *Attrs
 	Children Children
 	Text     *TextNode
-	Element  *DomNode
+	Element  *vn_dom.DomNode
 }
 
 func (vnode *Vnode) isSame(other Node) bool {
@@ -42,7 +44,7 @@ func (vnode *Vnode) getText() *TextNode {
 	return vnode.Text
 }
 
-func (vnode *Vnode) getElement() *DomNode {
+func (vnode *Vnode) getElement() *vn_dom.DomNode {
 	return vnode.Element
 }
 
@@ -56,19 +58,19 @@ func (vnode *Vnode) hashCode() string {
 
 func (vnode *Vnode) createElement() {
 	if vnode.Element == nil {
-		document := getDocument()
-		domNode := document.createElement(vnode.TagName)
+		document := vn_dom.GetDocument()
+		domNode := document.CreateElement(vnode.TagName)
 
 		if vnode.Attrs != nil {
 			if vnode.Attrs.Props != nil {
 				for attr, attrValue := range *vnode.Attrs.Props {
-					domNode.setAttribute(attr, attrValue)
+					domNode.SetAttribute(attr, attrValue)
 				}
 			}
 
 			if vnode.Attrs.Events != nil {
 				for eventName, handler := range *vnode.Attrs.Events {
-					domNode.addEventListener(eventName, handler)
+					domNode.AddEventListener(eventName, handler)
 				}
 			}
 		}
@@ -82,11 +84,11 @@ func (vnode *Vnode) computeChildren() {
 	if vnode.Text != nil {
 		textNode := vnode.Text
 		textNode.createElement()
-		vnode.Element.appendChild(*textNode.getElement())
+		vnode.Element.AppendChild(*textNode.getElement())
 	} else {
 		for _, el := range vnode.Children {
 			el.createElement()
-			vnode.Element.appendChild(*el.Element)
+			vnode.Element.AppendChild(*el.Element)
 		}
 	}
 }
