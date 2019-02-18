@@ -24,3 +24,21 @@ func (node DomNode) querySelector(element string) DomNode {
 
 	return DomNode{bindingNode}
 }
+
+func (node DomNode) appendChild(child DomNode) {
+	node.binding.Call("appendChild", child.binding)
+}
+
+func (node DomNode) remove() {
+	node.binding.Call("remove")
+}
+
+func (node DomNode) replaceWith(next DomNode) {
+	node.binding.Call("replaceWith", next.binding)
+}
+
+func (node DomNode) createTextNode(value string) DomNode {
+	textNode := getDocument().binding.Call("createTextNode", value)
+
+	return DomNode{textNode}
+}
