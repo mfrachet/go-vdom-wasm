@@ -9,7 +9,6 @@ func initializeApp(rootNodeID string, initialNode Node) {
 }
 
 func updateElement(parent DomNode, newNode Node, oldNode Node, index int) {
-
 	if oldNode == nil {
 		// Adding a new child to the tree
 		newNode.createElement()
