@@ -10,17 +10,21 @@ func initializeApp(rootNodeID string, initialNode Node) {
 	rootNode.AppendChild(domNode)
 }
 
-func updateElement(parent vn_dom.DomElement, newNode Node, oldNode Node, index int) {
+func updateElement(parent vn_dom.DomNode, newNode Node, oldNode Node, index int) {
 	if oldNode == nil {
 		// Adding a new child to the tree
 		newNode.createElement()
 		parent.AppendChild(*newNode.getElement())
 	} else if newNode == nil {
-		oldNode.getElement().Remove()
+		oldElement := *oldNode.getElement()
+		oldElement.Remove()
 	} else if !newNode.isSame(oldNode) {
 		// Replacing two different children
 		newNode.createElement()
-		oldNode.getElement().ReplaceWith(*newNode.getElement())
+
+		oldElement := *oldNode.getElement()
+		newElement := *newNode.getElement()
+		oldElement.ReplaceWith(newElement)
 	} else {
 		// handling children
 		newChildrenCount := newNode.childrenCount()

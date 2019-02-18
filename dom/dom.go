@@ -5,16 +5,16 @@ import (
 )
 
 type DomNode interface {
-	GetDocument() DomNode
-	QuerySelector(string) DomNode
-	AppendChild(string) DomNode
+	QuerySelector(string) DomElement
+	AppendChild(DomNode)
 	Remove()
-	ReplaceWith(DomNode)
-	CreateTextNode(string) DomNode
-	CreateElement(string) DomNode
+	ReplaceWith(DomElement)
+	CreateTextNode(string) DomElement
+	CreateElement(string) DomElement
 	SetAttribute(string, string)
 	AddEventListener(string, func([]js.Value))
-	ChildNodes(int)
+	ChildNodes(int) DomElement
+	GetBinding() js.Value
 }
 
 type DomElement struct {
@@ -32,46 +32,50 @@ func GetDocument() DomElement {
 	return *instance
 }
 
+func (node DomElement) GetBinding() js.Value {
+	return node.binding
+}
+
 func (node DomElement) QuerySelector(element string) DomElement {
-	bindingNode := GetDocument().binding.Call("querySelector", element)
+	bindingNode := GetDocument().GetBinding().Call("querySelector", element)
 
 	return DomElement{bindingNode}
 }
 
-func (node DomElement) AppendChild(child DomElement) {
-	node.binding.Call("appendChild", child.binding)
+func (node DomElement) AppendChild(child DomNode) {
+	node.GetBinding().Call("appendChild", child.GetBinding())
 }
 
 func (node DomElement) Remove() {
-	node.binding.Call("remove")
+	node.GetBinding().Call("remove")
 }
 
 func (node DomElement) ReplaceWith(next DomElement) {
-	node.binding.Call("replaceWith", next.binding)
+	node.GetBinding().Call("replaceWith", next.GetBinding())
 }
 
 func (node DomElement) CreateTextNode(value string) DomElement {
-	textNode := GetDocument().binding.Call("createTextNode", value)
+	textNode := GetDocument().GetBinding().Call("createTextNode", value)
 
 	return DomElement{textNode}
 }
 
 func (node DomElement) CreateElement(tag string) DomElement {
-	element := GetDocument().binding.Call("createElement", tag)
+	element := GetDocument().GetBinding().Call("createElement", tag)
 
 	return DomElement{element}
 }
 
 func (node DomElement) SetAttribute(attr string, value string) {
-	node.binding.Call("setAttribute", attr, value)
+	node.GetBinding().Call("setAttribute", attr, value)
 }
 
 func (node DomElement) AddEventListener(eventName string, callback func([]js.Value)) {
-	node.binding.Call("addEventListener", eventName, js.NewCallback(callback))
+	node.GetBinding().Call("addEventListener", eventName, js.NewCallback(callback))
 }
 
 func (node DomElement) ChildNodes(index int) DomElement {
-	element := node.binding.Get("childNodes").Index(index)
+	element := node.GetBinding().Get("childNodes").Index(index)
 
 	return DomElement{element}
 }
