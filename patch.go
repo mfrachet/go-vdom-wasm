@@ -1,24 +1,26 @@
 package vn
 
+import vn_dom "github.com/mfrachet/go-vdom-wasm/dom"
+
 func initializeApp(rootNodeID string, initialNode Node) {
-	rootNode := getDocument().querySelector(rootNodeID)
+	rootNode := vn_dom.GetDocument().QuerySelector(rootNodeID)
 	initialNode.createElement()
 	domNode := *initialNode.getElement()
 
-	rootNode.appendChild(domNode)
+	rootNode.AppendChild(domNode)
 }
 
-func updateElement(parent DomNode, newNode Node, oldNode Node, index int) {
+func updateElement(parent vn_dom.DomNode, newNode Node, oldNode Node, index int) {
 	if oldNode == nil {
 		// Adding a new child to the tree
 		newNode.createElement()
-		parent.appendChild(*newNode.getElement())
+		parent.AppendChild(*newNode.getElement())
 	} else if newNode == nil {
-		oldNode.getElement().remove()
+		oldNode.getElement().Remove()
 	} else if !newNode.isSame(oldNode) {
 		// Replacing two different children
 		newNode.createElement()
-		oldNode.getElement().replaceWith(*newNode.getElement())
+		oldNode.getElement().ReplaceWith(*newNode.getElement())
 	} else {
 		// handling children
 		newChildrenCount := newNode.childrenCount()
@@ -49,7 +51,7 @@ func updateElement(parent DomNode, newNode Node, oldNode Node, index int) {
 				}
 
 				if newChild != nil && newChild.childrenCount() > 0 {
-					updateElement(parent.childNodes(index), newChild, oldChild, i)
+					updateElement(parent.ChildNodes(index), newChild, oldChild, i)
 				} else {
 					updateElement(parent, newChild, oldChild, i)
 				}
