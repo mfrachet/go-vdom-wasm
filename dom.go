@@ -56,3 +56,9 @@ func (node DomNode) setAttribute(attr string, value string) {
 func (node DomNode) addEventListener(eventName string, callback func([]js.Value)) {
 	node.binding.Call("addEventListener", eventName, js.NewCallback(callback))
 }
+
+func (node DomNode) childNodes(index int) DomNode {
+	element := node.binding.Get("childNodes").Index(index)
+
+	return DomNode{element}
+}
