@@ -62,6 +62,18 @@ func (mr *MockNodeMockRecorder) GetElement() *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetElement", reflect.TypeOf((*MockNode)(nil).GetElement))
 }
 
+// SetElement mocks base method
+func (m *MockNode) SetElement(arg0 dom.DomElement) {
+	m.ctrl.T.Helper()
+	m.ctrl.Call(m, "SetElement", arg0)
+}
+
+// SetElement indicates an expected call of SetElement
+func (mr *MockNodeMockRecorder) SetElement(arg0 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SetElement", reflect.TypeOf((*MockNode)(nil).SetElement), arg0)
+}
+
 // HashCode mocks base method
 func (m *MockNode) HashCode() string {
 	m.ctrl.T.Helper()

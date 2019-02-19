@@ -9,3 +9,11 @@ func Append(domNode vnd.DomNode, virtualNode Node) {
 
 	domNode.AppendChild(*element)
 }
+
+func Remove(domNode vnd.DomNode) {
+	domNode.Remove()
+}
+
+func CreateInstance(document vnd.DomNode, virtualNode TextNode) vnd.DomElement {
+	return document.CreateTextNode(virtualNode.Value)
+}
