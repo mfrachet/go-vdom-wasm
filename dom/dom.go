@@ -3,7 +3,7 @@ package vnd
 import (
 	"syscall/js"
 
-	vn_helpers "github.com/mfrachet/go-vdom-wasm/helpers"
+	vnh "github.com/mfrachet/go-vdom-wasm/helpers"
 )
 
 type DomNode interface {
@@ -27,7 +27,7 @@ type DomElement struct {
 var instance *DomElement
 
 func GetDocument() DomElement {
-	if vn_helpers.NotNil(instance) {
+	if vnh.NotNil(instance) {
 		docNode := js.Global().Get("document")
 		instance = &DomElement{docNode}
 	}
