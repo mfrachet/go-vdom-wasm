@@ -1,17 +1,15 @@
-package vn
+package vn_test
 
 import (
-	"fmt"
 	"testing"
 
-	vnd "github.com/mfrachet/go-vdom-wasm/dom"
-	"github.com/stretchr/testify/assert"
+	"github.com/golang/mock/gomock"
+	"github.com/mfrachet/go-vdom-wasm/mock"
 )
 
-func TestPatchInitialize(t *testing.T) {
-	doc := vnd.GetDocument()
+func TestAppendChild(t *testing.T) {
+	ctrl := gomock.NewController(t)
 
-	fmt.Println("lol", doc.GetBinding())
-
-	assert.Equal(t, true, false)
+	mockVNode := mock.NewMockNode(ctrl)
+	mockDNode := mock.NewMockDomNode(ctrl)
 }
