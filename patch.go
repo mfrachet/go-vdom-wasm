@@ -9,18 +9,14 @@ func updateElement(parent vnd.DomNode, newNode Node, oldNode Node, index int) {
 	if vnh.IsNil(newNode) {
 		Remove(*oldNode.GetElement())
 	} else {
+		newElement := *newNode.MakeDomNode(parent)
+
 		if vnh.IsNil(oldNode) {
-			// Adding a new child to the tree
 			Append(parent, newNode)
 		} else if !newNode.IsSame(oldNode) {
-			// Replacing two different children
-			newElement := *newNode.MakeDomNode(parent)
-
 			oldElement := *oldNode.GetElement()
 			oldElement.ReplaceWith(newElement)
 		} else {
-			newNode.MakeDomNode(parent)
-			// handling children
 			newChildrenCount := newNode.ChildrenCount()
 			oldChildrenCount := oldNode.ChildrenCount()
 
