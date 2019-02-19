@@ -23,5 +23,5 @@ func TestAppendChild(t *testing.T) {
 	mockVNode.EXPECT().MakeDomNode(mockDNode).Return(&el).Times(1)
 	mockDNode.EXPECT().AppendChild(el).Times(1)
 
-	vn.AppendToNode(mockDNode, mockVNode)
+	vn.Append(mockDNode, mockVNode)
 }

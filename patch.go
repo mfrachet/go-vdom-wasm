@@ -5,7 +5,7 @@ import (
 	vnh "github.com/mfrachet/go-vdom-wasm/helpers"
 )
 
-func AppendToNode(domNode vnd.DomNode, virtualNode Node) {
+func Append(domNode vnd.DomNode, virtualNode Node) {
 	element := virtualNode.MakeDomNode(domNode)
 
 	domNode.AppendChild(*element)
@@ -18,7 +18,7 @@ func updateElement(parent vnd.DomNode, newNode Node, oldNode Node, index int) {
 	} else {
 		if vnh.IsNil(oldNode) {
 			// Adding a new child to the tree
-			AppendToNode(parent, newNode)
+			Append(parent, newNode)
 		} else if !newNode.IsSame(oldNode) {
 			// Replacing two different children
 			newElement := *newNode.MakeDomNode(parent)
@@ -49,7 +49,7 @@ func Patch(oldNodeRef interface{}, newVnode Node) {
 	case string:
 		rootNodeID := oldNodeRef.(string)
 		rootNode := vnd.GetDocument().QuerySelector(rootNodeID)
-		AppendToNode(rootNode, newVnode)
+		Append(rootNode, newVnode)
 	default:
 		oldVnode := oldNodeRef.(Node)
 
