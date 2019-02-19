@@ -10,12 +10,13 @@ type TextNode struct {
 	Element *vnd.DomElement
 }
 
-func (textNode *TextNode) CreateElement() {
+func (textNode *TextNode) MakeDomNode(document vnd.DomNode) *vnd.DomElement {
 	if vnh.IsNil(textNode.Element) {
-		document := vnd.GetDocument()
 		domNode := document.CreateTextNode(textNode.Value)
 		textNode.Element = &domNode
 	}
+
+	return textNode.Element
 }
 
 func (textNode *TextNode) GetElement() *vnd.DomElement {
@@ -34,7 +35,7 @@ func (textNode *TextNode) ChildrenCount() int {
 	return -1
 }
 
-func (textNode *TextNode) GetChildren() Children {
+func (textNode *TextNode) ChildAt(index int) Node {
 	return nil
 }
 

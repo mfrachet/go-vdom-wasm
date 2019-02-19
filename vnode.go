@@ -41,8 +41,14 @@ func (vnode *Vnode) ChildrenCount() int {
 	return len(vnode.Children)
 }
 
-func (vnode *Vnode) GetChildren() Children {
-	return vnode.Children
+func (vnode *Vnode) ChildAt(index int) Node {
+	size := len(vnode.Children)
+
+	if size > index {
+		return vnode.Children[index]
+	}
+
+	return nil
 }
 
 func (vnode *Vnode) GetText() *TextNode {
@@ -61,9 +67,8 @@ func (vnode *Vnode) HashCode() string {
 	return fmt.Sprintf("%s/%v", vnode.TagName, Attrs{})
 }
 
-func (vnode *Vnode) CreateElement() {
+func (vnode *Vnode) MakeDomNode(document vnd.DomNode) *vnd.DomElement {
 	if vnh.IsNil(vnode.Element) {
-		document := vnd.GetDocument()
 		domNode := document.CreateElement(vnode.TagName)
 
 		if vnh.NotNil(vnode.Attrs) {
@@ -81,18 +86,20 @@ func (vnode *Vnode) CreateElement() {
 		}
 
 		vnode.Element = &domNode
-		vnode.computeChildren()
+		vnode.computeChildren(document)
 	}
+
+	return vnode.Element
 }
 
-func (vnode *Vnode) computeChildren() {
+func (vnode *Vnode) computeChildren(document vnd.DomNode) {
 	if vnh.NotNil(vnode.Text) {
 		textNode := vnode.Text
-		textNode.CreateElement()
+		textNode.MakeDomNode(document)
 		vnode.Element.AppendChild(*textNode.GetElement())
 	} else {
 		for _, el := range vnode.Children {
-			el.CreateElement()
+			el.MakeDomNode(document)
 			vnode.Element.AppendChild(*el.Element)
 		}
 	}

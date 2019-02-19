@@ -34,16 +34,18 @@ func (m *MockNode) EXPECT() *MockNodeMockRecorder {
 	return m.recorder
 }
 
-// CreateElement mocks base method
-func (m *MockNode) CreateElement() {
+// MakeDomNode mocks base method
+func (m *MockNode) MakeDomNode(arg0 dom.DomNode) *dom.DomElement {
 	m.ctrl.T.Helper()
-	m.ctrl.Call(m, "CreateElement")
+	ret := m.ctrl.Call(m, "MakeDomNode", arg0)
+	ret0, _ := ret[0].(*dom.DomElement)
+	return ret0
 }
 
-// CreateElement indicates an expected call of CreateElement
-func (mr *MockNodeMockRecorder) CreateElement() *gomock.Call {
+// MakeDomNode indicates an expected call of MakeDomNode
+func (mr *MockNodeMockRecorder) MakeDomNode(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateElement", reflect.TypeOf((*MockNode)(nil).CreateElement))
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "MakeDomNode", reflect.TypeOf((*MockNode)(nil).MakeDomNode), arg0)
 }
 
 // GetElement mocks base method
@@ -88,18 +90,18 @@ func (mr *MockNodeMockRecorder) ChildrenCount() *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ChildrenCount", reflect.TypeOf((*MockNode)(nil).ChildrenCount))
 }
 
-// GetChildren mocks base method
-func (m *MockNode) GetChildren() go_vdom_wasm.Children {
+// ChildAt mocks base method
+func (m *MockNode) ChildAt(arg0 int) go_vdom_wasm.Node {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetChildren")
-	ret0, _ := ret[0].(go_vdom_wasm.Children)
+	ret := m.ctrl.Call(m, "ChildAt", arg0)
+	ret0, _ := ret[0].(go_vdom_wasm.Node)
 	return ret0
 }
 
-// GetChildren indicates an expected call of GetChildren
-func (mr *MockNodeMockRecorder) GetChildren() *gomock.Call {
+// ChildAt indicates an expected call of ChildAt
+func (mr *MockNodeMockRecorder) ChildAt(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetChildren", reflect.TypeOf((*MockNode)(nil).GetChildren))
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ChildAt", reflect.TypeOf((*MockNode)(nil).ChildAt), arg0)
 }
 
 // GetText mocks base method

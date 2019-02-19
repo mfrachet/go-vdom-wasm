@@ -5,12 +5,10 @@ import (
 	vnh "github.com/mfrachet/go-vdom-wasm/helpers"
 )
 
-func AppendToNode(domNode vnd.DomNode, virtualNode Node) {
-	virtualNode.CreateElement()
+func Append(domNode vnd.DomNode, virtualNode Node) {
+	element := virtualNode.MakeDomNode(domNode)
 
-	element := *virtualNode.GetElement()
-
-	domNode.AppendChild(element)
+	domNode.AppendChild(*element)
 }
 
 func updateElement(parent vnd.DomNode, newNode Node, oldNode Node, index int) {
@@ -18,17 +16,14 @@ func updateElement(parent vnd.DomNode, newNode Node, oldNode Node, index int) {
 		oldElement := *oldNode.GetElement()
 		oldElement.Remove()
 	} else {
-		newNode.CreateElement()
-
 		if vnh.IsNil(oldNode) {
 			// Adding a new child to the tree
-			AppendToNode(parent, newNode)
+			Append(parent, newNode)
 		} else if !newNode.IsSame(oldNode) {
 			// Replacing two different children
-			newNode.CreateElement()
+			newElement := *newNode.MakeDomNode(parent)
 
 			oldElement := *oldNode.GetElement()
-			newElement := *newNode.GetElement()
 			oldElement.ReplaceWith(newElement)
 		} else {
 			// handling children
@@ -38,16 +33,9 @@ func updateElement(parent vnd.DomNode, newNode Node, oldNode Node, index int) {
 			max := vnh.Max(newChildrenCount, oldChildrenCount)
 
 			for i := 0; i < max; i++ {
-				var oldChild Node
-				var newChild Node
 
-				if oldNode.ChildrenCount() > i {
-					oldChild = oldNode.GetChildren()[i]
-				}
-
-				if newNode.ChildrenCount() > i {
-					newChild = newNode.GetChildren()[i]
-				}
+				oldChild := oldNode.ChildAt(i)
+				newChild := newNode.ChildAt(i)
 
 				updateElement(parent.ChildNodes(index), newChild, oldChild, i)
 			}
@@ -61,7 +49,7 @@ func Patch(oldNodeRef interface{}, newVnode Node) {
 	case string:
 		rootNodeID := oldNodeRef.(string)
 		rootNode := vnd.GetDocument().QuerySelector(rootNodeID)
-		AppendToNode(rootNode, newVnode)
+		Append(rootNode, newVnode)
 	default:
 		oldVnode := oldNodeRef.(Node)
 

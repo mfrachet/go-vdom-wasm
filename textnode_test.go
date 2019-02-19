@@ -6,7 +6,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestIsSameTextNOde(t *testing.T) {
+func TestTextNode_IsSame(t *testing.T) {
 	a := &TextNode{Value: "Hello world"}
 	b := &TextNode{Value: "Hello world"}
 	c := &TextNode{Value: "Hello world2"}
@@ -15,7 +15,14 @@ func TestIsSameTextNOde(t *testing.T) {
 	assert.Equal(t, false, a.IsSame(c))
 }
 
-func TestTextnodeChildrenCount(t *testing.T) {
+func TestTextNode_ChildrenCount(t *testing.T) {
 	a := &TextNode{Value: "Hello world"}
 	assert.Equal(t, -1, a.ChildrenCount())
+}
+
+func TestTextNode_ChildAt(t *testing.T) {
+	a := TextNode{Value: "Hello world"}
+	child := a.ChildAt(1)
+
+	assert.Equal(t, nil, child)
 }

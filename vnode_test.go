@@ -6,7 +6,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestIsSameVNode(t *testing.T) {
+func TestVnode_IsSame(t *testing.T) {
 	a := H("div", nil, "Hello world")
 	b := H("div", nil, "Hello world")
 	c := H("span", nil, "Hello world")
@@ -31,7 +31,7 @@ func TestIsSameVNode(t *testing.T) {
 	assert.Equal(t, false, k.IsSame(l))
 }
 
-func TestVnodeChildrenCount(t *testing.T) {
+func TestVnode_ChildrenCount(t *testing.T) {
 	a := H("div", nil, Children{
 		H("span", nil, "Hello"),
 		H("span", nil, "Hello"),
@@ -40,19 +40,15 @@ func TestVnodeChildrenCount(t *testing.T) {
 	assert.Equal(t, 2, a.ChildrenCount())
 }
 
-// func TestVnodeCreateElement(t *testing.T) {
-// 	document := js.Global().Get("document")
-// 	domNode := document.Call("createElement", "div")
-// 	spanNode := document.Call("createElement", "span")
-// 	textNode := document.Call("createTextNode", "Hello")
-// 	spanNode.Call("appendChild", textNode)
-// 	domNode.Call("appendChild", spanNode)
+func TestVnode_ChildAt(t *testing.T) {
+	childAtOne := H("span", nil, "Hello World")
 
-// 	vnode := H("div", nil, Children{
-// 		H("span", nil, "Hello"),
-// 	})
+	a := H("div", nil, Children{
+		H("span", nil, "Hello"),
+		childAtOne,
+	})
+	b := H("span", nil, "Hello")
 
-// 	vnode.CreateElement()
-
-// 	assert.Equal(t, domNode, *vnode.Element)
-// }
+	assert.Equal(t, childAtOne, a.ChildAt(1))
+	assert.Equal(t, nil, b.ChildAt(1))
+}
