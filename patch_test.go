@@ -10,7 +10,7 @@ import (
 	"github.com/mfrachet/go-vdom-wasm/mock"
 )
 
-func TestAppendChild(t *testing.T) {
+func TestPatch_Append(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 
@@ -18,7 +18,7 @@ func TestAppendChild(t *testing.T) {
 	mockDNode := mock.NewMockDomNode(ctrl)
 
 	el := vnd.DomElement{}
-	el.SetBinding(js.ValueOf("Hello world"))
+	el.SetBinding(js.ValueOf("To append"))
 
 	mockVNode.EXPECT().MakeDomNode(mockDNode).Return(&el).Times(1)
 	mockDNode.EXPECT().AppendChild(el).Times(1)
