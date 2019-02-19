@@ -3,7 +3,7 @@ package vn
 import (
 	"fmt"
 
-	vn_dom "github.com/mfrachet/go-vdom-wasm/dom"
+	vnd "github.com/mfrachet/go-vdom-wasm/dom"
 )
 
 type Children []*Vnode
@@ -13,7 +13,7 @@ type Vnode struct {
 	Attrs    *Attrs
 	Children Children
 	Text     *TextNode
-	Element  *vn_dom.DomElement
+	Element  *vnd.DomElement
 }
 
 func (vnode *Vnode) isSame(other Node) bool {
@@ -44,7 +44,7 @@ func (vnode *Vnode) getText() *TextNode {
 	return vnode.Text
 }
 
-func (vnode *Vnode) getElement() *vn_dom.DomElement {
+func (vnode *Vnode) getElement() *vnd.DomElement {
 	return vnode.Element
 }
 
@@ -58,7 +58,7 @@ func (vnode *Vnode) hashCode() string {
 
 func (vnode *Vnode) createElement() {
 	if vnode.Element == nil {
-		document := vn_dom.GetDocument()
+		document := vnd.GetDocument()
 		domNode := document.CreateElement(vnode.TagName)
 
 		if vnode.Attrs != nil {

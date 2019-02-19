@@ -1,4 +1,4 @@
-package vn_helpers
+package vnh
 
 import (
 	"testing"

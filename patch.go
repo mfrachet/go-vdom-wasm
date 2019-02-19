@@ -3,19 +3,19 @@ package vn
 import (
 	"fmt"
 
-	vn_dom "github.com/mfrachet/go-vdom-wasm/dom"
-	vn_helpers "github.com/mfrachet/go-vdom-wasm/helpers"
+	vnd "github.com/mfrachet/go-vdom-wasm/dom"
+	vnh "github.com/mfrachet/go-vdom-wasm/helpers"
 )
 
 func initializeApp(rootNodeID string, initialNode Node) {
-	rootNode := vn_dom.GetDocument().QuerySelector(rootNodeID)
+	rootNode := vnd.GetDocument().QuerySelector(rootNodeID)
 	initialNode.createElement()
 	domNode := *initialNode.getElement()
 
 	rootNode.AppendChild(domNode)
 }
 
-func updateElement(parent vn_dom.DomNode, newNode Node, oldNode Node, index int) {
+func updateElement(parent vnd.DomNode, newNode Node, oldNode Node, index int) {
 	if newNode == nil {
 		oldElement := *oldNode.getElement()
 		oldElement.Remove()
@@ -39,7 +39,7 @@ func updateElement(parent vn_dom.DomNode, newNode Node, oldNode Node, index int)
 			newChildrenCount := newNode.childrenCount()
 			oldChildrenCount := oldNode.childrenCount()
 
-			max := vn_helpers.Max(newChildrenCount, oldChildrenCount)
+			max := vnh.Max(newChildrenCount, oldChildrenCount)
 
 			for i := 0; i < max; i++ {
 				var oldChild Node

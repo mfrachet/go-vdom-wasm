@@ -1,4 +1,4 @@
-package vn_helpers
+package vnh
 
 func Max(x int, y int) int {
 	if x > y {
