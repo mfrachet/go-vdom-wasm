@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	vnd "github.com/mfrachet/go-vdom-wasm/dom"
+	vnh "github.com/mfrachet/go-vdom-wasm/helpers"
 )
 
 type Children []*Vnode
@@ -17,15 +18,15 @@ type Vnode struct {
 }
 
 func (vnode *Vnode) isSame(other Node) bool {
-	if vnode.Text == nil {
-		if other.getText() == nil {
+	if vnh.IsNil(vnode.Text) {
+		if vnh.IsNil(other.getText()) {
 			return vnode.hashCode() == other.hashCode()
 		}
 
 		return false
 	}
 
-	if other.getText() != nil {
+	if vnh.NotNil(other.getText()) {
 		return vnode.Text.Value == other.getText().Value && vnode.hashCode() == other.hashCode()
 	}
 
@@ -49,7 +50,7 @@ func (vnode *Vnode) getElement() *vnd.DomElement {
 }
 
 func (vnode *Vnode) hashCode() string {
-	if vnode.Attrs != nil && vnode.Attrs.Props != nil {
+	if vnh.NotNil(vnode.Attrs) && vnh.NotNil(vnode.Attrs.Props) {
 		return fmt.Sprintf("%s/%v", vnode.TagName, *vnode.Attrs.Props)
 	}
 
@@ -57,18 +58,18 @@ func (vnode *Vnode) hashCode() string {
 }
 
 func (vnode *Vnode) createElement() {
-	if vnode.Element == nil {
+	if vnh.IsNil(vnode.Element) {
 		document := vnd.GetDocument()
 		domNode := document.CreateElement(vnode.TagName)
 
-		if vnode.Attrs != nil {
-			if vnode.Attrs.Props != nil {
+		if vnh.NotNil(vnode.Attrs) {
+			if vnh.NotNil(vnode.Attrs.Props) {
 				for attr, attrValue := range *vnode.Attrs.Props {
 					domNode.SetAttribute(attr, attrValue)
 				}
 			}
 
-			if vnode.Attrs.Events != nil {
+			if vnh.NotNil(vnode.Attrs.Events) {
 				for eventName, handler := range *vnode.Attrs.Events {
 					domNode.AddEventListener(eventName, handler)
 				}
@@ -81,8 +82,7 @@ func (vnode *Vnode) createElement() {
 }
 
 func (vnode *Vnode) computeChildren() {
-	if vnode.Text != nil {
-
+	if vnh.NotNil(vnode.Text) {
 		textNode := vnode.Text
 		textNode.createElement()
 		vnode.Element.AppendChild(*textNode.getElement())
