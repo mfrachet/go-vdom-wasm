@@ -23,6 +23,10 @@ func (textNode *TextNode) GetElement() *vnd.DomElement {
 	return textNode.Element
 }
 
+func (textNode *TextNode) SetElement(element vnd.DomElement) {
+	textNode.Element = &element
+}
+
 func (textNode *TextNode) HashCode() string {
 	return textNode.Value
 }

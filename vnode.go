@@ -59,6 +59,10 @@ func (vnode *Vnode) GetElement() *vnd.DomElement {
 	return vnode.Element
 }
 
+func (vnode *Vnode) SetElement(element vnd.DomElement) {
+	vnode.Element = &element
+}
+
 func (vnode *Vnode) HashCode() string {
 	if vnh.NotNil(vnode.Attrs) && vnh.NotNil(vnode.Attrs.Props) {
 		return fmt.Sprintf("%s/%v", vnode.TagName, *vnode.Attrs.Props)
