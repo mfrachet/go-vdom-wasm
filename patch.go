@@ -5,12 +5,6 @@ import (
 	vnh "github.com/mfrachet/go-vdom-wasm/helpers"
 )
 
-func Append(domNode vnd.DomNode, virtualNode Node) {
-	element := virtualNode.MakeDomNode(domNode)
-
-	domNode.AppendChild(*element)
-}
-
 func updateElement(parent vnd.DomNode, newNode Node, oldNode Node, index int) {
 	if vnh.IsNil(newNode) {
 		oldElement := *oldNode.GetElement()

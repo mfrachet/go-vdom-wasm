@@ -10,7 +10,7 @@ import (
 	"github.com/mfrachet/go-vdom-wasm/mock"
 )
 
-func TestPatch_Append(t *testing.T) {
+func TestReconciler_Append(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 
