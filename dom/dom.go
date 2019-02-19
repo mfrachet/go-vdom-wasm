@@ -1,7 +1,6 @@
 package vnd
 
 import (
-	"fmt"
 	"syscall/js"
 
 	vnh "github.com/mfrachet/go-vdom-wasm/helpers"
@@ -18,6 +17,7 @@ type DomNode interface {
 	AddEventListener(string, func([]js.Value))
 	ChildNodes(int) DomElement
 	GetBinding() js.Value
+	SetBinding(js.Value)
 	GetParent() DomElement
 }
 
@@ -29,9 +29,7 @@ var instance *DomElement
 
 func GetDocument() DomElement {
 	if vnh.IsNil(instance) {
-		fmt.Println("Creating the dom node ?")
 		docNode := js.Global().Get("document")
-		fmt.Println("Creating the dom node ?", docNode)
 		instance = &DomElement{docNode}
 	}
 
@@ -46,6 +44,10 @@ func (node DomElement) GetParent() DomElement {
 
 func (node DomElement) GetBinding() js.Value {
 	return node.binding
+}
+
+func (node DomElement) SetBinding(nextBinding js.Value) {
+	node.binding = nextBinding
 }
 
 func (node DomElement) QuerySelector(element string) DomElement {

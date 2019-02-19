@@ -7,9 +7,10 @@ import (
 
 func AppendToNode(domNode vnd.DomNode, virtualNode Node) {
 	virtualNode.CreateElement()
-	// element := *virtualNode.GetElement()
 
-	// domNode.AppendChild(element)
+	element := *virtualNode.GetElement()
+
+	domNode.AppendChild(element)
 }
 
 func updateElement(parent vnd.DomNode, newNode Node, oldNode Node, index int) {
