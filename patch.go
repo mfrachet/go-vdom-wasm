@@ -1,8 +1,6 @@
 package vn
 
 import (
-	"fmt"
-
 	vnd "github.com/mfrachet/go-vdom-wasm/dom"
 	vnh "github.com/mfrachet/go-vdom-wasm/helpers"
 )
@@ -16,18 +14,17 @@ func initializeApp(rootNodeID string, initialNode Node) {
 }
 
 func updateElement(parent vnd.DomNode, newNode Node, oldNode Node, index int) {
-	if newNode == nil {
+	if vnh.IsNil(newNode) {
 		oldElement := *oldNode.getElement()
 		oldElement.Remove()
 	} else {
 		newNode.createElement()
 
-		if oldNode == nil {
+		if vnh.IsNil(oldNode) {
 			// Adding a new child to the tree
 			newNode.createElement()
 			parent.AppendChild(*newNode.getElement())
 		} else if !newNode.isSame(oldNode) {
-			fmt.Println("lol", newNode, oldNode)
 			// Replacing two different children
 			newNode.createElement()
 

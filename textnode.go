@@ -2,6 +2,7 @@ package vn
 
 import (
 	vnd "github.com/mfrachet/go-vdom-wasm/dom"
+	vnh "github.com/mfrachet/go-vdom-wasm/helpers"
 )
 
 type TextNode struct {
@@ -10,7 +11,7 @@ type TextNode struct {
 }
 
 func (textNode *TextNode) createElement() {
-	if textNode.Element == nil {
+	if vnh.IsNil(textNode.Element) {
 		document := vnd.GetDocument()
 		domNode := document.CreateTextNode(textNode.Value)
 		textNode.Element = &domNode
