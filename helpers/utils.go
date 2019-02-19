@@ -1,7 +1,9 @@
 package vnh
 
+import "reflect"
+
 func IsNil(toVerify interface{}) bool {
-	return toVerify == nil
+	return reflect.ValueOf(toVerify).IsNil()
 }
 
 func NotNil(toVerify interface{}) bool {

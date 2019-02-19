@@ -27,7 +27,7 @@ type DomElement struct {
 var instance *DomElement
 
 func GetDocument() DomElement {
-	if vnh.NotNil(instance) {
+	if vnh.IsNil(instance) {
 		docNode := js.Global().Get("document")
 		instance = &DomElement{docNode}
 	}
