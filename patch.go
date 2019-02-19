@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	vn_dom "github.com/mfrachet/go-vdom-wasm/dom"
+	vn_helpers "github.com/mfrachet/go-vdom-wasm/helpers"
 )
 
 func initializeApp(rootNodeID string, initialNode Node) {
@@ -38,13 +39,7 @@ func updateElement(parent vn_dom.DomNode, newNode Node, oldNode Node, index int)
 			newChildrenCount := newNode.childrenCount()
 			oldChildrenCount := oldNode.childrenCount()
 
-			var max int
-
-			if newChildrenCount > oldChildrenCount {
-				max = newChildrenCount
-			} else {
-				max = oldChildrenCount
-			}
+			max := vn_helpers.Max(newChildrenCount, oldChildrenCount)
 
 			for i := 0; i < max; i++ {
 				var oldChild Node
@@ -58,13 +53,7 @@ func updateElement(parent vn_dom.DomNode, newNode Node, oldNode Node, index int)
 					newChild = newNode.getChildren()[i]
 				}
 
-				var nextParent vn_dom.DomNode = parent.ChildNodes(index)
-
-				if oldChild != nil {
-					nextParent = oldChild.getElement().GetParent()
-				}
-
-				updateElement(nextParent, newChild, oldChild, i)
+				updateElement(parent.ChildNodes(index), newChild, oldChild, i)
 			}
 		}
 	}
