@@ -1,6 +1,8 @@
 package vn
 
-import vn_dom "github.com/mfrachet/go-vdom-wasm/dom"
+import (
+	vn_dom "github.com/mfrachet/go-vdom-wasm/dom"
+)
 
 type TextNode struct {
 	Value   string

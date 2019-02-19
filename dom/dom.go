@@ -15,6 +15,7 @@ type DomNode interface {
 	AddEventListener(string, func([]js.Value))
 	ChildNodes(int) DomElement
 	GetBinding() js.Value
+	GetParent() DomElement
 }
 
 type DomElement struct {
@@ -30,6 +31,12 @@ func GetDocument() DomElement {
 	}
 
 	return *instance
+}
+
+func (node DomElement) GetParent() DomElement {
+	parent := node.GetBinding().Get("parentElement")
+
+	return DomElement{parent}
 }
 
 func (node DomElement) GetBinding() js.Value {

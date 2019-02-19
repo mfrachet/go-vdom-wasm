@@ -82,6 +82,7 @@ func (vnode *Vnode) createElement() {
 
 func (vnode *Vnode) computeChildren() {
 	if vnode.Text != nil {
+
 		textNode := vnode.Text
 		textNode.createElement()
 		vnode.Element.AppendChild(*textNode.getElement())

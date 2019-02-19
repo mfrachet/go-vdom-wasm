@@ -1,6 +1,10 @@
 package vn
 
-import vn_dom "github.com/mfrachet/go-vdom-wasm/dom"
+import (
+	"fmt"
+
+	vn_dom "github.com/mfrachet/go-vdom-wasm/dom"
+)
 
 func initializeApp(rootNodeID string, initialNode Node) {
 	rootNode := vn_dom.GetDocument().QuerySelector(rootNodeID)
@@ -11,58 +15,60 @@ func initializeApp(rootNodeID string, initialNode Node) {
 }
 
 func updateElement(parent vn_dom.DomNode, newNode Node, oldNode Node, index int) {
-	if oldNode == nil {
-		// Adding a new child to the tree
-		newNode.createElement()
-		parent.AppendChild(*newNode.getElement())
-	} else if newNode == nil {
+	if newNode == nil {
 		oldElement := *oldNode.getElement()
 		oldElement.Remove()
-	} else if !newNode.isSame(oldNode) {
-		// Replacing two different children
+	} else {
 		newNode.createElement()
 
-		oldElement := *oldNode.getElement()
-		newElement := *newNode.getElement()
-		oldElement.ReplaceWith(newElement)
-	} else {
-		// handling children
-		newChildrenCount := newNode.childrenCount()
-
-		if newChildrenCount > 0 {
+		if oldNode == nil {
+			// Adding a new child to the tree
 			newNode.createElement()
+			parent.AppendChild(*newNode.getElement())
+		} else if !newNode.isSame(oldNode) {
+			fmt.Println("lol", newNode, oldNode)
+			// Replacing two different children
+			newNode.createElement()
+
+			oldElement := *oldNode.getElement()
+			newElement := *newNode.getElement()
+			oldElement.ReplaceWith(newElement)
+		} else {
+			// handling children
+			newChildrenCount := newNode.childrenCount()
 			oldChildrenCount := oldNode.childrenCount()
 
-			var max int = newChildrenCount
+			var max int
 
-			if oldChildrenCount > newChildrenCount {
+			if newChildrenCount > oldChildrenCount {
+				max = newChildrenCount
+			} else {
 				max = oldChildrenCount
 			}
 
-			oldChildren := oldNode.getChildren()
-			newChildren := newNode.getChildren()
-
 			for i := 0; i < max; i++ {
-				var newChild Node
 				var oldChild Node
+				var newChild Node
 
-				if oldChildrenCount > i {
-					oldChild = oldChildren[i]
+				if oldNode.childrenCount() > i {
+					oldChild = oldNode.getChildren()[i]
 				}
 
-				if newChildrenCount > i {
-					newChild = newChildren[i]
+				if newNode.childrenCount() > i {
+					newChild = newNode.getChildren()[i]
 				}
 
-				if newChild != nil && newChild.childrenCount() > 0 {
-					updateElement(parent.ChildNodes(index), newChild, oldChild, i)
-				} else {
-					updateElement(parent, newChild, oldChild, i)
+				var nextParent vn_dom.DomNode = parent.ChildNodes(index)
+
+				if oldChild != nil {
+					nextParent = oldChild.getElement().GetParent()
 				}
 
+				updateElement(nextParent, newChild, oldChild, i)
 			}
 		}
 	}
+
 }
 
 func Patch(oldNodeRef interface{}, newVnode Node) {
