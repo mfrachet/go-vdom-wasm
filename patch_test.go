@@ -1,16 +1,17 @@
 package vn
 
 import (
+	"fmt"
 	"testing"
 
+	vnd "github.com/mfrachet/go-vdom-wasm/dom"
 	"github.com/stretchr/testify/assert"
 )
 
-func TestPatch(t *testing.T) {
-	a := &TextNode{Value: "Hello world"}
-	b := &TextNode{Value: "Hello world"}
-	c := &TextNode{Value: "Hello world2"}
+func TestPatchInitialize(t *testing.T) {
+	doc := vnd.GetDocument()
 
-	assert.Equal(t, true, a.isSame(b))
-	assert.Equal(t, false, a.isSame(c))
+	fmt.Println("lol", doc.GetBinding())
+
+	assert.Equal(t, true, false)
 }

@@ -1,6 +1,7 @@
 package vnd
 
 import (
+	"fmt"
 	"syscall/js"
 
 	vnh "github.com/mfrachet/go-vdom-wasm/helpers"
@@ -28,7 +29,9 @@ var instance *DomElement
 
 func GetDocument() DomElement {
 	if vnh.IsNil(instance) {
+		fmt.Println("Creating the dom node ?")
 		docNode := js.Global().Get("document")
+		fmt.Println("Creating the dom node ?", docNode)
 		instance = &DomElement{docNode}
 	}
 

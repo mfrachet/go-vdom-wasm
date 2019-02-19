@@ -5,8 +5,7 @@ import (
 	vnh "github.com/mfrachet/go-vdom-wasm/helpers"
 )
 
-func initializeApp(rootNodeID string, initialNode Node) {
-	rootNode := vnd.GetDocument().QuerySelector(rootNodeID)
+func initializeApp(rootNode vnd.DomNode, initialNode Node) {
 	initialNode.createElement()
 	domNode := *initialNode.getElement()
 
@@ -60,7 +59,9 @@ func updateElement(parent vnd.DomNode, newNode Node, oldNode Node, index int) {
 func Patch(oldNodeRef interface{}, newVnode Node) {
 	switch oldNodeRef.(type) {
 	case string:
-		initializeApp(oldNodeRef.(string), newVnode)
+		rootNodeID := oldNodeRef.(string)
+		rootNode := vnd.GetDocument().QuerySelector(rootNodeID)
+		initializeApp(rootNode, newVnode)
 	default:
 		oldVnode := oldNodeRef.(Node)
 
