@@ -61,7 +61,7 @@ func (vnode *Vnode) HashCode() string {
 	return fmt.Sprintf("%s/%v", vnode.TagName, Attrs{})
 }
 
-func (vnode *Vnode) MakeDomNode(document vnd.DomNode) {
+func (vnode *Vnode) MakeDomNode(document vnd.DomNode) *vnd.DomElement {
 	if vnh.IsNil(vnode.Element) {
 		domNode := document.CreateElement(vnode.TagName)
 
@@ -82,6 +82,8 @@ func (vnode *Vnode) MakeDomNode(document vnd.DomNode) {
 		vnode.Element = &domNode
 		vnode.computeChildren(document)
 	}
+
+	return vnode.Element
 }
 
 func (vnode *Vnode) computeChildren(document vnd.DomNode) {

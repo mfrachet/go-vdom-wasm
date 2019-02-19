@@ -35,9 +35,11 @@ func (m *MockNode) EXPECT() *MockNodeMockRecorder {
 }
 
 // MakeDomNode mocks base method
-func (m *MockNode) MakeDomNode(arg0 dom.DomNode) {
+func (m *MockNode) MakeDomNode(arg0 dom.DomNode) *dom.DomElement {
 	m.ctrl.T.Helper()
-	m.ctrl.Call(m, "MakeDomNode", arg0)
+	ret := m.ctrl.Call(m, "MakeDomNode", arg0)
+	ret0, _ := ret[0].(*dom.DomElement)
+	return ret0
 }
 
 // MakeDomNode indicates an expected call of MakeDomNode

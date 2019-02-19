@@ -6,11 +6,9 @@ import (
 )
 
 func AppendToNode(domNode vnd.DomNode, virtualNode Node) {
-	virtualNode.MakeDomNode(domNode)
+	element := virtualNode.MakeDomNode(domNode)
 
-	element := *virtualNode.GetElement()
-
-	domNode.AppendChild(element)
+	domNode.AppendChild(*element)
 }
 
 func updateElement(parent vnd.DomNode, newNode Node, oldNode Node, index int) {
@@ -18,8 +16,6 @@ func updateElement(parent vnd.DomNode, newNode Node, oldNode Node, index int) {
 		oldElement := *oldNode.GetElement()
 		oldElement.Remove()
 	} else {
-		newNode.MakeDomNode(parent)
-
 		if vnh.IsNil(oldNode) {
 			// Adding a new child to the tree
 			AppendToNode(parent, newNode)

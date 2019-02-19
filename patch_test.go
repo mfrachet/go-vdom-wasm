@@ -20,8 +20,7 @@ func TestAppendChild(t *testing.T) {
 	el := vnd.DomElement{}
 	el.SetBinding(js.ValueOf("Hello world"))
 
-	mockVNode.EXPECT().MakeDomNode(mockDNode).Times(1)
-	mockVNode.EXPECT().GetElement().Return(&el).Times(1)
+	mockVNode.EXPECT().MakeDomNode(mockDNode).Return(&el).Times(1)
 	mockDNode.EXPECT().AppendChild(el).Times(1)
 
 	vn.AppendToNode(mockDNode, mockVNode)
