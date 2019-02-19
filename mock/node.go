@@ -34,16 +34,16 @@ func (m *MockNode) EXPECT() *MockNodeMockRecorder {
 	return m.recorder
 }
 
-// CreateElement mocks base method
-func (m *MockNode) CreateElement() {
+// MakeDomNode mocks base method
+func (m *MockNode) MakeDomNode(arg0 dom.DomNode) {
 	m.ctrl.T.Helper()
-	m.ctrl.Call(m, "CreateElement")
+	m.ctrl.Call(m, "MakeDomNode", arg0)
 }
 
-// CreateElement indicates an expected call of CreateElement
-func (mr *MockNodeMockRecorder) CreateElement() *gomock.Call {
+// MakeDomNode indicates an expected call of MakeDomNode
+func (mr *MockNodeMockRecorder) MakeDomNode(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateElement", reflect.TypeOf((*MockNode)(nil).CreateElement))
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "MakeDomNode", reflect.TypeOf((*MockNode)(nil).MakeDomNode), arg0)
 }
 
 // GetElement mocks base method

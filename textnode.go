@@ -10,9 +10,8 @@ type TextNode struct {
 	Element *vnd.DomElement
 }
 
-func (textNode *TextNode) CreateElement() {
+func (textNode *TextNode) MakeDomNode(document vnd.DomNode) {
 	if vnh.IsNil(textNode.Element) {
-		document := vnd.GetDocument()
 		domNode := document.CreateTextNode(textNode.Value)
 		textNode.Element = &domNode
 	}

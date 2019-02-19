@@ -61,9 +61,8 @@ func (vnode *Vnode) HashCode() string {
 	return fmt.Sprintf("%s/%v", vnode.TagName, Attrs{})
 }
 
-func (vnode *Vnode) CreateElement() {
+func (vnode *Vnode) MakeDomNode(document vnd.DomNode) {
 	if vnh.IsNil(vnode.Element) {
-		document := vnd.GetDocument()
 		domNode := document.CreateElement(vnode.TagName)
 
 		if vnh.NotNil(vnode.Attrs) {
@@ -81,18 +80,18 @@ func (vnode *Vnode) CreateElement() {
 		}
 
 		vnode.Element = &domNode
-		vnode.computeChildren()
+		vnode.computeChildren(document)
 	}
 }
 
-func (vnode *Vnode) computeChildren() {
+func (vnode *Vnode) computeChildren(document vnd.DomNode) {
 	if vnh.NotNil(vnode.Text) {
 		textNode := vnode.Text
-		textNode.CreateElement()
+		textNode.MakeDomNode(document)
 		vnode.Element.AppendChild(*textNode.GetElement())
 	} else {
 		for _, el := range vnode.Children {
-			el.CreateElement()
+			el.MakeDomNode(document)
 			vnode.Element.AppendChild(*el.Element)
 		}
 	}
