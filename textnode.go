@@ -10,7 +10,7 @@ type TextNode struct {
 	Element *vnd.DomElement
 }
 
-func (textNode *TextNode) createElement() {
+func (textNode *TextNode) CreateElement() {
 	if vnh.IsNil(textNode.Element) {
 		document := vnd.GetDocument()
 		domNode := document.CreateTextNode(textNode.Value)
@@ -18,26 +18,26 @@ func (textNode *TextNode) createElement() {
 	}
 }
 
-func (textNode *TextNode) getElement() *vnd.DomElement {
+func (textNode *TextNode) GetElement() *vnd.DomElement {
 	return textNode.Element
 }
 
-func (textNode *TextNode) hashCode() string {
+func (textNode *TextNode) HashCode() string {
 	return textNode.Value
 }
 
-func (textNode *TextNode) isSame(other Node) bool {
-	return textNode.hashCode() == other.hashCode()
+func (textNode *TextNode) IsSame(other Node) bool {
+	return textNode.HashCode() == other.HashCode()
 }
 
-func (textNode *TextNode) childrenCount() int {
+func (textNode *TextNode) ChildrenCount() int {
 	return -1
 }
 
-func (textNode *TextNode) getChildren() Children {
+func (textNode *TextNode) GetChildren() Children {
 	return nil
 }
 
-func (textNode *TextNode) getText() *TextNode {
+func (textNode *TextNode) GetText() *TextNode {
 	return textNode
 }

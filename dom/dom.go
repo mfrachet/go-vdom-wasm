@@ -17,6 +17,7 @@ type DomNode interface {
 	AddEventListener(string, func([]js.Value))
 	ChildNodes(int) DomElement
 	GetBinding() js.Value
+	SetBinding(js.Value)
 	GetParent() DomElement
 }
 
@@ -43,6 +44,10 @@ func (node DomElement) GetParent() DomElement {
 
 func (node DomElement) GetBinding() js.Value {
 	return node.binding
+}
+
+func (node DomElement) SetBinding(nextBinding js.Value) {
+	node.binding = nextBinding
 }
 
 func (node DomElement) QuerySelector(element string) DomElement {

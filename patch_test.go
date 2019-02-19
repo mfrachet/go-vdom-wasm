@@ -1,16 +1,28 @@
-package vn
+package vn_test
 
 import (
+	"syscall/js"
 	"testing"
 
-	"github.com/stretchr/testify/assert"
+	"github.com/golang/mock/gomock"
+	vn "github.com/mfrachet/go-vdom-wasm"
+	vnd "github.com/mfrachet/go-vdom-wasm/dom"
+	"github.com/mfrachet/go-vdom-wasm/mock"
 )
 
-func TestPatch(t *testing.T) {
-	a := &TextNode{Value: "Hello world"}
-	b := &TextNode{Value: "Hello world"}
-	c := &TextNode{Value: "Hello world2"}
+func TestAppendChild(t *testing.T) {
+	ctrl := gomock.NewController(t)
+	defer ctrl.Finish()
 
-	assert.Equal(t, true, a.isSame(b))
-	assert.Equal(t, false, a.isSame(c))
+	mockVNode := mock.NewMockNode(ctrl)
+	mockDNode := mock.NewMockDomNode(ctrl)
+
+	el := vnd.DomElement{}
+	el.SetBinding(js.ValueOf("Hello world"))
+
+	mockVNode.EXPECT().CreateElement().Times(1)
+	mockVNode.EXPECT().GetElement().Return(&el).Times(1)
+	mockDNode.EXPECT().AppendChild(el).Times(1)
+
+	vn.AppendToNode(mockDNode, mockVNode)
 }

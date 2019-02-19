@@ -17,39 +17,39 @@ type Vnode struct {
 	Element  *vnd.DomElement
 }
 
-func (vnode *Vnode) isSame(other Node) bool {
+func (vnode *Vnode) IsSame(other Node) bool {
 	if vnh.IsNil(vnode.Text) {
-		if vnh.IsNil(other.getText()) {
-			return vnode.hashCode() == other.hashCode()
+		if vnh.IsNil(other.GetText()) {
+			return vnode.HashCode() == other.HashCode()
 		}
 
 		return false
 	}
 
-	if vnh.NotNil(other.getText()) {
-		return vnode.Text.Value == other.getText().Value && vnode.hashCode() == other.hashCode()
+	if vnh.NotNil(other.GetText()) {
+		return vnode.Text.Value == other.GetText().Value && vnode.HashCode() == other.HashCode()
 	}
 
 	return false
 }
 
-func (vnode *Vnode) childrenCount() int {
+func (vnode *Vnode) ChildrenCount() int {
 	return len(vnode.Children)
 }
 
-func (vnode *Vnode) getChildren() Children {
+func (vnode *Vnode) GetChildren() Children {
 	return vnode.Children
 }
 
-func (vnode *Vnode) getText() *TextNode {
+func (vnode *Vnode) GetText() *TextNode {
 	return vnode.Text
 }
 
-func (vnode *Vnode) getElement() *vnd.DomElement {
+func (vnode *Vnode) GetElement() *vnd.DomElement {
 	return vnode.Element
 }
 
-func (vnode *Vnode) hashCode() string {
+func (vnode *Vnode) HashCode() string {
 	if vnh.NotNil(vnode.Attrs) && vnh.NotNil(vnode.Attrs.Props) {
 		return fmt.Sprintf("%s/%v", vnode.TagName, *vnode.Attrs.Props)
 	}
@@ -57,7 +57,7 @@ func (vnode *Vnode) hashCode() string {
 	return fmt.Sprintf("%s/%v", vnode.TagName, Attrs{})
 }
 
-func (vnode *Vnode) createElement() {
+func (vnode *Vnode) CreateElement() {
 	if vnh.IsNil(vnode.Element) {
 		document := vnd.GetDocument()
 		domNode := document.CreateElement(vnode.TagName)
@@ -84,11 +84,11 @@ func (vnode *Vnode) createElement() {
 func (vnode *Vnode) computeChildren() {
 	if vnh.NotNil(vnode.Text) {
 		textNode := vnode.Text
-		textNode.createElement()
-		vnode.Element.AppendChild(*textNode.getElement())
+		textNode.CreateElement()
+		vnode.Element.AppendChild(*textNode.GetElement())
 	} else {
 		for _, el := range vnode.Children {
-			el.createElement()
+			el.CreateElement()
 			vnode.Element.AppendChild(*el.Element)
 		}
 	}
