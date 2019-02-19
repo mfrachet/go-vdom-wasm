@@ -22,13 +22,13 @@ func TestIsSameVNode(t *testing.T) {
 	k := H("li", nil, "Hello world")
 	l := H("li", nil, "Hello world2")
 
-	assert.Equal(t, true, a.isSame(b))
-	assert.Equal(t, false, a.isSame(c))
-	assert.Equal(t, true, g.isSame(h))
-	assert.Equal(t, true, d.isSame(e))
-	assert.Equal(t, false, d.isSame(f))
-	assert.Equal(t, false, d.isSame(j))
-	assert.Equal(t, false, k.isSame(l))
+	assert.Equal(t, true, a.IsSame(b))
+	assert.Equal(t, false, a.IsSame(c))
+	assert.Equal(t, true, g.IsSame(h))
+	assert.Equal(t, true, d.IsSame(e))
+	assert.Equal(t, false, d.IsSame(f))
+	assert.Equal(t, false, d.IsSame(j))
+	assert.Equal(t, false, k.IsSame(l))
 }
 
 func TestVnodeChildrenCount(t *testing.T) {
@@ -37,7 +37,7 @@ func TestVnodeChildrenCount(t *testing.T) {
 		H("span", nil, "Hello"),
 	})
 
-	assert.Equal(t, 2, a.childrenCount())
+	assert.Equal(t, 2, a.ChildrenCount())
 }
 
 // func TestVnodeCreateElement(t *testing.T) {
@@ -52,7 +52,7 @@ func TestVnodeChildrenCount(t *testing.T) {
 // 		H("span", nil, "Hello"),
 // 	})
 
-// 	vnode.createElement()
+// 	vnode.CreateElement()
 
 // 	assert.Equal(t, domNode, *vnode.Element)
 // }

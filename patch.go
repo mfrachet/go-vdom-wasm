@@ -6,33 +6,33 @@ import (
 )
 
 func AppendToNode(domNode vnd.DomNode, virtualNode Node) {
-	virtualNode.createElement()
-	element := *virtualNode.getElement()
+	virtualNode.CreateElement()
+	element := *virtualNode.GetElement()
 
 	domNode.AppendChild(element)
 }
 
 func updateElement(parent vnd.DomNode, newNode Node, oldNode Node, index int) {
 	if vnh.IsNil(newNode) {
-		oldElement := *oldNode.getElement()
+		oldElement := *oldNode.GetElement()
 		oldElement.Remove()
 	} else {
-		newNode.createElement()
+		newNode.CreateElement()
 
 		if vnh.IsNil(oldNode) {
 			// Adding a new child to the tree
 			AppendToNode(parent, newNode)
-		} else if !newNode.isSame(oldNode) {
+		} else if !newNode.IsSame(oldNode) {
 			// Replacing two different children
-			newNode.createElement()
+			newNode.CreateElement()
 
-			oldElement := *oldNode.getElement()
-			newElement := *newNode.getElement()
+			oldElement := *oldNode.GetElement()
+			newElement := *newNode.GetElement()
 			oldElement.ReplaceWith(newElement)
 		} else {
 			// handling children
-			newChildrenCount := newNode.childrenCount()
-			oldChildrenCount := oldNode.childrenCount()
+			newChildrenCount := newNode.ChildrenCount()
+			oldChildrenCount := oldNode.ChildrenCount()
 
 			max := vnh.Max(newChildrenCount, oldChildrenCount)
 
@@ -40,12 +40,12 @@ func updateElement(parent vnd.DomNode, newNode Node, oldNode Node, index int) {
 				var oldChild Node
 				var newChild Node
 
-				if oldNode.childrenCount() > i {
-					oldChild = oldNode.getChildren()[i]
+				if oldNode.ChildrenCount() > i {
+					oldChild = oldNode.GetChildren()[i]
 				}
 
-				if newNode.childrenCount() > i {
-					newChild = newNode.getChildren()[i]
+				if newNode.ChildrenCount() > i {
+					newChild = newNode.GetChildren()[i]
 				}
 
 				updateElement(parent.ChildNodes(index), newChild, oldChild, i)
@@ -64,6 +64,6 @@ func Patch(oldNodeRef interface{}, newVnode Node) {
 	default:
 		oldVnode := oldNodeRef.(Node)
 
-		updateElement(*oldVnode.getElement(), newVnode, oldVnode, 0)
+		updateElement(*oldVnode.GetElement(), newVnode, oldVnode, 0)
 	}
 }
