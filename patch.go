@@ -21,7 +21,7 @@ func updateElement(parent vnd.DomNode, newNode Node, oldNode Node, index int) {
 			AppendToNode(parent, newNode)
 		} else if !newNode.IsSame(oldNode) {
 			// Replacing two different children
-			newElement := newNode.MakeDomNode(parent)
+			newElement := *newNode.MakeDomNode(parent)
 
 			oldElement := *oldNode.GetElement()
 			oldElement.ReplaceWith(newElement)
