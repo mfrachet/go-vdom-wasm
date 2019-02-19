@@ -33,16 +33,9 @@ func updateElement(parent vnd.DomNode, newNode Node, oldNode Node, index int) {
 			max := vnh.Max(newChildrenCount, oldChildrenCount)
 
 			for i := 0; i < max; i++ {
-				var oldChild Node
-				var newChild Node
 
-				if oldNode.ChildrenCount() > i {
-					oldChild = oldNode.GetChildren()[i]
-				}
-
-				if newNode.ChildrenCount() > i {
-					newChild = newNode.GetChildren()[i]
-				}
+				oldChild := oldNode.ChildAt(i)
+				newChild := newNode.ChildAt(i)
 
 				updateElement(parent.ChildNodes(index), newChild, oldChild, i)
 			}

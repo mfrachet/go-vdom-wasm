@@ -7,7 +7,7 @@ type Node interface {
 	GetElement() *vnd.DomElement
 	HashCode() string
 	ChildrenCount() int
-	GetChildren() Children
+	ChildAt(int) Node
 	GetText() *TextNode
 	IsSame(Node) bool
 }

@@ -35,7 +35,7 @@ func (textNode *TextNode) ChildrenCount() int {
 	return -1
 }
 
-func (textNode *TextNode) GetChildren() Children {
+func (textNode *TextNode) ChildAt(index int) Node {
 	return nil
 }
 

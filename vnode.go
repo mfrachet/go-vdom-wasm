@@ -41,8 +41,14 @@ func (vnode *Vnode) ChildrenCount() int {
 	return len(vnode.Children)
 }
 
-func (vnode *Vnode) GetChildren() Children {
-	return vnode.Children
+func (vnode *Vnode) ChildAt(index int) Node {
+	size := len(vnode.Children)
+
+	if size > index {
+		return vnode.Children[index]
+	}
+
+	return nil
 }
 
 func (vnode *Vnode) GetText() *TextNode {
