@@ -17,6 +17,10 @@ type Vnode struct {
 	Element  *vnd.DomElement
 }
 
+func NewVNode(tagName string, attrs *Attrs, children Children, text *TextNode, element *vnd.DomElement) *Vnode {
+	return &Vnode{tagName, attrs, children, text, element}
+}
+
 func (vnode *Vnode) IsSame(other Node) bool {
 	if vnh.IsNil(vnode.Text) {
 		if vnh.IsNil(other.GetText()) {
