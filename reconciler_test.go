@@ -36,3 +36,15 @@ func TestReconciler_Remove(t *testing.T) {
 
 	vn.Remove(mockDNode)
 }
+
+func TestReconciler_CreateInstanceTextNode(t *testing.T) {
+	ctrl := gomock.NewController(t)
+	defer ctrl.Finish()
+
+	textNode := vn.TextNode{"Hello world", nil}
+	mockDNode := mock.NewMockDomNode(ctrl)
+
+	mockDNode.EXPECT().CreateTextNode("Hello world").Times(1)
+
+	vn.CreateInstance(mockDNode, textNode)
+}
