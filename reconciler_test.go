@@ -25,3 +25,14 @@ func TestReconciler_Append(t *testing.T) {
 
 	vn.Append(mockDNode, mockVNode)
 }
+
+func TestReconciler_Remove(t *testing.T) {
+	ctrl := gomock.NewController(t)
+	defer ctrl.Finish()
+
+	mockDNode := mock.NewMockDomNode(ctrl)
+
+	mockDNode.EXPECT().Remove().Times(1)
+
+	vn.Remove(mockDNode)
+}
