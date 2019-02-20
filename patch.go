@@ -1,8 +1,6 @@
 package vn
 
 import (
-	"fmt"
-
 	vnd "github.com/mfrachet/go-vdom-wasm/dom"
 	vnh "github.com/mfrachet/go-vdom-wasm/helpers"
 )
@@ -20,6 +18,7 @@ func updateElement(parent vnd.DomNode, newNode Node, oldNode Node) {
 		oldElement := *oldNode.GetElement()
 		oldElement.ReplaceWith(newElement)
 	} else {
+		newNode.SetElement(*oldNode.GetElement())
 
 		newChildrenCount := newNode.ChildrenCount()
 		oldChildrenCount := oldNode.ChildrenCount()
@@ -46,8 +45,6 @@ func Patch(oldNodeRef interface{}, newVnode Node) {
 		Append(rootNode, newElement)
 	default:
 		oldVnode := oldNodeRef.(Node)
-
-		fmt.Println("Create on ", oldVnode.GetElement())
 
 		updateElement(oldVnode.GetElement(), newVnode, oldVnode)
 	}
