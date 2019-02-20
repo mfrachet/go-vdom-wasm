@@ -18,27 +18,25 @@ func CreateText(parent vnd.DomNode, virtualNode TextNode) vnd.DomElement {
 }
 
 func CreateInstance(parent vnd.DomNode, vnode Node) vnd.DomElement {
-	if vnh.IsNil(vnode.GetElement()) {
-		domNode := parent.CreateElement(vnode.GetTagName())
-		attrs := vnode.GetAttrs()
+	domNode := parent.CreateElement(vnode.GetTagName())
+	attrs := vnode.GetAttrs()
 
-		if vnh.NotNil(attrs) {
-			if vnh.NotNil(attrs.Props) {
-				for attr, attrValue := range *attrs.Props {
-					domNode.SetAttribute(attr, attrValue)
-				}
-			}
-
-			if vnh.NotNil(attrs.Events) {
-				for eventName, handler := range *attrs.Events {
-					domNode.AddEventListener(eventName, handler)
-				}
+	if vnh.NotNil(attrs) {
+		if vnh.NotNil(attrs.Props) {
+			for attr, attrValue := range *attrs.Props {
+				domNode.SetAttribute(attr, attrValue)
 			}
 		}
 
-		vnode.SetElement(domNode)
-		ComputeChildren(parent, vnode)
+		if vnh.NotNil(attrs.Events) {
+			for eventName, handler := range *attrs.Events {
+				domNode.AddEventListener(eventName, handler)
+			}
+		}
 	}
+
+	vnode.SetElement(domNode)
+	ComputeChildren(parent, vnode)
 
 	return *vnode.GetElement()
 }

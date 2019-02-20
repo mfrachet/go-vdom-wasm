@@ -5,11 +5,21 @@ import (
 	vnh "github.com/mfrachet/go-vdom-wasm/helpers"
 )
 
+func createIfNotExist(parent vnd.DomNode, vnode Node) vnd.DomElement {
+	if vnode.HasElement() {
+		return *vnode.GetElement()
+	}
+
+	newElement := CreateInstance(parent, vnode)
+
+	return newElement
+}
+
 func updateElement(parent vnd.DomNode, newNode Node, oldNode Node, index int) {
 	if vnh.IsNil(newNode) {
 		Remove(*oldNode.GetElement())
 	} else {
-		newElement := CreateInstance(parent, newNode)
+		newElement := createIfNotExist(parent, newNode)
 
 		if vnh.IsNil(oldNode) {
 			Append(parent, newElement)
@@ -40,7 +50,7 @@ func Patch(oldNodeRef interface{}, newVnode Node) {
 		rootNodeID := oldNodeRef.(string)
 		rootNode := vnd.GetDocument().QuerySelector(rootNodeID)
 
-		newElement := CreateInstance(rootNode, newVnode)
+		newElement := createIfNotExist(rootNode, newVnode)
 
 		Append(rootNode, newElement)
 	default:
