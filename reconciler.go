@@ -34,18 +34,12 @@ func CreateInstance(parent vnd.DomNode, vnode Node) vnd.DomElement {
 	domNode := parent.CreateElement(vnode.GetTagName())
 	attrs := vnode.GetAttrs()
 
-	if vnh.NotNil(attrs) {
-		if vnh.NotNil(attrs.Props) {
-			for attr, attrValue := range *attrs.Props {
-				domNode.SetAttribute(attr, attrValue)
-			}
-		}
+	for attr, attrValue := range *attrs.Props {
+		domNode.SetAttribute(attr, attrValue)
+	}
 
-		if vnh.NotNil(attrs.Events) {
-			for eventName, handler := range *attrs.Events {
-				domNode.AddEventListener(eventName, handler)
-			}
-		}
+	for eventName, handler := range *attrs.Events {
+		domNode.AddEventListener(eventName, handler)
 	}
 
 	return domNode
