@@ -37,13 +37,13 @@ func CreateInstance(document vnd.DomNode, vnode Node) vnd.DomElement {
 		}
 
 		vnode.SetElement(domNode)
-		computeChildren(document, vnode)
+		ComputeChildren(document, vnode)
 	}
 
 	return *vnode.GetElement()
 }
 
-func computeChildren(document vnd.DomNode, vnode Node) {
+func ComputeChildren(document vnd.DomNode, vnode Node) {
 	textNode := vnode.GetText()
 	if vnh.NotNil(textNode) {
 		textElement := CreateText(document, *textNode)
