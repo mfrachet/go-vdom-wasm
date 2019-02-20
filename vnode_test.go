@@ -3,6 +3,7 @@ package vn
 import (
 	"testing"
 
+	vnd "github.com/mfrachet/go-vdom-wasm/dom"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -51,4 +52,12 @@ func TestVnode_ChildAt(t *testing.T) {
 
 	assert.Equal(t, childAtOne, a.ChildAt(1))
 	assert.Equal(t, nil, b.ChildAt(1))
+}
+
+func TestVnode_HasElement(t *testing.T) {
+	element := H("span", nil, "Hello world")
+	assert.Equal(t, false, element.HasElement())
+
+	element.SetElement(vnd.DomElement{})
+	assert.Equal(t, true, element.HasElement())
 }

@@ -13,47 +13,55 @@ func Remove(domNode vnd.DomNode) {
 	domNode.Remove()
 }
 
-func CreateText(document vnd.DomNode, virtualNode TextNode) vnd.DomElement {
-	return document.CreateTextNode(virtualNode.Value)
+func CreateText(parent vnd.DomNode, virtualNode TextNode) vnd.DomElement {
+	return parent.CreateTextNode(virtualNode.Value)
 }
 
-func CreateInstance(document vnd.DomNode, vnode Node) vnd.DomElement {
-	if vnh.IsNil(vnode.GetElement()) {
-		domNode := document.CreateElement(vnode.GetTagName())
-		attrs := vnode.GetAttrs()
+func createIfNotExist(parent vnd.DomNode, vnode Node) vnd.DomElement {
+	if vnode.HasElement() {
+		return *vnode.GetElement()
+	}
 
-		if vnh.NotNil(attrs) {
-			if vnh.NotNil(attrs.Props) {
-				for attr, attrValue := range *attrs.Props {
-					domNode.SetAttribute(attr, attrValue)
-				}
-			}
+	newElement := CreateInstance(parent, vnode)
+	vnode.SetElement(newElement)
 
-			if vnh.NotNil(attrs.Events) {
-				for eventName, handler := range *attrs.Events {
-					domNode.AddEventListener(eventName, handler)
-				}
+	ComputeChildren(parent, vnode)
+
+	return newElement
+}
+
+func CreateInstance(parent vnd.DomNode, vnode Node) vnd.DomElement {
+	domNode := parent.CreateElement(vnode.GetTagName())
+	attrs := vnode.GetAttrs()
+
+	if vnh.NotNil(attrs) {
+		if vnh.NotNil(attrs.Props) {
+			for attr, attrValue := range *attrs.Props {
+				domNode.SetAttribute(attr, attrValue)
 			}
 		}
 
-		vnode.SetElement(domNode)
-		computeChildren(document, vnode)
+		if vnh.NotNil(attrs.Events) {
+			for eventName, handler := range *attrs.Events {
+				domNode.AddEventListener(eventName, handler)
+			}
+		}
 	}
 
-	return *vnode.GetElement()
+	return domNode
 }
 
-func computeChildren(document vnd.DomNode, vnode Node) {
+func ComputeChildren(parent vnd.DomNode, vnode Node) {
 	textNode := vnode.GetText()
 	if vnh.NotNil(textNode) {
-		textElement := CreateText(document, *textNode)
+		textElement := CreateText(parent, *textNode)
 		textNode.SetElement(textElement)
 
 		Append(vnode.GetElement(), textElement)
 	} else {
 		for _, el := range vnode.GetChildren() {
-			CreateInstance(document, el)
-			vnode.GetElement().AppendChild(*el.GetElement())
+			childElement := createIfNotExist(parent, el)
+			vnode.GetElement().AppendChild(childElement)
 		}
 	}
 }
