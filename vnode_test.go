@@ -24,9 +24,10 @@ func TestVnode_IsSame(t *testing.T) {
 	l := H("li", nil, "Hello world2")
 
 	assert.Equal(t, true, a.IsSame(b))
-	assert.Equal(t, false, a.IsSame(c))
 	assert.Equal(t, true, g.IsSame(h))
 	assert.Equal(t, true, d.IsSame(e))
+
+	assert.Equal(t, false, a.IsSame(c))
 	assert.Equal(t, false, d.IsSame(f))
 	assert.Equal(t, false, d.IsSame(j))
 	assert.Equal(t, false, k.IsSame(l))

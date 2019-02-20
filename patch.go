@@ -5,7 +5,7 @@ import (
 	vnh "github.com/mfrachet/go-vdom-wasm/helpers"
 )
 
-func updateElement(parent vnd.DomNode, newNode Node, oldNode Node, index int) {
+func updateElement(parent vnd.DomNode, newNode Node, oldNode Node) {
 	if vnh.IsNil(newNode) {
 		Remove(*oldNode.GetElement())
 	} else {
@@ -27,7 +27,7 @@ func updateElement(parent vnd.DomNode, newNode Node, oldNode Node, index int) {
 				oldChild := oldNode.ChildAt(i)
 				newChild := newNode.ChildAt(i)
 
-				updateElement(parent.ChildNodes(index), newChild, oldChild, i)
+				updateElement(oldNode.GetElement(), newChild, oldChild)
 			}
 		}
 	}
@@ -46,6 +46,6 @@ func Patch(oldNodeRef interface{}, newVnode Node) {
 	default:
 		oldVnode := oldNodeRef.(Node)
 
-		updateElement(*oldVnode.GetElement(), newVnode, oldVnode, 0)
+		updateElement(*oldVnode.GetElement(), newVnode, oldVnode)
 	}
 }
