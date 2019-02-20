@@ -2,21 +2,11 @@ package vn
 
 import (
 	vnd "github.com/mfrachet/go-vdom-wasm/dom"
-	vnh "github.com/mfrachet/go-vdom-wasm/helpers"
 )
 
 type TextNode struct {
 	Value   string
 	Element *vnd.DomElement
-}
-
-func (textNode *TextNode) MakeDomNode(document vnd.DomNode) *vnd.DomElement {
-	if vnh.IsNil(textNode.Element) {
-		domNode := document.CreateTextNode(textNode.Value)
-		textNode.Element = &domNode
-	}
-
-	return textNode.Element
 }
 
 func (textNode *TextNode) GetElement() *vnd.DomElement {

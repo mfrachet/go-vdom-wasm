@@ -3,7 +3,6 @@ package vn
 import vnd "github.com/mfrachet/go-vdom-wasm/dom"
 
 type Node interface {
-	MakeDomNode(vnd.DomNode) *vnd.DomElement
 	GetElement() *vnd.DomElement
 	GetTagName() string
 	GetAttrs() *Attrs

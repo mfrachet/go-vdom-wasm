@@ -40,8 +40,7 @@ func Patch(oldNodeRef interface{}, newVnode Node) {
 		rootNodeID := oldNodeRef.(string)
 		rootNode := vnd.GetDocument().QuerySelector(rootNodeID)
 
-		newElement := *newVnode.MakeDomNode(rootNode)
-		newVnode.SetElement(newElement)
+		newElement := CreateInstance(rootNode, newVnode)
 
 		Append(rootNode, newElement)
 	default:
