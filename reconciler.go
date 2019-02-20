@@ -38,11 +38,11 @@ func ComputeChildren(parent vnd.DomNode, vnode Node) {
 		textElement := CreateText(parent, *textNode)
 		textNode.SetElement(textElement)
 
-		Append(vnode.GetElement(), textElement)
+		Append(parent, textElement)
 	} else {
 		for _, el := range vnode.GetChildren() {
 			childElement := createIfNotExist(parent, el)
-			vnode.GetElement().AppendChild(childElement)
+			parent.AppendChild(childElement)
 		}
 	}
 }

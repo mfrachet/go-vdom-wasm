@@ -8,30 +8,29 @@ import (
 func updateElement(parent vnd.DomNode, newNode Node, oldNode Node) {
 	if vnh.IsNil(newNode) {
 		Remove(*oldNode.GetElement())
-	} else {
+	} else if vnh.IsNil(oldNode) {
 		newElement := createIfNotExist(parent, newNode)
 
-		if vnh.IsNil(oldNode) {
-			Append(parent, newElement)
-		} else if !newNode.IsSame(oldNode) {
-			oldElement := *oldNode.GetElement()
-			oldElement.ReplaceWith(newElement)
-		} else {
-			newChildrenCount := newNode.ChildrenCount()
-			oldChildrenCount := oldNode.ChildrenCount()
+		Append(parent, newElement)
+	} else if !newNode.IsSame(oldNode) {
+		newElement := createIfNotExist(parent, newNode)
 
-			max := vnh.Max(newChildrenCount, oldChildrenCount)
+		oldElement := *oldNode.GetElement()
+		oldElement.ReplaceWith(newElement)
+	} else {
 
-			for i := 0; i < max; i++ {
+		newChildrenCount := newNode.ChildrenCount()
+		oldChildrenCount := oldNode.ChildrenCount()
 
-				oldChild := oldNode.ChildAt(i)
-				newChild := newNode.ChildAt(i)
+		max := vnh.Max(newChildrenCount, oldChildrenCount)
 
-				updateElement(oldNode.GetElement(), newChild, oldChild)
-			}
+		for i := 0; i < max; i++ {
+			oldChild := oldNode.ChildAt(i)
+			newChild := newNode.ChildAt(i)
+
+			updateElement(oldNode.GetElement(), newChild, oldChild)
 		}
 	}
-
 }
 
 func Patch(oldNodeRef interface{}, newVnode Node) {

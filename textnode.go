@@ -17,12 +17,8 @@ func (textNode *TextNode) SetElement(element vnd.DomElement) {
 	textNode.Element = &element
 }
 
-func (textNode *TextNode) HashCode() string {
-	return textNode.Value
-}
-
 func (textNode *TextNode) IsSame(other *TextNode) bool {
-	return textNode.HashCode() == other.HashCode()
+	return textNode.Value == other.Value
 }
 
 func (textNode *TextNode) ChildrenCount() int {

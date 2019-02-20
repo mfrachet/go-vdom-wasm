@@ -31,7 +31,8 @@ func (vnode *Vnode) IsSame(other Node) bool {
 	}
 
 	if vnh.NotNil(other.GetText()) {
-		return vnode.Text.Value == other.GetText().Value && vnode.HashCode() == other.HashCode()
+		hasSameText := other.GetText().IsSame(vnode.Text)
+		return hasSameText && vnode.HashCode() == other.HashCode()
 	}
 
 	return false
