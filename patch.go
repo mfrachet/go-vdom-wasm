@@ -46,6 +46,6 @@ func Patch(oldNodeRef interface{}, newVnode Node) {
 	default:
 		oldVnode := oldNodeRef.(Node)
 
-		updateElement(*oldVnode.GetElement(), newVnode, oldVnode)
+		updateElement(oldVnode.GetElement(), newVnode, oldVnode)
 	}
 }
