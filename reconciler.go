@@ -13,13 +13,13 @@ func Remove(domNode vnd.DomNode) {
 	domNode.Remove()
 }
 
-func CreateText(document vnd.DomNode, virtualNode TextNode) vnd.DomElement {
-	return document.CreateTextNode(virtualNode.Value)
+func CreateText(parent vnd.DomNode, virtualNode TextNode) vnd.DomElement {
+	return parent.CreateTextNode(virtualNode.Value)
 }
 
-func CreateInstance(document vnd.DomNode, vnode Node) vnd.DomElement {
+func CreateInstance(parent vnd.DomNode, vnode Node) vnd.DomElement {
 	if vnh.IsNil(vnode.GetElement()) {
-		domNode := document.CreateElement(vnode.GetTagName())
+		domNode := parent.CreateElement(vnode.GetTagName())
 		attrs := vnode.GetAttrs()
 
 		if vnh.NotNil(attrs) {
@@ -37,22 +37,22 @@ func CreateInstance(document vnd.DomNode, vnode Node) vnd.DomElement {
 		}
 
 		vnode.SetElement(domNode)
-		ComputeChildren(document, vnode)
+		ComputeChildren(parent, vnode)
 	}
 
 	return *vnode.GetElement()
 }
 
-func ComputeChildren(document vnd.DomNode, vnode Node) {
+func ComputeChildren(parent vnd.DomNode, vnode Node) {
 	textNode := vnode.GetText()
 	if vnh.NotNil(textNode) {
-		textElement := CreateText(document, *textNode)
+		textElement := CreateText(parent, *textNode)
 		textNode.SetElement(textElement)
 
 		Append(vnode.GetElement(), textElement)
 	} else {
 		for _, el := range vnode.GetChildren() {
-			CreateInstance(document, el)
+			CreateInstance(parent, el)
 			vnode.GetElement().AppendChild(*el.GetElement())
 		}
 	}
