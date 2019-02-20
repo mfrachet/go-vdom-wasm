@@ -8,9 +8,6 @@ import (
 )
 
 func updateElement(parent vnd.DomNode, newNode Node, oldNode Node) {
-
-	fmt.Println(parent, newNode, oldNode)
-
 	if vnh.IsNil(newNode) {
 		Remove(*oldNode.GetElement())
 	} else if vnh.IsNil(oldNode) {
@@ -49,6 +46,8 @@ func Patch(oldNodeRef interface{}, newVnode Node) {
 		Append(rootNode, newElement)
 	default:
 		oldVnode := oldNodeRef.(Node)
+
+		fmt.Println("Create on ", oldVnode.GetElement())
 
 		updateElement(oldVnode.GetElement(), newVnode, oldVnode)
 	}

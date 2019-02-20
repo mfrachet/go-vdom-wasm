@@ -32,7 +32,7 @@ func CreateInstance(parent vnd.DomNode, vnode Node) vnd.DomElement {
 	return domNode
 }
 
-func ComputeChildren(parent vnd.DomNode, vnode Node) {
+func computeChildren(parent vnd.DomNode, vnode Node) {
 	textNode := vnode.GetText()
 	if vnh.NotNil(textNode) {
 		textElement := CreateText(parent, *textNode)
@@ -55,7 +55,7 @@ func createIfNotExist(parent vnd.DomNode, vnode Node) vnd.DomElement {
 	newElement := CreateInstance(parent, vnode)
 	vnode.SetElement(newElement)
 
-	ComputeChildren(newElement, vnode)
+	computeChildren(newElement, vnode)
 
 	return newElement
 }
