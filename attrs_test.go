@@ -20,5 +20,5 @@ func TestAttrs_Sanitize_No_Changes(t *testing.T) {
 
 	sanitized := Sanitize(attrs)
 
-	assert.Equal(t, *attrs, sanitized)
+	assert.Equal(t, attrs, sanitized)
 }

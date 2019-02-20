@@ -15,9 +15,9 @@ type Attrs struct {
 	Events *Ev
 }
 
-func Sanitize(attrs *Attrs) Attrs {
+func Sanitize(attrs *Attrs) *Attrs {
 	if vnh.IsNil(attrs) {
-		return Attrs{Props: &Props{}, Events: &Ev{}}
+		return &Attrs{Props: &Props{}, Events: &Ev{}}
 	}
 
 	if vnh.IsNil(attrs.Props) {
@@ -28,5 +28,5 @@ func Sanitize(attrs *Attrs) Attrs {
 		attrs.Events = &Ev{}
 	}
 
-	return *attrs
+	return attrs
 }
