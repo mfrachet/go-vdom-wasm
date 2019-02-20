@@ -12,6 +12,6 @@ func Remove(domNode vnd.DomNode) {
 	domNode.Remove()
 }
 
-func CreateInstance(document vnd.DomNode, virtualNode TextNode) vnd.DomElement {
+func CreateText(document vnd.DomNode, virtualNode TextNode) vnd.DomElement {
 	return document.CreateTextNode(virtualNode.Value)
 }
