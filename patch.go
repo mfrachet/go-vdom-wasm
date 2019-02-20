@@ -5,16 +5,6 @@ import (
 	vnh "github.com/mfrachet/go-vdom-wasm/helpers"
 )
 
-func createIfNotExist(parent vnd.DomNode, vnode Node) vnd.DomElement {
-	if vnode.HasElement() {
-		return *vnode.GetElement()
-	}
-
-	newElement := CreateInstance(parent, vnode)
-
-	return newElement
-}
-
 func updateElement(parent vnd.DomNode, newNode Node, oldNode Node, index int) {
 	if vnh.IsNil(newNode) {
 		Remove(*oldNode.GetElement())

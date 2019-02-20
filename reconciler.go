@@ -17,6 +17,19 @@ func CreateText(parent vnd.DomNode, virtualNode TextNode) vnd.DomElement {
 	return parent.CreateTextNode(virtualNode.Value)
 }
 
+func createIfNotExist(parent vnd.DomNode, vnode Node) vnd.DomElement {
+	if vnode.HasElement() {
+		return *vnode.GetElement()
+	}
+
+	newElement := CreateInstance(parent, vnode)
+	vnode.SetElement(newElement)
+
+	ComputeChildren(parent, vnode)
+
+	return newElement
+}
+
 func CreateInstance(parent vnd.DomNode, vnode Node) vnd.DomElement {
 	domNode := parent.CreateElement(vnode.GetTagName())
 	attrs := vnode.GetAttrs()
@@ -35,10 +48,7 @@ func CreateInstance(parent vnd.DomNode, vnode Node) vnd.DomElement {
 		}
 	}
 
-	vnode.SetElement(domNode)
-	ComputeChildren(parent, vnode)
-
-	return *vnode.GetElement()
+	return domNode
 }
 
 func ComputeChildren(parent vnd.DomNode, vnode Node) {
@@ -50,8 +60,8 @@ func ComputeChildren(parent vnd.DomNode, vnode Node) {
 		Append(vnode.GetElement(), textElement)
 	} else {
 		for _, el := range vnode.GetChildren() {
-			CreateInstance(parent, el)
-			vnode.GetElement().AppendChild(*el.GetElement())
+			childElement := createIfNotExist(parent, el)
+			vnode.GetElement().AppendChild(childElement)
 		}
 	}
 }
