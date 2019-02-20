@@ -62,6 +62,34 @@ func (mr *MockNodeMockRecorder) GetElement() *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetElement", reflect.TypeOf((*MockNode)(nil).GetElement))
 }
 
+// GetTagName mocks base method
+func (m *MockNode) GetTagName() string {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetTagName")
+	ret0, _ := ret[0].(string)
+	return ret0
+}
+
+// GetTagName indicates an expected call of GetTagName
+func (mr *MockNodeMockRecorder) GetTagName() *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetTagName", reflect.TypeOf((*MockNode)(nil).GetTagName))
+}
+
+// GetAttrs mocks base method
+func (m *MockNode) GetAttrs() *go_vdom_wasm.Attrs {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetAttrs")
+	ret0, _ := ret[0].(*go_vdom_wasm.Attrs)
+	return ret0
+}
+
+// GetAttrs indicates an expected call of GetAttrs
+func (mr *MockNodeMockRecorder) GetAttrs() *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetAttrs", reflect.TypeOf((*MockNode)(nil).GetAttrs))
+}
+
 // SetElement mocks base method
 func (m *MockNode) SetElement(arg0 dom.DomElement) {
 	m.ctrl.T.Helper()

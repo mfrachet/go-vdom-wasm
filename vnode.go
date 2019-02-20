@@ -59,6 +59,14 @@ func (vnode *Vnode) GetElement() *vnd.DomElement {
 	return vnode.Element
 }
 
+func (vnode *Vnode) GetTagName() string {
+	return vnode.TagName
+}
+
+func (vnode *Vnode) GetAttrs() *Attrs {
+	return vnode.Attrs
+}
+
 func (vnode *Vnode) SetElement(element vnd.DomElement) {
 	vnode.Element = &element
 }
@@ -72,18 +80,19 @@ func (vnode *Vnode) HashCode() string {
 }
 
 func (vnode *Vnode) MakeDomNode(document vnd.DomNode) *vnd.DomElement {
-	if vnh.IsNil(vnode.Element) {
-		domNode := document.CreateElement(vnode.TagName)
+	if vnh.IsNil(vnode.GetElement()) {
+		domNode := document.CreateElement(vnode.GetTagName())
+		attrs := vnode.GetAttrs()
 
-		if vnh.NotNil(vnode.Attrs) {
-			if vnh.NotNil(vnode.Attrs.Props) {
-				for attr, attrValue := range *vnode.Attrs.Props {
+		if vnh.NotNil(attrs) {
+			if vnh.NotNil(attrs.Props) {
+				for attr, attrValue := range *attrs.Props {
 					domNode.SetAttribute(attr, attrValue)
 				}
 			}
 
-			if vnh.NotNil(vnode.Attrs.Events) {
-				for eventName, handler := range *vnode.Attrs.Events {
+			if vnh.NotNil(attrs.Events) {
+				for eventName, handler := range *attrs.Events {
 					domNode.AddEventListener(eventName, handler)
 				}
 			}
