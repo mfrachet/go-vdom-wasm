@@ -9,7 +9,7 @@ func updateElement(parent vnd.DomNode, newNode Node, oldNode Node, index int) {
 	if vnh.IsNil(newNode) {
 		Remove(*oldNode.GetElement())
 	} else {
-		newElement := *newNode.MakeDomNode(parent)
+		newElement := CreateInstance(parent, newNode)
 
 		if vnh.IsNil(oldNode) {
 			Append(parent, newElement)

@@ -158,6 +158,20 @@ func (mr *MockNodeMockRecorder) GetText() *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetText", reflect.TypeOf((*MockNode)(nil).GetText))
 }
 
+// GetChildren mocks base method
+func (m *MockNode) GetChildren() go_vdom_wasm.Children {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetChildren")
+	ret0, _ := ret[0].(go_vdom_wasm.Children)
+	return ret0
+}
+
+// GetChildren indicates an expected call of GetChildren
+func (mr *MockNodeMockRecorder) GetChildren() *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetChildren", reflect.TypeOf((*MockNode)(nil).GetChildren))
+}
+
 // IsSame mocks base method
 func (m *MockNode) IsSame(arg0 go_vdom_wasm.Node) bool {
 	m.ctrl.T.Helper()

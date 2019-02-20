@@ -67,6 +67,10 @@ func (vnode *Vnode) GetAttrs() *Attrs {
 	return vnode.Attrs
 }
 
+func (vnode *Vnode) GetChildren() Children {
+	return vnode.Children
+}
+
 func (vnode *Vnode) SetElement(element vnd.DomElement) {
 	vnode.Element = &element
 }

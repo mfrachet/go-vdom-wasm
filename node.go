@@ -12,5 +12,6 @@ type Node interface {
 	ChildrenCount() int
 	ChildAt(int) Node
 	GetText() *TextNode
+	GetChildren() Children
 	IsSame(Node) bool
 }
