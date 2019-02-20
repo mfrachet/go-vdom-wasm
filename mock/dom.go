@@ -175,17 +175,3 @@ func (mr *MockDomNodeMockRecorder) SetBinding(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SetBinding", reflect.TypeOf((*MockDomNode)(nil).SetBinding), arg0)
 }
-
-// GetParent mocks base method
-func (m *MockDomNode) GetParent() dom.DomElement {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetParent")
-	ret0, _ := ret[0].(dom.DomElement)
-	return ret0
-}
-
-// GetParent indicates an expected call of GetParent
-func (mr *MockDomNodeMockRecorder) GetParent() *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetParent", reflect.TypeOf((*MockDomNode)(nil).GetParent))
-}
