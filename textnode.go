@@ -9,26 +9,10 @@ type TextNode struct {
 	Element *vnd.DomElement
 }
 
-func (textNode *TextNode) GetElement() *vnd.DomElement {
-	return textNode.Element
-}
-
 func (textNode *TextNode) SetElement(element vnd.DomElement) {
 	textNode.Element = &element
 }
 
 func (textNode *TextNode) IsSame(other *TextNode) bool {
 	return textNode.Value == other.Value
-}
-
-func (textNode *TextNode) ChildrenCount() int {
-	return -1
-}
-
-func (textNode *TextNode) ChildAt(index int) Node {
-	return nil
-}
-
-func (textNode *TextNode) GetText() *TextNode {
-	return textNode
 }

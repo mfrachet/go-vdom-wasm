@@ -1,11 +1,16 @@
 package vn
 
 import (
+	"fmt"
+
 	vnd "github.com/mfrachet/go-vdom-wasm/dom"
 	vnh "github.com/mfrachet/go-vdom-wasm/helpers"
 )
 
 func updateElement(parent vnd.DomNode, newNode Node, oldNode Node) {
+
+	fmt.Println(parent, newNode, oldNode)
+
 	if vnh.IsNil(newNode) {
 		Remove(*oldNode.GetElement())
 	} else if vnh.IsNil(oldNode) {

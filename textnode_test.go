@@ -14,15 +14,3 @@ func TestTextNode_IsSame(t *testing.T) {
 	assert.Equal(t, true, a.IsSame(b))
 	assert.Equal(t, false, a.IsSame(c))
 }
-
-func TestTextNode_ChildrenCount(t *testing.T) {
-	a := &TextNode{Value: "Hello world"}
-	assert.Equal(t, -1, a.ChildrenCount())
-}
-
-func TestTextNode_ChildAt(t *testing.T) {
-	a := TextNode{Value: "Hello world"}
-	child := a.ChildAt(1)
-
-	assert.Equal(t, nil, child)
-}
