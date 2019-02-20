@@ -6,6 +6,7 @@ type Node interface {
 	GetElement() *vnd.DomElement
 	GetTagName() string
 	GetAttrs() *Attrs
+	HasElement() bool
 	SetElement(vnd.DomElement)
 	HashCode() string
 	ChildrenCount() int

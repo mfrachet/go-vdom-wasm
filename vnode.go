@@ -59,6 +59,10 @@ func (vnode *Vnode) GetElement() *vnd.DomElement {
 	return vnode.Element
 }
 
+func (vnode *Vnode) HasElement() bool {
+	return vnh.NotNil(vnode.GetElement())
+}
+
 func (vnode *Vnode) GetTagName() string {
 	return vnode.TagName
 }

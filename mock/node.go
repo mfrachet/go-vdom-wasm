@@ -76,6 +76,20 @@ func (mr *MockNodeMockRecorder) GetAttrs() *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetAttrs", reflect.TypeOf((*MockNode)(nil).GetAttrs))
 }
 
+// HasElement mocks base method
+func (m *MockNode) HasElement() bool {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "HasElement")
+	ret0, _ := ret[0].(bool)
+	return ret0
+}
+
+// HasElement indicates an expected call of HasElement
+func (mr *MockNodeMockRecorder) HasElement() *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "HasElement", reflect.TypeOf((*MockNode)(nil).HasElement))
+}
+
 // SetElement mocks base method
 func (m *MockNode) SetElement(arg0 dom.DomElement) {
 	m.ctrl.T.Helper()
