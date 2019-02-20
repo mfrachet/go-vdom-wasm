@@ -17,13 +17,13 @@ func updateElement(parent vnd.DomNode, newNode Node, oldNode Node) {
 			oldElement := *oldNode.GetElement()
 			oldElement.ReplaceWith(newElement)
 		} else {
+
 			newChildrenCount := newNode.ChildrenCount()
 			oldChildrenCount := oldNode.ChildrenCount()
 
 			max := vnh.Max(newChildrenCount, oldChildrenCount)
 
 			for i := 0; i < max; i++ {
-
 				oldChild := oldNode.ChildAt(i)
 				newChild := newNode.ChildAt(i)
 
