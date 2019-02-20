@@ -80,7 +80,7 @@ func (vnode *Vnode) HashCode() string {
 }
 
 func (vnode *Vnode) MakeDomNode(document vnd.DomNode) *vnd.DomElement {
-	if vnh.IsNil(vnode.Element) {
+	if vnh.IsNil(vnode.GetElement()) {
 		domNode := document.CreateElement(vnode.GetTagName())
 		attrs := vnode.GetAttrs()
 
