@@ -102,7 +102,7 @@ func (vnode *Vnode) computeChildren(document vnd.DomNode) {
 		textElement := CreateText(document, *textNode)
 		textNode.SetElement(textElement)
 
-		vnode.Element.AppendChild(textElement)
+		Append(vnode.GetElement(), textElement)
 	} else {
 		for _, el := range vnode.Children {
 			el.MakeDomNode(document)
