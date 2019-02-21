@@ -29,7 +29,7 @@ If you prefer a _quickest_ solution, you can also rely on the [go-wasm-cli](http
 In your favorite terminal
 
 ```shell
-$ go get github.com/mfrachet/go-vdom-wasm
+$ GOOS=js GOARCH=wasm go get github.com/mfrachet/go-vdom-wasm
 ```
 
 ## Usage
