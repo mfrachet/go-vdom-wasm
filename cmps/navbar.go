@@ -5,7 +5,7 @@ import (
 )
 
 func Navbar() *vn.Vnode {
-	IMAGE_ADRESS := "https://dashboard.snapcraft.io/site_media/appmedia/2017/11/gophercolor.png"
+	IMAGE_ADRESS := "https://i.ibb.co/kmpdhXW/govdom.png"
 
 	brandSection := vn.H("div", &vn.Attrs{Props: &vn.Props{"class": "navbar-brand"}}, vn.Children{
 		vn.H("a", &vn.Attrs{Props: &vn.Props{"class": "navbar-item"}}, vn.Children{Avatar(IMAGE_ADRESS)}),
