@@ -13,20 +13,20 @@ This module has been inspired by the awesome work of [@mbasso](https://github.co
 
 [Want to see go-vdom-wasm in action?](https://mfrachet.github.io/go-vdom-wasm/)
 
-# Ready to start?
+## Ready to start?
 
 - [Before starting](#before-starting)
 - [Install the module](#install-the-module)
 - [Usage](#usage)
 - [Todos](#todos)
 
-## Before starting
+### Before starting
 
 You have to make some little configuration that are well explained in the [Go + WASM wiki - Getting started](https://github.com/golang/go/wiki/WebAssembly#getting-started) guide.
 
 If you prefer a _quickest_ solution, you can also rely on the [go-wasm-cli](https://github.com/mfrachet/go-wasm-cli) utility. It allows to create a WASM application in one command line and to have hot reload while coding.
 
-## Install the module
+### Install the module
 
 In your favorite terminal
 
@@ -34,7 +34,7 @@ In your favorite terminal
 $ go get github.com/mfrachet/go-vdom-wasm
 ```
 
-## Usage
+### Usage
 
 Let's define the root of our `go-vdom-wasm` application. Everything that the library will work on is **inside** that `div`:
 
@@ -53,7 +53,7 @@ rootNode := vn.H("div", nil, "Hello world")
 vn.Patch("#app", rootNode)
 ```
 
-### Passing attributes
+#### Passing attributes
 
 The second argument of `vn.H` is a reference to an `Attrs` structure. It allows to manage `HTML attributes` and events.
 
@@ -75,7 +75,7 @@ The [DOM](https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model
 </ul>
 ```
 
-### Handling events
+#### Handling events
 
 The `Attrs` also allows to pass functions to handle specific events.
 
@@ -101,7 +101,7 @@ This module binds the event using the [`addEventListener` API](https://developer
 
 :warning: While using event handler, it's necessary to add en empty `select{}` at the end of the `main` function
 
-## Todos
+### Todos
 
 - [ ] Add more tests :woman_facepalming: :man_facepalming:
 - [ ] Find a better solution [to compare two virtual nodes](https://github.com/mfrachet/go-vdom-wasm/blob/bddbb032b6c048cf6ee58368241f4b3d3c427691/vnode.go#L24)
