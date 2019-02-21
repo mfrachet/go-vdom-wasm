@@ -2,7 +2,7 @@ _:warning: This is an experimental package. It's NOT production ready :blush:_
 
 Webassembly VDOM to create web apps using Go. Widely inspired by https://github.com/mbasso/asm-dom
 
-A TODO application on gh-pages: https://mfrachet.github.io/go-vdom-wasm/
+A TODO application on gh-pages: https://mfrachet.github.io/go-vdom-wasm/ . For the sources, [check this branch](https://github.com/mfrachet/go-vdom-wasm/tree/gh-pages).
 
 ---
 
