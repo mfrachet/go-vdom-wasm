@@ -1,4 +1,4 @@
-![go-vdom-wasm](https://i.ibb.co/kmpdhXW/govdom.png)
+![go-vdom-wasm](https://i.ibb.co/J5dgL4v/Webp-net-resizeimage.png)
 
 _:warning: This is an experimental package. It's NOT production ready :blush:_
 
