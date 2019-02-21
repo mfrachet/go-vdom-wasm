@@ -1,4 +1,6 @@
-![go-vdom-wasm](https://i.ibb.co/J5dgL4v/Webp-net-resizeimage.png)
+<p align="center">
+<img src="https://i.ibb.co/J5dgL4v/Webp-net-resizeimage.png">
+</p>
 
 _:warning: This is an experimental package. It's NOT production ready :blush:_
 
