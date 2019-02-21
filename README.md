@@ -1,32 +1,32 @@
 <p align="center">
 <img src="https://i.ibb.co/J5dgL4v/Webp-net-resizeimage.png">
 </p>
+<h1 align="center">go-vdom-wasm</h1>
 
-_:warning: This is an experimental package. It's NOT production ready :blush:_
+This package allows to build frontend applications in Go targeting [Webassembly](https://webassembly.org/). It provides a conveniant syntax close to the [hyperscript](https://github.com/hyperhype/hyperscript) one in the JavaScript lands and aims to provide _efficient_ way to deal with the [DOM](https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model). If you're not familiar the Virtual DOM notion, I suggest you take a look at [this document]().
 
-Webassembly VDOM to create web apps using Go. Widely inspired by https://github.com/mbasso/asm-dom
+:warning: This package is not production ready. Use at your own risks. A [Todos](#todos) section is available if you want to take part of the projet and try to make it better. You can also check the [Go + WASM wiki](https://github.com/golang/go/wiki/WebAssembly) to get a better overview of the Webassembly support for the Go language.
 
-A TODO application on gh-pages: https://mfrachet.github.io/go-vdom-wasm/ . For the sources, [check this branch](https://github.com/mfrachet/go-vdom-wasm/tree/gh-pages).
+This module has been inspired by the awesome work of [@mbasso](https://github.com/mbasso) on https://github.com/mbasso/asm-dom.
 
----
+[Want to see go-vdom-wasm in action?](https://mfrachet.github.io/go-vdom-wasm/)
 
-# Content
+# Ready to start?
 
-- [Installation](#installation)
+- [Before starting](#before-starting)
+- [Install the module](#install-the-module)
 - [Usage](#usage)
 - [Todos](#todos)
 
-## Installation
+## Before starting
 
-### Configuring Go for Webassembly
+You have to make some little configuration that are well explained in the [Go + WASM wiki - Getting started](https://github.com/golang/go/wiki/WebAssembly#getting-started) guide.
 
-You first need to follow a webassembly project structure for Go [like this one](https://github.com/golang/go/wiki/WebAssembly).
+If you prefer a _quickest_ solution, you can also rely on the [go-wasm-cli](https://github.com/mfrachet/go-wasm-cli) utility. It allows to create a WASM application in one command line and to have hot reload while coding.
 
-_:information_source: You can also use https://github.com/mfrachet/go-wasm-cli to quickly start a go-webassembly project._
+## Install the module
 
-### In your favorite terminal
-
-Try running:
+In your favorite terminal
 
 ```shell
 $ go get github.com/mfrachet/go-vdom-wasm
@@ -34,35 +34,37 @@ $ go get github.com/mfrachet/go-vdom-wasm
 
 ## Usage
 
-### A first (v)node
-
-_index.html_
+Let's define the root of our `go-vdom-wasm` application. Everything that the library will work on is **inside** that `div`:
 
 ```html
+<!-- index.html-->
+
 <div id="app"></div>
 ```
 
-_main.go_
+Let's now `Patch` that node with a virtual one to make something happen:
 
-```golang
+```go
+// main.go
+
 rootNode := vn.H("div", nil, "Hello world")
 vn.Patch("#app", rootNode)
 ```
 
-### Using props
+### Passing attributes
 
 The second argument of `vn.H` is a reference to an `Attrs` structure. It allows to manage `HTML attributes` and events.
 
 In this example, we set a `class="navbar"` to the underlying `ul` element
 
-```golang
+```go
 vn.H("ul", &vn.Attrs{Props: &vn.Props{"class": "navbar"}}, vn.Children{
 	vn.H("li", nil, "First item"),
 	vn.H("li", nil, "Second item"),
 }),
 ```
 
-The expected result would be:
+The [DOM](https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model) representation of the previous snippet is:
 
 ```html
 <ul class="navbar">
@@ -73,11 +75,11 @@ The expected result would be:
 
 ### Handling events
 
-The `Attrs` also allows to pass a function for a specific events.
+The `Attrs` also allows to pass functions to handle specific events.
 
 In this example, we set a click event on of the the `li`:
 
-```golang
+```go
 func handleClick(args []js.Value){
 	fmt.Println("I've been clicked!")
 }
@@ -104,3 +106,5 @@ This module binds the event using the [`addEventListener` API](https://developer
 - [ ] Ensure consistency and avoid unecessary rerendering that sometimes occur for the same DOMNodes :question:
 - [ ] Make a better abstraction concerning the reconciler (it's a really first step)
 - [ ] Rely on Go good practices (reference passing, better algorithms and so forth...)
+- [ ] Generating the API doc and adding decent comment in code
+- [ ] Find a way to abstract the `[]js.Value` passed in every event handler
