@@ -27,7 +27,6 @@ func (vnode *Vnode) IsSame(other Node) bool {
 	otherKey := other.GetKey()
 
 	if currKey != nil && otherKey != nil {
-		fmt.Println("They are the same => ", *currKey)
 		return *currKey == *otherKey
 	}
 
