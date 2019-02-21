@@ -2,7 +2,7 @@ _:warning: This is an experimental package. It's NOT production ready :blush:_
 
 Webassembly VDOM to create web apps using Go. Widely inspired by https://github.com/mbasso/asm-dom
 
-An example is available through github pages: https://mfrachet.github.io/go-vdom-wasm/
+A TODO application on gh-pages: https://mfrachet.github.io/go-vdom-wasm/
 
 ---
 
@@ -10,17 +10,22 @@ An example is available through github pages: https://mfrachet.github.io/go-vdom
 
 - [Installation](#installation)
 - [Usage](#usage)
+- [Todos](#todos)
 
 ## Installation
 
+### Configuring Go for Webassembly
+
 You first need to follow a webassembly project structure for Go [like this one](https://github.com/golang/go/wiki/WebAssembly).
 
-*You can also use https://github.com/mfrachet/go-wasm-cli to quickly start a go-webassembly project.*
+_:information_source: You can also use https://github.com/mfrachet/go-wasm-cli to quickly start a go-webassembly project._
 
-Then simply run:
+### In your favorite terminal
+
+Try running:
 
 ```shell
-$ go get https://github.com/mfrachet/go-wasm-vdom
+$ go get github.com/mfrachet/go-vdom-wasm
 ```
 
 ## Usage
@@ -57,12 +62,10 @@ The expected result would be:
 
 ```html
 <ul class="navbar">
-    <li>First item</li>
-    <li>Second item</li>
+  <li>First item</li>
+  <li>Second item</li>
 </ul>
 ```
-
-
 
 ### Handling events
 
@@ -80,7 +83,7 @@ func main() {
         vn.H("li", &vn.Attrs{Events: &vn.Ev{"click": handleClick}}, "First item"),
         vn.H("li", nil, "Second item"),
 	})
-	
+
 	vn.patch("#app", rootNode)
 }
 
@@ -90,3 +93,10 @@ This module binds the event using the [`addEventListener` API](https://developer
 
 :warning: While using event handler, it's necessary to add en empty `select{}` at the end of the `main` function
 
+## Todos
+
+- [ ] Add more tests :woman_facepalming: :man_facepalming:
+- [ ] Find a better solution [to compare two virtual nodes](https://github.com/mfrachet/go-vdom-wasm/blob/bddbb032b6c048cf6ee58368241f4b3d3c427691/vnode.go#L24)
+- [ ] Ensure consistency and avoid unecessary rerendering that sometimes occur for the same DOMNodes :question:
+- [ ] Make a better abstraction concerning the reconciler (it's a really first step)
+- [ ] Rely on Go good practices (reference passing, better algorithms and so forth...)
