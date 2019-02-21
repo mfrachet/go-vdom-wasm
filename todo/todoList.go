@@ -42,16 +42,23 @@ func createList(children vn.Children) *vn.Vnode {
 }
 
 func createItem(todo *TodoModel) *vn.Vnode {
-	var dynamicClass string
+	var attrsChecked *vn.Attrs
+	var text string
 
 	if todo.isChecked {
-		dynamicClass = " is-checked"
+		attrsChecked = &vn.Attrs{Props: &vn.Props{"class": "is-checked"}}
 	}
 
-	return vn.H("a", &vn.Attrs{Props: &vn.Props{"class": "panel-block" + dynamicClass}}, vn.Children{
-		vn.H("span", nil, todo.text),
-		vn.H("button", &vn.Attrs{Props: &vn.Props{"class": "button is-primary m-l"}, Events: &vn.Ev{"click": handleCheck(todo)}}, "Check me :D"),
-		vn.H("button", &vn.Attrs{Props: &vn.Props{"class": "button is-danger m-l"}, Events: &vn.Ev{"click": handleRemove(todo)}}, "Delete me :("),
+	if todo.isChecked {
+		text = "Uncheck the task!"
+	} else {
+		text = "Check the task!"
+	}
+
+	return vn.H("a", &vn.Attrs{Props: &vn.Props{"class": "panel-block"}}, vn.Children{
+		vn.H("span", attrsChecked, todo.text),
+		vn.H("button", &vn.Attrs{Props: &vn.Props{"class": "button is-primary m-l"}, Events: &vn.Ev{"click": handleCheck(todo)}}, text),
+		vn.H("button", &vn.Attrs{Props: &vn.Props{"class": "button is-danger m-l"}, Events: &vn.Ev{"click": handleRemove(todo)}}, "Delete task :("),
 	}, todo.text)
 }
 
