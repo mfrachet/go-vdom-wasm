@@ -44,13 +44,21 @@ func TestVnode_IsSame_WithChildren(t *testing.T) {
 		H("li", nil, "Second item"),
 	})
 
-	c := H("ul", &Attrs{Props: &Props{"class": "navbar"}}, Children{
-		H("li", nil, "First item"),
-		H("li", nil, "Something else"),
-	})
-
 	assert.Equal(t, true, a.IsSame(b))
-	assert.Equal(t, false, a.IsSame(c))
+}
+
+func TestVnode_IsSame_WithKey(t *testing.T) {
+	a := H("ul", &Attrs{Props: &Props{"class": "navbar"}}, Children{
+		H("li", nil, "First item"),
+		H("li", nil, "Second item"),
+	}, "1")
+
+	b := H("ul", &Attrs{Props: &Props{"class": "navbar"}}, Children{
+		H("li", nil, "First item"),
+		H("li", nil, "Second item"),
+	}, "2")
+
+	assert.Equal(t, false, a.IsSame(b))
 }
 
 func TestVnode_ChildrenCount(t *testing.T) {
