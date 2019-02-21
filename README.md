@@ -1,3 +1,7 @@
+<p align="center">
+<img src="https://i.ibb.co/J5dgL4v/Webp-net-resizeimage.png">
+</p>
+
 _:warning: This is an experimental package. It's NOT production ready :blush:_
 
 Webassembly VDOM to create web apps using Go. Widely inspired by https://github.com/mbasso/asm-dom
