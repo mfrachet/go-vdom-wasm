@@ -15,13 +15,22 @@ type Vnode struct {
 	Children Children
 	Text     *TextNode
 	Element  *vnd.DomElement
+	key      *string
 }
 
-func NewVNode(tagName string, attrs *Attrs, children Children, text *TextNode, element *vnd.DomElement) *Vnode {
-	return &Vnode{tagName, attrs, children, text, element}
+func NewVNode(tagName string, attrs *Attrs, children Children, text *TextNode, element *vnd.DomElement, key *string) *Vnode {
+	return &Vnode{tagName, attrs, children, text, element, key}
 }
 
 func (vnode *Vnode) IsSame(other Node) bool {
+	currKey := vnode.GetKey()
+	otherKey := other.GetKey()
+
+	if currKey != nil && otherKey != nil {
+		fmt.Println("They are the same => ", *currKey)
+		return *currKey == *otherKey
+	}
+
 	if vnh.IsNil(vnode.Text) {
 		if vnh.IsNil(other.GetText()) {
 			return vnode.HashCode() == other.HashCode()
@@ -50,6 +59,10 @@ func (vnode *Vnode) ChildAt(index int) Node {
 	}
 
 	return nil
+}
+
+func (vnode *Vnode) GetKey() *string {
+	return vnode.key
 }
 
 func (vnode *Vnode) GetText() *TextNode {

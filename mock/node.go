@@ -76,6 +76,20 @@ func (mr *MockNodeMockRecorder) GetAttrs() *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetAttrs", reflect.TypeOf((*MockNode)(nil).GetAttrs))
 }
 
+// GetKey mocks base method
+func (m *MockNode) GetKey() *string {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetKey")
+	ret0, _ := ret[0].(*string)
+	return ret0
+}
+
+// GetKey indicates an expected call of GetKey
+func (mr *MockNodeMockRecorder) GetKey() *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetKey", reflect.TypeOf((*MockNode)(nil).GetKey))
+}
+
 // HasElement mocks base method
 func (m *MockNode) HasElement() bool {
 	m.ctrl.T.Helper()
