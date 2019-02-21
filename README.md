@@ -1,11 +1,9 @@
 <p align="center">
 <img src="https://i.ibb.co/J5dgL4v/Webp-net-resizeimage.png">
 </p>
-<h1 align="center" style="text-decoration:none">go-vdom-wasm</h1>
+<h1 align="center">go-vdom-wasm</h1>
 
 This package allows to build frontend applications in Go targeting [Webassembly](https://webassembly.org/). It provides a conveniant syntax close to the [hyperscript](https://github.com/hyperhype/hyperscript) one in the JavaScript lands and aims to provide _efficient_ way to deal with the [DOM](https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model). If you're not familiar the Virtual DOM notion, I suggest you take a look at [this document]().
-
----
 
 :warning: This package is not production ready. Use at your own risks. A [Todos](#todos) section is available if you want to take part of the projet and try to make it better. You can also check the [Go + WASM wiki](https://github.com/golang/go/wiki/WebAssembly) to get a better overview of the Webassembly support for the Go language.
 
