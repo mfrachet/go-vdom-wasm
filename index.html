@@ -1,24 +1,28 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
+  <head>
+    <title>app</title>
+    <meta charset="utf-8" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.4/css/bulma.min.css"
+    />
+    <link rel="stylesheet" href="/style.css" />
+    <script src="./wasm_exec.js"></script>
+    <script>
+      const go = new Go();
+      WebAssembly.instantiateStreaming(
+        fetch("main.wasm"),
+        go.importObject
+      ).then(result => {
+        go.run(result.instance);
+      });
+    </script>
+  </head>
 
-<head>
-	<title>app</title>
-	<meta charset="utf-8">
-	<link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre.min.css">
-	<link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-exp.min.css">
-	<link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-icons.min.css">
-	<link rel="stylesheet" href="/style.css">
-	<script src="wasm_exec.js"></script>
-	<script>
-		const go = new Go();
-		WebAssembly.instantiateStreaming(fetch("main.wasm"), go.importObject).then((result) => {
-			go.run(result.instance);
-		});
-	</script>
-</head>
-
-<body>
-	<div id="app"></div>
-</body>
-
+  <body>
+    <div>
+      <div id="app"></div>
+    </div>
+  </body>
 </html>

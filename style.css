@@ -3,7 +3,18 @@ body {
   margin: 0;
 }
 
-.nav {
-  height: 100vh;
-  overflow: auto;
+.m-r {
+  margin-right: 1em;
+}
+
+.m-t {
+  margin-top: 1em;
+}
+
+.m-l {
+  margin-left: 1em;
+}
+
+.is-checked {
+  text-decoration: line-through;
 }
