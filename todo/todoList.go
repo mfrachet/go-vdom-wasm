@@ -48,11 +48,11 @@ func createItem(todo *TodoModel) *vn.Vnode {
 		dynamicClass = " is-checked"
 	}
 
-	return vn.H("a", &vn.Attrs{Props: &vn.Props{"class": "panel-block" + dynamicClass, "key": todo.text}}, vn.Children{
+	return vn.H("a", &vn.Attrs{Props: &vn.Props{"class": "panel-block" + dynamicClass}}, vn.Children{
 		vn.H("span", nil, todo.text),
 		vn.H("button", &vn.Attrs{Props: &vn.Props{"class": "button is-primary m-l"}, Events: &vn.Ev{"click": handleCheck(todo)}}, "Check me :D"),
 		vn.H("button", &vn.Attrs{Props: &vn.Props{"class": "button is-danger m-l"}, Events: &vn.Ev{"click": handleRemove(todo)}}, "Delete me :("),
-	})
+	}, todo.text)
 }
 
 func createNotif(notif string) *vn.Vnode {
