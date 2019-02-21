@@ -1,3 +1,5 @@
+![go-vdom-wasm](https://i.ibb.co/kmpdhXW/govdom.png)
+
 _:warning: This is an experimental package. It's NOT production ready :blush:_
 
 Webassembly VDOM to create web apps using Go. Widely inspired by https://github.com/mbasso/asm-dom
