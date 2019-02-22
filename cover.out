@@ -20,11 +20,11 @@ github.com/mfrachet/go-vdom-wasm/patch.go:46.10,49.60 2 0
 github.com/mfrachet/go-vdom-wasm/reconciler.go:8.52,10.2 1 1
 github.com/mfrachet/go-vdom-wasm/reconciler.go:12.34,14.2 1 1
 github.com/mfrachet/go-vdom-wasm/reconciler.go:16.71,18.2 1 1
-github.com/mfrachet/go-vdom-wasm/reconciler.go:20.65,24.44 3 0
-github.com/mfrachet/go-vdom-wasm/reconciler.go:28.2,28.48 1 0
-github.com/mfrachet/go-vdom-wasm/reconciler.go:32.2,32.16 1 0
-github.com/mfrachet/go-vdom-wasm/reconciler.go:24.44,26.3 1 0
-github.com/mfrachet/go-vdom-wasm/reconciler.go:28.48,30.3 1 0
+github.com/mfrachet/go-vdom-wasm/reconciler.go:20.65,24.44 3 1
+github.com/mfrachet/go-vdom-wasm/reconciler.go:28.2,28.48 1 1
+github.com/mfrachet/go-vdom-wasm/reconciler.go:32.2,32.16 1 1
+github.com/mfrachet/go-vdom-wasm/reconciler.go:24.44,26.3 1 1
+github.com/mfrachet/go-vdom-wasm/reconciler.go:28.48,30.3 1 1
 github.com/mfrachet/go-vdom-wasm/reconciler.go:35.54,37.26 2 0
 github.com/mfrachet/go-vdom-wasm/reconciler.go:37.26,42.3 3 0
 github.com/mfrachet/go-vdom-wasm/reconciler.go:42.8,43.42 1 0

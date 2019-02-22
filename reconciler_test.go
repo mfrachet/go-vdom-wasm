@@ -1,7 +1,10 @@
 package vn_test
 
 import (
+	"syscall/js"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 
 	"github.com/golang/mock/gomock"
 	vn "github.com/mfrachet/go-vdom-wasm"
@@ -41,4 +44,22 @@ func TestReconciler_CreateText(t *testing.T) {
 	mockDNode.EXPECT().CreateTextNode("Hello world").Times(1)
 
 	vn.CreateText(mockDNode, textNode)
+}
+
+func handleClick(arg []js.Value) {}
+func TestReconciler_CreateInstance(t *testing.T) {
+	ctrl := gomock.NewController(t)
+	defer ctrl.Finish()
+
+	vnode := vn.H("li", &vn.Attrs{Props: &vn.Props{"class": "navbar"}, Events: &vn.Ev{"click": nil}}, "Hello world")
+
+	mockParent := mock.NewMockDomNode(ctrl)
+	mockChild := mock.NewMockDomNode(ctrl)
+	mockParent.EXPECT().CreateElement("li").Return(mockChild).Times(1)
+	mockChild.EXPECT().SetAttribute("class", "navbar").Times(1)
+	mockChild.EXPECT().AddEventListener("click", nil).Times(1)
+
+	domNode := vn.CreateInstance(mockParent, vnode)
+
+	assert.Equal(t, domNode, mockChild)
 }
