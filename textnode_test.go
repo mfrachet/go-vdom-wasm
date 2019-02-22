@@ -27,5 +27,5 @@ func TestTextNode_SetElement(t *testing.T) {
 	mockDomNode := mock.NewMockDomNode(ctrl)
 	a.SetElement(mockDomNode)
 
-	assert.Equal(t, mockDomNode, a.Element)
+	assert.Equal(t, mockDomNode, *a.Element)
 }
