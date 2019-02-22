@@ -1,5 +1,5 @@
-all: build test 
-build:
+all: deps test 
+deps:
 	GOOS=js GOARCH=wasm go get ./...
 test: 
 	GOOS=js GOARCH=wasm go test ./...
