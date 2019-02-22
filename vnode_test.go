@@ -23,6 +23,8 @@ func TestVnode_IsSame(t *testing.T) {
 	k := H("li", nil, "Hello world")
 	l := H("li", nil, "Hello world2")
 
+	m := H("li", nil, Children{})
+
 	assert.Equal(t, true, a.IsSame(b))
 	assert.Equal(t, true, g.IsSame(h))
 	assert.Equal(t, true, d.IsSame(e))
@@ -31,6 +33,9 @@ func TestVnode_IsSame(t *testing.T) {
 	assert.Equal(t, false, d.IsSame(f))
 	assert.Equal(t, false, d.IsSame(j))
 	assert.Equal(t, false, k.IsSame(l))
+
+	assert.Equal(t, false, m.IsSame(a))
+	assert.Equal(t, false, a.IsSame(m))
 }
 
 func TestVnode_IsSame_WithChildren(t *testing.T) {
@@ -89,4 +94,24 @@ func TestVnode_HasElement(t *testing.T) {
 
 	element.SetElement(vnd.DomElement{})
 	assert.Equal(t, true, element.HasElement())
+}
+
+func TestVnode_GetTagName(t *testing.T) {
+	element := H("span", nil, "Hello world")
+
+	assert.Equal(t, "span", element.GetTagName())
+}
+
+func TestVnode_GetAttrs(t *testing.T) {
+	attrs := &Attrs{Props: &Props{"class": "navbar"}}
+	element := H("span", attrs, "Hello world")
+
+	assert.Equal(t, attrs, element.GetAttrs())
+}
+
+func TestVnode_GetChildren(t *testing.T) {
+	children := Children{}
+	element := H("span", nil, children)
+
+	assert.Equal(t, children, element.GetChildren())
 }
