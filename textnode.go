@@ -6,10 +6,10 @@ import (
 
 type TextNode struct {
 	Value   string
-	Element *vnd.DomElement
+	Element *vnd.DomNode
 }
 
-func (textNode *TextNode) SetElement(element vnd.DomElement) {
+func (textNode *TextNode) SetElement(element vnd.DomNode) {
 	textNode.Element = &element
 }
 

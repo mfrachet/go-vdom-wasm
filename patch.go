@@ -29,7 +29,7 @@ func updateElement(parent vnd.DomNode, newNode Node, oldNode Node) {
 			oldChild := oldNode.ChildAt(i)
 			newChild := newNode.ChildAt(i)
 
-			updateElement(oldNode.GetElement(), newChild, oldChild)
+			updateElement(*oldNode.GetElement(), newChild, oldChild)
 		}
 	}
 }
@@ -46,6 +46,6 @@ func Patch(oldNodeRef interface{}, newVnode Node) {
 	default:
 		oldVnode := oldNodeRef.(Node)
 
-		updateElement(oldVnode.GetElement(), newVnode, oldVnode)
+		updateElement(*oldVnode.GetElement(), newVnode, oldVnode)
 	}
 }

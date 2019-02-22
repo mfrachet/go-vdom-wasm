@@ -13,11 +13,11 @@ func Remove(domNode vnd.DomNode) {
 	domNode.Remove()
 }
 
-func CreateText(parent vnd.DomNode, virtualNode TextNode) vnd.DomElement {
+func CreateText(parent vnd.DomNode, virtualNode TextNode) vnd.DomNode {
 	return parent.CreateTextNode(virtualNode.Value)
 }
 
-func CreateInstance(parent vnd.DomNode, vnode Node) vnd.DomElement {
+func CreateInstance(parent vnd.DomNode, vnode Node) vnd.DomNode {
 	domNode := parent.CreateElement(vnode.GetTagName())
 	attrs := vnode.GetAttrs()
 
@@ -47,7 +47,7 @@ func computeChildren(parent vnd.DomNode, vnode Node) {
 	}
 }
 
-func createIfNotExist(parent vnd.DomNode, vnode Node) vnd.DomElement {
+func createIfNotExist(parent vnd.DomNode, vnode Node) vnd.DomNode {
 	if vnode.HasElement() {
 		return *vnode.GetElement()
 	}
