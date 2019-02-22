@@ -1,6 +1,6 @@
 package vn
 
-func H(tagName string, attrs *Attrs, children interface{}, params ...string) *Vnode {
+func H(tagName string, attrs *Attrs, children interface{}, params ...string) Node {
 	sanitizedAttrs := Sanitize(attrs)
 	var key *string
 
@@ -10,8 +10,8 @@ func H(tagName string, attrs *Attrs, children interface{}, params ...string) *Vn
 
 	switch (children).(type) {
 	case string:
-		return NewVNode(tagName, sanitizedAttrs, nil, &TextNode{(children).(string), nil}, nil, key)
+		return NewNode(tagName, sanitizedAttrs, nil, &TextNode{(children).(string), nil}, nil, key)
 	default:
-		return NewVNode(tagName, sanitizedAttrs, children.(Children), nil, nil, key)
+		return NewNode(tagName, sanitizedAttrs, children.(Children), nil, nil, key)
 	}
 }

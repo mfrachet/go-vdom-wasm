@@ -7,7 +7,7 @@ import (
 	vnh "github.com/mfrachet/go-vdom-wasm/helpers"
 )
 
-type Children []*Vnode
+type Children []Node
 
 type Vnode struct {
 	TagName  string
@@ -18,7 +18,7 @@ type Vnode struct {
 	key      *string
 }
 
-func NewVNode(tagName string, attrs *Attrs, children Children, text *TextNode, element *vnd.DomNode, key *string) *Vnode {
+func NewNode(tagName string, attrs *Attrs, children Children, text *TextNode, element *vnd.DomNode, key *string) Node {
 	return &Vnode{tagName, attrs, children, text, element, key}
 }
 
