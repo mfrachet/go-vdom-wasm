@@ -18,7 +18,7 @@ func TestTextNode_IsSame(t *testing.T) {
 	assert.Equal(t, false, a.IsSame(c))
 }
 
-func TestTextNode_SetElement(t *testing.T) {
+func TestTextNode_Accessors(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 
@@ -27,5 +27,6 @@ func TestTextNode_SetElement(t *testing.T) {
 	mockDomNode := mock.NewMockDomNode(ctrl)
 	a.SetElement(mockDomNode)
 
-	assert.Equal(t, mockDomNode, a.Element)
+	assert.Equal(t, mockDomNode, *a.GetElement())
+	assert.Equal(t, "Hello world", a.GetValue())
 }

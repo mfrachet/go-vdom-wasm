@@ -14,7 +14,7 @@ func Remove(domNode vnd.DomNode) {
 }
 
 func CreateText(parent vnd.DomNode, virtualNode TextNode) vnd.DomNode {
-	return parent.CreateTextNode(virtualNode.Value)
+	return parent.CreateTextNode(virtualNode.GetValue())
 }
 
 func CreateInstance(parent vnd.DomNode, vnode Node) vnd.DomNode {
