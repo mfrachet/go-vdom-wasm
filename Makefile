@@ -1,4 +1,4 @@
-all: test build
+all: build test 
 build:
 	GOOS=js GOARCH=wasm go get ${gobuild_args} ./...
 test: 
