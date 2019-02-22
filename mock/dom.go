@@ -35,10 +35,10 @@ func (m *MockDomNode) EXPECT() *MockDomNodeMockRecorder {
 }
 
 // QuerySelector mocks base method
-func (m *MockDomNode) QuerySelector(arg0 string) dom.DomElement {
+func (m *MockDomNode) QuerySelector(arg0 string) dom.DomNode {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "QuerySelector", arg0)
-	ret0, _ := ret[0].(dom.DomElement)
+	ret0, _ := ret[0].(dom.DomNode)
 	return ret0
 }
 
@@ -73,7 +73,7 @@ func (mr *MockDomNodeMockRecorder) Remove() *gomock.Call {
 }
 
 // ReplaceWith mocks base method
-func (m *MockDomNode) ReplaceWith(arg0 dom.DomElement) {
+func (m *MockDomNode) ReplaceWith(arg0 dom.DomNode) {
 	m.ctrl.T.Helper()
 	m.ctrl.Call(m, "ReplaceWith", arg0)
 }
@@ -85,10 +85,10 @@ func (mr *MockDomNodeMockRecorder) ReplaceWith(arg0 interface{}) *gomock.Call {
 }
 
 // CreateTextNode mocks base method
-func (m *MockDomNode) CreateTextNode(arg0 string) dom.DomElement {
+func (m *MockDomNode) CreateTextNode(arg0 string) dom.DomNode {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "CreateTextNode", arg0)
-	ret0, _ := ret[0].(dom.DomElement)
+	ret0, _ := ret[0].(dom.DomNode)
 	return ret0
 }
 
@@ -99,10 +99,10 @@ func (mr *MockDomNodeMockRecorder) CreateTextNode(arg0 interface{}) *gomock.Call
 }
 
 // CreateElement mocks base method
-func (m *MockDomNode) CreateElement(arg0 string) dom.DomElement {
+func (m *MockDomNode) CreateElement(arg0 string) dom.DomNode {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "CreateElement", arg0)
-	ret0, _ := ret[0].(dom.DomElement)
+	ret0, _ := ret[0].(dom.DomNode)
 	return ret0
 }
 
@@ -137,10 +137,10 @@ func (mr *MockDomNodeMockRecorder) AddEventListener(arg0, arg1 interface{}) *gom
 }
 
 // ChildNodes mocks base method
-func (m *MockDomNode) ChildNodes(arg0 int) dom.DomElement {
+func (m *MockDomNode) ChildNodes(arg0 int) dom.DomNode {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "ChildNodes", arg0)
-	ret0, _ := ret[0].(dom.DomElement)
+	ret0, _ := ret[0].(dom.DomNode)
 	return ret0
 }
 

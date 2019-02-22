@@ -35,10 +35,10 @@ func (m *MockNode) EXPECT() *MockNodeMockRecorder {
 }
 
 // GetElement mocks base method
-func (m *MockNode) GetElement() *dom.DomElement {
+func (m *MockNode) GetElement() *dom.DomNode {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetElement")
-	ret0, _ := ret[0].(*dom.DomElement)
+	ret0, _ := ret[0].(*dom.DomNode)
 	return ret0
 }
 
@@ -105,7 +105,7 @@ func (mr *MockNodeMockRecorder) HasElement() *gomock.Call {
 }
 
 // SetElement mocks base method
-func (m *MockNode) SetElement(arg0 dom.DomElement) {
+func (m *MockNode) SetElement(arg0 dom.DomNode) {
 	m.ctrl.T.Helper()
 	m.ctrl.Call(m, "SetElement", arg0)
 }
