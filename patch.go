@@ -9,11 +9,11 @@ func updateElement(parent vnd.DomNode, newNode Node, oldNode Node) {
 	if vnh.IsNil(newNode) {
 		Remove(*oldNode.GetElement())
 	} else if vnh.IsNil(oldNode) {
-		newElement := createIfNotExist(parent, newNode)
+		newElement := CreateIfNotExist(parent, newNode)
 
 		Append(parent, newElement)
 	} else if !newNode.IsSame(oldNode) {
-		newElement := createIfNotExist(parent, newNode)
+		newElement := CreateIfNotExist(parent, newNode)
 
 		oldElement := *oldNode.GetElement()
 		oldElement.ReplaceWith(newElement)
@@ -40,7 +40,7 @@ func Patch(oldNodeRef interface{}, newVnode Node) {
 		rootNodeID := oldNodeRef.(string)
 		rootNode := vnd.GetDocument().QuerySelector(rootNodeID)
 
-		newElement := createIfNotExist(rootNode, newVnode)
+		newElement := CreateIfNotExist(rootNode, newVnode)
 
 		Append(rootNode, newElement)
 	default:
