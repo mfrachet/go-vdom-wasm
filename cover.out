@@ -32,8 +32,10 @@ github.com/mfrachet/go-vdom-wasm/reconciler.go:43.42,46.4 2 0
 github.com/mfrachet/go-vdom-wasm/reconciler.go:50.67,51.24 1 1
 github.com/mfrachet/go-vdom-wasm/reconciler.go:55.2,60.19 4 0
 github.com/mfrachet/go-vdom-wasm/reconciler.go:51.24,53.3 1 1
-github.com/mfrachet/go-vdom-wasm/textnode.go:12.59,14.2 1 1
-github.com/mfrachet/go-vdom-wasm/textnode.go:16.56,18.2 1 1
+github.com/mfrachet/go-vdom-wasm/textnode.go:12.53,14.2 1 0
+github.com/mfrachet/go-vdom-wasm/textnode.go:16.45,18.2 1 1
+github.com/mfrachet/go-vdom-wasm/textnode.go:20.59,22.2 1 1
+github.com/mfrachet/go-vdom-wasm/textnode.go:24.56,27.2 1 1
 github.com/mfrachet/go-vdom-wasm/vnode.go:21.119,23.2 1 1
 github.com/mfrachet/go-vdom-wasm/vnode.go:25.45,29.39 3 1
 github.com/mfrachet/go-vdom-wasm/vnode.go:33.2,33.27 1 1

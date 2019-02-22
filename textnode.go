@@ -9,10 +9,19 @@ type TextNode struct {
 	Element *vnd.DomNode
 }
 
+func (textNode *TextNode) GetElement() *vnd.DomNode {
+	return textNode.Element
+}
+
+func (textNode *TextNode) GetValue() string {
+	return textNode.Value
+}
+
 func (textNode *TextNode) SetElement(element vnd.DomNode) {
 	textNode.Element = &element
 }
 
 func (textNode *TextNode) IsSame(other *TextNode) bool {
-	return textNode.Value == other.Value
+	return textNode.GetValue() == other.GetValue()
+
 }
