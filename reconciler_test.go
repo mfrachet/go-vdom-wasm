@@ -8,6 +8,7 @@ import (
 
 	"github.com/golang/mock/gomock"
 	vn "github.com/mfrachet/go-vdom-wasm"
+	vnd "github.com/mfrachet/go-vdom-wasm/dom"
 	"github.com/mfrachet/go-vdom-wasm/mock"
 )
 
@@ -62,4 +63,19 @@ func TestReconciler_CreateInstance(t *testing.T) {
 	domNode := vn.CreateInstance(mockParent, vnode)
 
 	assert.Equal(t, domNode, mockChild)
+}
+
+func TestReconciler_CreateIfNotExist(t *testing.T) {
+	ctrl := gomock.NewController(t)
+	defer ctrl.Finish()
+
+	domElement := vnd.DomElement{}
+	vnode := vn.H("div", nil, vn.Children{})
+	vnode.SetElement(domElement)
+
+	mockParent := mock.NewMockDomNode(ctrl)
+
+	domNode := vn.CreateIfNotExist(mockParent, vnode)
+
+	assert.Equal(t, domNode, domElement)
 }
