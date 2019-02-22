@@ -65,7 +65,7 @@ func TestReconciler_CreateInstance(t *testing.T) {
 	assert.Equal(t, domNode, mockChild)
 }
 
-func TestReconciler_CreateIfNotExist(t *testing.T) {
+func TestReconciler_CreateIfNotExist_WithElement(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 
