@@ -14,11 +14,11 @@ type Vnode struct {
 	Attrs    *Attrs
 	Children Children
 	Text     *TextNode
-	Element  *vnd.DomElement
+	Element  *vnd.DomNode
 	key      *string
 }
 
-func NewVNode(tagName string, attrs *Attrs, children Children, text *TextNode, element *vnd.DomElement, key *string) *Vnode {
+func NewVNode(tagName string, attrs *Attrs, children Children, text *TextNode, element *vnd.DomNode, key *string) *Vnode {
 	return &Vnode{tagName, attrs, children, text, element, key}
 }
 
@@ -68,7 +68,7 @@ func (vnode *Vnode) GetText() *TextNode {
 	return vnode.Text
 }
 
-func (vnode *Vnode) GetElement() *vnd.DomElement {
+func (vnode *Vnode) GetElement() *vnd.DomNode {
 	return vnode.Element
 }
 
@@ -88,7 +88,7 @@ func (vnode *Vnode) GetChildren() Children {
 	return vnode.Children
 }
 
-func (vnode *Vnode) SetElement(element vnd.DomElement) {
+func (vnode *Vnode) SetElement(element vnd.DomNode) {
 	vnode.Element = &element
 }
 
