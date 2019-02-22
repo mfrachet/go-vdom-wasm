@@ -6,11 +6,11 @@ import (
 
 type TextNode struct {
 	Value   string
-	Element *vnd.DomNode
+	Element vnd.DomNode
 }
 
 func (textNode *TextNode) SetElement(element vnd.DomNode) {
-	textNode.Element = &element
+	textNode.Element = element
 }
 
 func (textNode *TextNode) IsSame(other *TextNode) bool {
