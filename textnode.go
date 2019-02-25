@@ -5,8 +5,8 @@ import (
 )
 
 type TextNode struct {
-	Value   string
-	Element *vnd.DomNode
+	value   string
+	element *vnd.DomNode
 }
 
 func NewTextnode(value string) *TextNode {
@@ -14,15 +14,15 @@ func NewTextnode(value string) *TextNode {
 }
 
 func (textNode *TextNode) GetElement() *vnd.DomNode {
-	return textNode.Element
+	return textNode.element
 }
 
 func (textNode *TextNode) GetValue() string {
-	return textNode.Value
+	return textNode.value
 }
 
 func (textNode *TextNode) SetElement(element vnd.DomNode) {
-	textNode.Element = &element
+	textNode.element = &element
 }
 
 func (textNode *TextNode) IsSame(other *TextNode) bool {
