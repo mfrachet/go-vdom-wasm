@@ -10,7 +10,7 @@ func H(tagName string, attrs *Attrs, children interface{}, params ...string) Nod
 
 	switch (children).(type) {
 	case string:
-		return NewNode(tagName, sanitizedAttrs, nil, &TextNode{(children).(string), nil}, nil, key)
+		return NewNode(tagName, sanitizedAttrs, nil, NewTextnode((children).(string)), nil, key)
 	default:
 		return NewNode(tagName, sanitizedAttrs, children.(Children), nil, nil, key)
 	}
