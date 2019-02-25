@@ -9,6 +9,10 @@ type TextNode struct {
 	Element *vnd.DomNode
 }
 
+func NewTextnode(value string) *TextNode {
+	return &TextNode{value, nil}
+}
+
 func (textNode *TextNode) GetElement() *vnd.DomNode {
 	return textNode.Element
 }
