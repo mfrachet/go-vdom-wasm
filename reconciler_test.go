@@ -52,7 +52,7 @@ func TestReconciler_CreateInstance(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 
-	vnode := vn.H("li", &vn.Attrs{Props: &vn.Props{"class": "navbar"}, Events: &vn.Ev{"click": nil}}, "Hello world")
+	vnode := vn.H("li", &vn.Props{"class": "navbar"}, &vn.Ev{"click": nil}, "Hello world")
 
 	mockParent := mock.NewMockDomNode(ctrl)
 	mockChild := mock.NewMockDomNode(ctrl)
@@ -70,7 +70,7 @@ func TestReconciler_CreateIfNotExist_WithElement(t *testing.T) {
 	defer ctrl.Finish()
 
 	domElement := vnd.DomElement{}
-	vnode := vn.H("div", nil, vn.Children{})
+	vnode := vn.H("div", vn.Children{})
 	vnode.SetElement(domElement)
 
 	mockParent := mock.NewMockDomNode(ctrl)
