@@ -39,7 +39,7 @@ func TestReconciler_CreateText(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 
-	textNode := vn.TextNode{"Hello world", nil}
+	textNode := vn.NewTextnode("Hello world")
 	mockDNode := mock.NewMockDomNode(ctrl)
 
 	mockDNode.EXPECT().CreateTextNode("Hello world").Times(1)

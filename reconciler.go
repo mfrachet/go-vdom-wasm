@@ -13,7 +13,7 @@ func Remove(domNode vnd.DomNode) {
 	domNode.Remove()
 }
 
-func CreateText(parent vnd.DomNode, virtualNode TextNode) vnd.DomNode {
+func CreateText(parent vnd.DomNode, virtualNode *TextNode) vnd.DomNode {
 	return parent.CreateTextNode(virtualNode.GetValue())
 }
 
@@ -35,7 +35,7 @@ func CreateInstance(parent vnd.DomNode, vnode Node) vnd.DomNode {
 func ComputeChildren(parent vnd.DomNode, vnode Node) {
 	textNode := vnode.GetText()
 	if vnh.NotNil(textNode) {
-		textElement := CreateText(parent, *textNode)
+		textElement := CreateText(parent, textNode)
 		textNode.SetElement(textElement)
 
 		Append(parent, textElement)
