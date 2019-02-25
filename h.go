@@ -1,17 +1,27 @@
 package vn
 
-func H(tagName string, attrs *Attrs, children interface{}, params ...string) Node {
+func H(tagName string, params ...interface{}) Node {
+	var key KeyIdentifier
+	var children Children
+	var textNode *TextNode
+	attrs := &Attrs{}
+
+	for _, param := range params {
+		switch (param).(type) {
+		case string:
+			textNode = NewTextnode((param).(string))
+		case KeyIdentifier:
+			key = param.(KeyIdentifier)
+		case *Props:
+			attrs.Props = param.(*Props)
+		case *Ev:
+			attrs.Events = param.(*Ev)
+		default:
+			children = param.(Children)
+		}
+	}
+
 	sanitizedAttrs := Sanitize(attrs)
-	var key *string
 
-	if len(params) == 1 {
-		key = &params[0]
-	}
-
-	switch (children).(type) {
-	case string:
-		return NewNode(tagName, sanitizedAttrs, nil, NewTextnode((children).(string)), nil, key)
-	default:
-		return NewNode(tagName, sanitizedAttrs, children.(Children), nil, nil, key)
-	}
+	return NewNode(tagName, sanitizedAttrs, children, textNode, nil, key)
 }

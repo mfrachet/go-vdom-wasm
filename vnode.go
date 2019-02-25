@@ -9,16 +9,31 @@ import (
 
 type Children []Node
 
+type Node interface {
+	GetElement() *vnd.DomNode
+	GetTagName() string
+	GetAttrs() *Attrs
+	GetKey() *string
+	HasElement() bool
+	SetElement(vnd.DomNode)
+	HashCode() string
+	ChildrenCount() int
+	ChildAt(int) Node
+	GetText() *TextNode
+	GetChildren() Children
+	IsSame(Node) bool
+}
+
 type Vnode struct {
 	tagname  string
 	attrs    *Attrs
 	children Children
 	text     *TextNode
 	element  *vnd.DomNode
-	key      *string
+	key      KeyIdentifier
 }
 
-func NewNode(tagname string, attrs *Attrs, children Children, text *TextNode, element *vnd.DomNode, key *string) Node {
+func NewNode(tagname string, attrs *Attrs, children Children, text *TextNode, element *vnd.DomNode, key KeyIdentifier) Node {
 	return &Vnode{tagname, attrs, children, text, element, key}
 }
 
@@ -61,7 +76,12 @@ func (vnode *Vnode) ChildAt(index int) Node {
 }
 
 func (vnode *Vnode) GetKey() *string {
-	return vnode.key
+	if vnh.IsNil(vnode.key) {
+		return nil
+	}
+
+	key := vnode.key.GetValue()
+	return &key
 }
 
 func (vnode *Vnode) GetText() *TextNode {
