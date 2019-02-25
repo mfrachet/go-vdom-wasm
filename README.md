@@ -47,20 +47,19 @@ Let's now `Patch` that node with a virtual one to make something happen:
 ```go
 // main.go
 
-rootNode := vn.H("div", nil, "Hello world")
+rootNode := vn.H("div", "Hello world")
+
 vn.Patch("#app", rootNode)
 ```
 
 ### Passing attributes
 
-The second argument of `vn.H` is a reference to an `Attrs` structure. It allows to manage `HTML attributes` and events.
-
 In this example, we set a `class="navbar"` to the underlying `ul` element
 
 ```go
-vn.H("ul", &vn.Attrs{Props: &vn.Props{"class": "navbar"}}, vn.Children{
-	vn.H("li", nil, "First item"),
-	vn.H("li", nil, "Second item"),
+vn.H("ul", &vn.Props{"class": "navbar"}, vn.Children{
+	vn.H("li", "First item"),
+	vn.H("li", "Second item"),
 }),
 ```
 
@@ -75,7 +74,7 @@ The [DOM](https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model
 
 ### Handling events
 
-The `Attrs` also allows to pass functions to handle specific events.
+The `Ev` structure allows to pass functions to handle specific events.
 
 In this example, we set a click event on of the the `li`:
 
@@ -85,9 +84,9 @@ func handleClick(args []js.Value){
 }
 
 func main() {
-    rootNode := vn.H("ul", &vn.Attrs{Props: &vn.Props{"class": "navbar"}}, vn.Children{
-        vn.H("li", &vn.Attrs{Events: &vn.Ev{"click": handleClick}}, "First item"),
-        vn.H("li", nil, "Second item"),
+    rootNode := vn.H("ul",  &vn.Props{"class": "navbar"}, vn.Children{
+        vn.H("li", &vn.Ev{"click": handleClick}, "First item"),
+        vn.H("li", "Second item"),
 	})
 
 	vn.patch("#app", rootNode)
