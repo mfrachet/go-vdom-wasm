@@ -15,6 +15,14 @@ func TestAttrs_Sanitize(t *testing.T) {
 	assert.Equal(t, false, sanitized.Events == nil)
 }
 
+func TestAttrs_Sanitize_Nil_Attrs(t *testing.T) {
+	attrs := &Attrs{Props: &Props{}, Events: &Ev{}}
+
+	sanitized := Sanitize(nil)
+
+	assert.Equal(t, sanitized, attrs)
+}
+
 func TestAttrs_Sanitize_No_Changes(t *testing.T) {
 	attrs := &Attrs{Props: &Props{}, Events: &Ev{}}
 
