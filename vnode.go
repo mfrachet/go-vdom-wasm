@@ -10,16 +10,16 @@ import (
 type Children []Node
 
 type Vnode struct {
-	TagName  string
-	Attrs    *Attrs
-	Children Children
-	Text     *TextNode
-	Element  *vnd.DomNode
+	tagname  string
+	attrs    *Attrs
+	children Children
+	text     *TextNode
+	element  *vnd.DomNode
 	key      *string
 }
 
-func NewNode(tagName string, attrs *Attrs, children Children, text *TextNode, element *vnd.DomNode, key *string) Node {
-	return &Vnode{tagName, attrs, children, text, element, key}
+func NewNode(tagname string, attrs *Attrs, children Children, text *TextNode, element *vnd.DomNode, key *string) Node {
+	return &Vnode{tagname, attrs, children, text, element, key}
 }
 
 func (vnode *Vnode) IsSame(other Node) bool {
@@ -30,7 +30,7 @@ func (vnode *Vnode) IsSame(other Node) bool {
 		return *currKey == *otherKey
 	}
 
-	if vnh.IsNil(vnode.Text) {
+	if vnh.IsNil(vnode.text) {
 		if vnh.IsNil(other.GetText()) {
 			return vnode.HashCode() == other.HashCode()
 		}
@@ -39,7 +39,7 @@ func (vnode *Vnode) IsSame(other Node) bool {
 	}
 
 	if vnh.NotNil(other.GetText()) {
-		hasSameText := other.GetText().IsSame(vnode.Text)
+		hasSameText := other.GetText().IsSame(vnode.text)
 		return hasSameText && vnode.HashCode() == other.HashCode()
 	}
 
@@ -47,14 +47,14 @@ func (vnode *Vnode) IsSame(other Node) bool {
 }
 
 func (vnode *Vnode) ChildrenCount() int {
-	return len(vnode.Children)
+	return len(vnode.children)
 }
 
 func (vnode *Vnode) ChildAt(index int) Node {
-	size := len(vnode.Children)
+	size := len(vnode.children)
 
 	if size > index {
-		return vnode.Children[index]
+		return vnode.children[index]
 	}
 
 	return nil
@@ -65,11 +65,11 @@ func (vnode *Vnode) GetKey() *string {
 }
 
 func (vnode *Vnode) GetText() *TextNode {
-	return vnode.Text
+	return vnode.text
 }
 
 func (vnode *Vnode) GetElement() *vnd.DomNode {
-	return vnode.Element
+	return vnode.element
 }
 
 func (vnode *Vnode) HasElement() bool {
@@ -77,21 +77,21 @@ func (vnode *Vnode) HasElement() bool {
 }
 
 func (vnode *Vnode) GetTagName() string {
-	return vnode.TagName
+	return vnode.tagname
 }
 
 func (vnode *Vnode) GetAttrs() *Attrs {
-	return vnode.Attrs
+	return vnode.attrs
 }
 
 func (vnode *Vnode) GetChildren() Children {
-	return vnode.Children
+	return vnode.children
 }
 
 func (vnode *Vnode) SetElement(element vnd.DomNode) {
-	vnode.Element = &element
+	vnode.element = &element
 }
 
 func (vnode *Vnode) HashCode() string {
-	return fmt.Sprintf("%s/%v", vnode.TagName, *vnode.Attrs.Props)
+	return fmt.Sprintf("%s/%v", vnode.tagname, *vnode.attrs.Props)
 }
