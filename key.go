@@ -6,13 +6,13 @@ type KeyIdentifier interface {
 }
 
 type Key struct {
-	value string
+	Value string
 }
 
 func (Key *Key) SetValue(value string) {
-	Key.value = value
+	Key.Value = value
 }
 
 func (key *Key) GetValue() string {
-	return key.value
+	return key.Value
 }

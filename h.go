@@ -1,11 +1,11 @@
 package vn
 
-func H(tagName string, attrs *Attrs, children interface{}, params ...string) Node {
+func H(tagName string, attrs *Attrs, children interface{}, params ...interface{}) Node {
 	sanitizedAttrs := Sanitize(attrs)
-	var key *string
+	var key KeyIdentifier
 
 	if len(params) == 1 {
-		key = &params[0]
+		key = params[0].(KeyIdentifier)
 	}
 
 	switch (children).(type) {
