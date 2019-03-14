@@ -98,6 +98,19 @@ This module binds the event using the [`addEventListener` API](https://developer
 
 :warning: While using event handler, it's necessary to add en empty `select{}` at the end of the `main` function
 
+### Using `keys` in list of item
+
+For efficient diffing while you're relying a list of items, you can rely on a `key` parameter:
+
+```go
+vn.H("div", vn.Children{
+		vn.H("span", attrsChecked, "Some text"),
+	}, &vn.Key{"UNIQUE KEY"})
+```
+
+The key aims to identifiy a Node. It has to be unique and will ensure a quick comparison before handling the computation.
+The idea is the same (less advanced actually, but here's the idea) as the [React key system](https://reactjs.org/docs/lists-and-keys.html).
+
 ## Todos
 
 - [ ] Add more tests :woman_facepalming: :man_facepalming:
