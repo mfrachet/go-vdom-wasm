@@ -13,6 +13,8 @@ install:
   - go version
   - go env
 before_script:
+  - mv /home/travis/build/mfrachet/go-vdom-wasm /home/travis/go/src/mfrachet/go-vdom-wasm
+  - cd /home/travis/go/src/mfrachet/go-vdom-wasm
   - curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
   - /home/travis/go/bin/dep ensure
 script:
