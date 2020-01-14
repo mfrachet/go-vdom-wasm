@@ -15,5 +15,6 @@ install:
   - go env
 before_script:
   - curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
+  - /home/travis/build/bin/dep ensure
 script:
   - make

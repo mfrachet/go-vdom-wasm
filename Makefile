@@ -1,6 +1,6 @@
-all: deps test 
-deps:
-	dep ensure
+all: test 
+# deps:
+# 	$(GOPATH)/bin/dep ensure
 prepare-test:
 	$(GOPATH)/bin/mockgen -source=dom/dom.go -destination=mock/dom.go -package=mock
 	$(GOPATH)/bin/mockgen -source=vnode.go -destination=mock/node.go -package=mock
