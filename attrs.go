@@ -6,7 +6,7 @@ import (
 	vnh "github.com/mfrachet/go-vdom-wasm/helpers"
 )
 
-type Ev = map[string]func([]js.Value)
+type Ev = map[string]func(js.Value, []js.Value) interface{}
 
 type Props = map[string]string
 

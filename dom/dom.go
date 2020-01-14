@@ -1,9 +1,8 @@
 package vnd
 
 import (
-	"syscall/js"
-
 	vnh "github.com/mfrachet/go-vdom-wasm/helpers"
+	"syscall/js"
 )
 
 type DomNode interface {
@@ -14,7 +13,7 @@ type DomNode interface {
 	CreateTextNode(string) DomNode
 	CreateElement(string) DomNode
 	SetAttribute(string, string)
-	AddEventListener(string, func([]js.Value))
+	AddEventListener(string, func(js.Value, []js.Value) interface{})
 	ChildNodes(int) DomNode
 	GetBinding() js.Value
 	SetBinding(js.Value)
@@ -77,8 +76,8 @@ func (node DomElement) SetAttribute(attr string, value string) {
 	node.GetBinding().Call("setAttribute", attr, value)
 }
 
-func (node DomElement) AddEventListener(eventName string, callback func([]js.Value)) {
-	node.GetBinding().Call("addEventListener", eventName, js.NewCallback(callback))
+func (node DomElement) AddEventListener(eventName string, callback func(js.Value, []js.Value) interface{}) {
+	node.GetBinding().Call("addEventListener", eventName, js.FuncOf(callback))
 }
 
 func (node DomElement) ChildNodes(index int) DomNode {
