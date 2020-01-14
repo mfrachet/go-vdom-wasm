@@ -7,6 +7,6 @@ jobs: # basic units of work in a run
     working_directory: /go/src/github.com/mfrachet/go-vdom-wasm
 
     steps: # steps that comprise the `build` job
-      - checkout # check out source code to working directory
-      - run: echo "Trigger build"
+      - run: git clone https://github.com/mfrachet/go-vdom-wasm.git ~/
+      - run: cd ~/go-vdom-wasm
       - run: make
