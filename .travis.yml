@@ -1,5 +1,15 @@
-language: go
-go:
-  - 1.13.x
+sudo: false
+install:
+  # From vecty's https://github.com/gopherjs/vecty/blob/master/.travis.yml
+  # Manually download and install Go 1.12 because the Travis / gimme version
+  # is broken (see https://travis-ci.community/t/goos-js-goarch-wasm-go-run-fails-panic-newosproc-not-implemented/1651/6)
+  - wget -O go.tar.gz https://dl.google.com/go/go1.12.linux-amd64.tar.gz
+  - tar -C ~ -xzf go.tar.gz
+  - rm go.tar.gz
+  - export GOROOT=~/go
+  - export GOPATH=/home/travis/gopath
+  - export PATH=$GOROOT/bin:$PATH
+  - go version
+  - go env
 before_script:
   - curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
