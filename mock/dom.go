@@ -125,7 +125,7 @@ func (mr *MockDomNodeMockRecorder) SetAttribute(arg0, arg1 interface{}) *gomock.
 }
 
 // AddEventListener mocks base method
-func (m *MockDomNode) AddEventListener(arg0 string, arg1 func([]js.Value)) {
+func (m *MockDomNode) AddEventListener(arg0 string, arg1 func(js.Value, []js.Value) interface{}) {
 	m.ctrl.T.Helper()
 	m.ctrl.Call(m, "AddEventListener", arg0, arg1)
 }
