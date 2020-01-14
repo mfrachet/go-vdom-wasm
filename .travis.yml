@@ -9,6 +9,8 @@ install:
   - export GOROOT=~/go
   - export GOPATH=/home/travis/build
   - export PATH=$GOROOT/bin:$PATH
+  - export GOBIN=/home/travis/build/bin
+  - mkdir /home/travis/build/bin
   - go version
   - go env
 before_script:
