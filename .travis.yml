@@ -7,7 +7,7 @@ install:
   - tar -C ~ -xzf go.tar.gz
   - rm go.tar.gz
   - export GOROOT=~/go
-  - export GOPATH=/home/travis/gopath
+  - export GOPATH=/home/travis/build
   - export PATH=$GOROOT/bin:$PATH
   - go version
   - go env
