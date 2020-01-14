@@ -13,3 +13,5 @@ install:
   - go env
 before_script:
   - curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
+script:
+  - make
