@@ -10,7 +10,6 @@ install:
   - export GOPATH=/home/travis/go
   - export PATH=$GOROOT/bin:$PATH
   - export GOBIN=/home/travis/go/bin
-  - mkdir /home/travis/go/bin
   - go version
   - go env
 before_script:
