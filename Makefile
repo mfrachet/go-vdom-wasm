@@ -1,4 +1,4 @@
-all: deps prepare-test test 
+all: deps test 
 deps:
 	dep ensure
 prepare-test:
