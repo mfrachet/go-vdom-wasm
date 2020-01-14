@@ -10,13 +10,9 @@
   version = "v1.1.1"
 
 [[projects]]
-  digest = "1:5e14df5b9539151b485eeb3ebea90a2823347516732978b0911ff17acea2842c"
+  digest = "1:be408f349cae090a7c17a279633d6e62b00068e64af66a582cae0983de8890ea"
   name = "github.com/golang/mock"
-  packages = [
-    "gomock",
-    "mockgen",
-    "mockgen/model",
-  ]
+  packages = ["gomock"]
   pruneopts = "UT"
   revision = "9fa652df1129bef0e734c9cf9bf6dbae9ef3b9fa"
   version = "1.3.1"
@@ -38,24 +34,6 @@
   version = "v1.4.0"
 
 [[projects]]
-  branch = "master"
-  digest = "1:0634daeabb9e4634a767484386c217e9ebfd0b270280e13f38dc7e67c65879e3"
-  name = "golang.org/x/tools"
-  packages = [
-    "go/ast/astutil",
-    "go/gcexportdata",
-    "go/internal/gcimporter",
-    "go/internal/packagesdriver",
-    "go/packages",
-    "go/types/typeutil",
-    "internal/fastwalk",
-    "internal/gopathwalk",
-    "internal/semver",
-  ]
-  pruneopts = "UT"
-  revision = "d31a08c2edf2cd930cbead4c1e6e3e1b26e94bd5"
-
-[[projects]]
   digest = "1:b75b3deb2bce8bc079e16bb2aecfe01eb80098f5650f9e93e5643ca8b7b73737"
   name = "gopkg.in/yaml.v2"
   packages = ["."]
@@ -68,7 +46,6 @@
   analyzer-version = 1
   input-imports = [
     "github.com/golang/mock/gomock",
-    "github.com/golang/mock/mockgen",
     "github.com/stretchr/testify/assert",
   ]
   solver-name = "gps-cdcl"
